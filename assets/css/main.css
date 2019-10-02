@@ -1,0 +1,21 @@
+  
+  /* Button All */
+  button.btn {
+    border-radius: 50rem;
+  }
+  .btn p {
+    font-size: 15px;
+  }
+  /* End Button All */
+
+
+  /* Header Table */
+  div#header_table div {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  div#header_table div button i {
+    padding-right: 10px;
+  }
+  /* End Header Table */
