@@ -44,7 +44,7 @@
       <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children">
         <a href="#0">
           <!-- <img src="<?php echo base_url(); ?>images/Icon-Sales.png" alt="avatar"> -->
-          Saran T.
+          Saran T. <i class="fa fa-angle-down fa-lg fa-fw"></i>
         </a>
     
         <ul class="cd-nav__sub-list" style="width: 120px;">

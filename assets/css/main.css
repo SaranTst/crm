@@ -1,21 +1,95 @@
   
   /* Button All */
-  button.btn {
+  .btn {
     border-radius: 50rem;
   }
   .btn p {
     font-size: 15px;
   }
+
+  .crm-btn-orange {
+    background-color: #E59C39;
+    color: white;
+    border: 2px solid #E59C39;
+  }
+
+  .crm-btn-orange:hover {
+    background-color: white;
+    color: #E59C39;
+  }
+
+  .crm-btn-gray {
+    background-color: #CCCCCC;
+    color: black;
+    border: 2px solid #CCCCCC;
+  }
+
+  .crm-btn-gray:hover {
+    background-color: white; 
+    color: #4C4F4E;
+  }
   /* End Button All */
 
 
   /* Header Table */
-  div#header_table div {
-    padding-right: 5px;
-    padding-left: 5px;
-  }
-
-  div#header_table div button i {
+  #header-table div button i {
     padding-right: 10px;
   }
   /* End Header Table */
+
+  /* Input Search */
+  #crm-input-search {
+    width: 85%;
+    border-radius: 50rem;
+  }
+  /* End Input Search */
+
+  /* Rating  + Start*/
+  .rating {
+    color: #E59C39;
+    font-size: 1.5em;
+    margin: 0 auto;
+  }
+
+  .fa.fa-star.select {
+    color: #E59C39;
+    font-size: 1em;
+  }
+  .fa.fa-star-o.select {
+    color: #E59C39;
+    font-size: 1em;
+  }
+  /* End Rating */
+
+  /* Table */
+  .table.table-striped td,
+  .table.table-striped th {
+    vertical-align: inherit;
+  }
+  /* End Table */
+
+  /* Tab Header */
+  .nav-pills .nav-item .nav-link {
+    border-radius: 0; 
+  }
+  .nav-pills li a {
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom-width: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: #CCCCCC;
+    color: #CCCCCC !important;
+    background-color: transparent !important;
+  }
+
+  .nav-pills li a:hover,
+  .nav-pills li a.active{
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom-width: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: #E59C39;
+    color: #E59C39 !important;
+    background-color: transparent !important;
+  }
+  /* End Tab Header */
