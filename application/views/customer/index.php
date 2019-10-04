@@ -3,20 +3,20 @@
     <div class="container-fluid">
 
       <div class="row mb-3" id="header-table">
-        <div class="col-md-3 col-sm-12 mb-1">
-          <a href="#" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-user fa-fw"></i> <p>Customer Management</p></a>
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 mb-2">
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-user fa-fw"></i> <p>Customer Management</p></a>
         </div>
-        <div class="col-md-5 col-sm-12 mb-2">
+        <div class="col-xl-5 col-lg-8 col-md-8 col-sm-12 mb-2">
           <form class="form-inline md-form form-sm active-pink-2 mt-1">
             <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
               aria-label="Search">
             <a href="#"><i class="fa fa-search fa-lg"></i></a>
           </form>
         </div>
-        <div class="col-md-2 col-sm-12 mb-2">
+        <div class="col-xl-2 col-lg-6 col-md-6 col-sm-12 mb-2">
           <a href="" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>Export to PDF</p></a>
         </div>
-        <div class="col-md-2 col-sm-12 mb-2">
+        <div class="col-xl-2 col-lg-6 col-md-6 col-sm-12 mb-2">
           <a href="<?php echo base_url(); ?>customer/create_customer" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-plus fa-fw"></i><p>Create Customer</p></a>
         </div>
       </div>

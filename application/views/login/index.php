@@ -25,6 +25,11 @@
       width: 60%;
 	}
 
+	.btn-login:hover {
+      background-color: white;
+      color: #166F7E;
+	}
+
 	.has-search .form-control {
 	  padding-left: 2.375rem;
 	}

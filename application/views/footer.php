@@ -16,21 +16,6 @@
     }
     $(".rating").rate(options_rating);
 
-	// sidebar menu 
-	$('ul.cd-side__list li').click(function(e) { 
-		
-		var img = $('li.cd-side__item--selected').find("img").attr("src");
-    	var img_white = img.replace(".png", "-White.png");
-    	$('li.cd-side__item--selected').find("img").attr("src",img_white);
-    	$('li.cd-side__item--selected').removeClass('cd-side__item--selected');
-
-    	$(this).addClass("cd-side__item--selected");
-    	var img = $('li.cd-side__item--selected').find("img").attr("src");
-    	var img_white = img.replace("-White", "");
-    	$('li.cd-side__item--selected').find("img").attr("src",img_white);
-
-    });
-
 
     function upload_and_preview(idinputfile, idshowfilename, idpreview) {
     
