@@ -30,7 +30,43 @@
     	$('li.cd-side__item--selected').find("img").attr("src",img_white);
 
     });
+
+
+    function upload_and_preview(idinputfile, idshowfilename, idpreview) {
+    
+        $("#"+idinputfile).trigger("click");
+        $("#"+idinputfile).change(function(e) {
+            var fileName = e.target.files[0].name;
+            $("#"+idshowfilename).val(fileName);
+
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              document.getElementById(idpreview).src = e.target.result;
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    }
+
 </script>
+
+<!--   <script type="text/javascript">
+  $(document).on("click", "#uploadf", function() {
+    var file = $(this).parents().find("#ipfile");
+    file.trigger("click");
+  });
+  $('input[type="file"]').change(function(e) {
+    var fileName = e.target.files[0].name;
+    $("#name_file").val(fileName);
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      // get loaded data and render thumbnail.
+      document.getElementById("preview").src = e.target.result;
+    };
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  });
+  </script> -->
 
 </body>
 </html>

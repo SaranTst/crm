@@ -10,6 +10,7 @@
 
   <!-- CSS [1]--> 
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap-4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap-4.3.1/css/bootstrap-datepicker.css">
 
   <!-- CSS topbar & sidebar [2]-->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
@@ -20,6 +21,8 @@
   <!-- JS [3]-->
   <script src="<?php echo base_url(); ?>assets/jquery/jquery-3.3.1.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/js/bootstrap-datepicker.js"></script>
+  <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/locales/bootstrap-datepicker.th.min.js"></script>
 
 </head>
 <body>
