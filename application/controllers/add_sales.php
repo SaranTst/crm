@@ -18,4 +18,11 @@ class Add_sales extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function create_sales()
+	{
+		$this->load->view('header');
+		$this->load->view('add_sales/create_sales');
+		$this->load->view('footer');
+	}
+
 }

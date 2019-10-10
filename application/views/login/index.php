@@ -80,10 +80,10 @@
 									</div>
 								</div>
                                 <div class="text-center mb-4">
-                                	<a href="javascript(0)"><u>Forgot your Password?</u></a>
+                                	<a href="javascript:void(0)"><u>Forgot your Password?</u></a>
                                 </div>
                                 <div class="text-center">
-	                                <button type="submit" class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm">Sign in</button>
+	                                <button type="button" class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm" onclick="window.location.href = '<?php echo base_url(); ?>dashboard';">Sign in</button>
 	                            </div>
                             </form>
                         </div>

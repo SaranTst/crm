@@ -149,7 +149,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Event</label>
-                    <input type="text" class="form-control" placeholder="Position" name="personnel_detail[0][event]">
+                    <input type="text" class="form-control" placeholder="Event" name="personnel_detail[0][event]">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -223,6 +223,17 @@
                     <input type="text" class="form-control" placeholder="Remarks" name="personnel_detail[0][remarks]">
                   </div>
                 </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3 mb-2 text-right">
+                  <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><p>Add Name</p></a>
+                </div>
+                <div class="col-md-3 mb-2">
+                  <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><p>SAVE</p></a>
+                </div>
+                <div class="col-md-3"></div>
               </div>
 
             </div>

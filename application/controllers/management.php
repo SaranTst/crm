@@ -18,4 +18,20 @@ class Management extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function create_lists()
+	{
+		$this->load->view('header');
+		$this->load->view('management/create_lists');
+		$this->load->view('footer');
+	}
+
+	public function lists($name_lists='')
+	{
+		$data['name_lists'] = $name_lists ? $name_lists : '';
+
+		$this->load->view('header');
+		$this->load->view('management/lists', $data);
+		$this->load->view('footer');
+	}
+
 }

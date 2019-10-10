@@ -3,12 +3,18 @@
     <div class="container-fluid">
 
       <div class="row mb-3" id="header-table">
-        <div class="col-md-6 pt-2"></div>
+        <div class="col-md-6 pt-2">
+          <ul class="nav nav-pills">
+            <li class="nav-item p-1">
+              <a class="nav-link active"><?php echo strtoupper($name_lists); ?></a>
+            </li>
+          </ul>
+        </div>
         <div class="col-md-3 pt-2">
           <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>Export to PDF</p></a>
         </div>
         <div class="col-md-3 pt-2">
-          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" onclick="$('#create_lists_form')[0].reset();$('#create_lists_modal').modal('show');"><i class="fa fa-plus fa-fw"></i><p>Create Lists</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" onclick="$('#create_data_form')[0].reset();$('#create_data_modal').modal('show');"><i class="fa fa-plus fa-fw"></i><p>Create Data</p></a>
         </div>
       </div>
 
@@ -18,7 +24,7 @@
           <thead>
             <tr>
               <th scope="col">No.</th>
-              <th scope="col">Name Lists</th>
+              <th scope="col">Name</th>
               <th scope="col">Create Date</th>
               <th scope="col">Update Date</th>
               <th scope="col">Edit</th>
@@ -28,33 +34,33 @@
           <tbody>
             <tr>
               <th scope="row">1.</th>
-              <td><a href="<?php echo base_url(); ?>management/lists/Brands">Brands</a></td>
-              <td>09-10-2019 17:00</td>
-              <td>09-10-2019 21:30</td>
+              <td><?php echo $name_lists.'__1'; ?></td>
+              <td>01-10-2019 17:00</td>
+              <td>04-10-2019 21:30</td>
               <td>
                 <div class="text-center">
-                  <a href="javascript:void(0)" onclick="$('#create_lists_form')[0].reset();$('#create_lists_modal').modal('show');"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                  <a href="javascript:void(0)" onclick="$('#create_data_form')[0].reset();$('#create_data_modal').modal('show');"><i class="fa fa-pencil-square-o fa-lg"></i></a>
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  <a href="<?php echo base_url(); ?>management"><i class="fa fa-times fa-lg"></i></a>
+                  <a href="<?php echo base_url(); ?>management/lists"><i class="fa fa-times fa-lg"></i></a>
                 </div>
               </td>
             </tr>
             <tr>
               <th scope="row">2.</th>
-              <td><a href="<?php echo base_url(); ?>management/lists/Model">Model</a></td>
-              <td>05-10-2019 10:15</td>
-              <td>06-10-2019 10:18</td>
+              <td><?php echo $name_lists.'__2'; ?></td>
+              <td>02-10-2019 10:15</td>
+              <td>09-10-2019 10:18</td>
               <td>
                 <div class="text-center">
-                  <a href="javascript:void(0)" onclick="$('#create_lists_form')[0].reset();$('#create_lists_modal').modal('show');"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                  <a href="javascript:void(0)" onclick="$('#create_data_form')[0].reset();$('#create_data_modal').modal('show');"><i class="fa fa-pencil-square-o fa-lg"></i></a>
                 </div>
               </td>
               <td>
                 <div class="text-center">
-                  <a href="<?php echo base_url(); ?>management"><i class="fa fa-times fa-lg"></i></a>
+                  <a href="<?php echo base_url(); ?>management/lists"><i class="fa fa-times fa-lg"></i></a>
                 </div>
               </td>
             </tr>
@@ -67,19 +73,19 @@
     </div> <!-- .content-wrapper -->
   </main> <!-- .cd-main-content -->
 
-  <!-- Modal Create Lists -->
-  <div id="create_lists_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+  <!-- Modal Create Data -->
+	<div id="create_data_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myLargeModalLabel">Create Lists</h4>
+                <h4 class="modal-title" id="myLargeModalLabel">Create Data</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-			      <form id="create_lists_form">
+			      <form id="create_data_form">
                 <div class="form-group">
-                    <label>Name Lists</label>
-                    <input type="text" class="form-control" placeholder="Name Lists" name="name_lists">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Name" name="name">
                 </div>
             </form>            
             </div>

@@ -9,14 +9,14 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
           
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 pt-2">
           <a href="<?php echo base_url(); ?>customer/more_create_customer" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-arrow-right fa-fw"></i><p>More info</p></a>
         </div>
-        <div class="col-md-2">
-          <a href="<?php echo base_url(); ?>customer/create_customer" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-check fa-fw"></i><p>SUMMIT</p></a>
+        <div class="col-md-3 pt-2">
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-check fa-fw"></i><p>SUMMIT</p></a>
         </div>
       </div>
     </div> <!-- .container-fluid -->

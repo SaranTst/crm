@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -30,7 +30,7 @@
 
  <header class="cd-main-header js-cd-main-header">
     <div class="cd-logo-wrapper">
-      <a href="#0" class="cd-logo"><img src="<?php echo base_url(); ?>images/Icon-Bjhmedical-W2.png" alt="Logo"></a>
+      <a href="<?php echo base_url(); ?>dashboard" class="cd-logo"><img src="<?php echo base_url(); ?>images/Icon-Bjhmedical-W2.png" alt="Logo"></a>
     </div>
     
     <div class="cd-search js-cd-search" style="display: none;">
@@ -45,7 +45,7 @@
       <!-- <li class="cd-nav__item"><a href="#0">Tour</a></li>
       <li class="cd-nav__item"><a href="#0">Support</a></li> -->
       <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children">
-        <a href="#0">
+        <a href="javascript:void(0)">
           <!-- <img src="<?php echo base_url(); ?>images/Icon-Sales.png" alt="avatar"> -->
           Saran T. <i class="fa fa-angle-down fa-lg fa-fw"></i>
         </a>
@@ -53,7 +53,7 @@
         <ul class="cd-nav__sub-list" style="width: 120px;">
 <!--           <li class="cd-nav__sub-item"><a href="#0">My Account</a></li>
           <li class="cd-nav__sub-item"><a href="#0">Edit Account</a></li> -->
-          <li class="cd-nav__sub-item"><a href="#0">Logout</a></li>
+          <li class="cd-nav__sub-item"><a href="<?php echo base_url(); ?>login">Logout</a></li>
         </ul>
       </li>
     </ul>

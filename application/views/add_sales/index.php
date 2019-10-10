@@ -2,7 +2,7 @@
     <div class="cd-content-wrapper">
     <div class="container-fluid">
 
-    	<?php echo "Add Sales"; ?>
+      <?php echo "Add Sale"; ?>
 
     </div> <!-- .container-fluid -->
     </div> <!-- .content-wrapper -->

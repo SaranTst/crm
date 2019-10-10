@@ -1,7 +1,47 @@
   
+  /* Input */
+  input[type=text],[type=number],[type=password] {
+    background-color: #CCCCCC; !important;
+    /*color: white;*/
+  }
+
+  input[type=text]:focus {
+    background-color: #CCCCCC;
+    border: 3px solid #E59C39;
+  }
+
+  input[type=number]:focus {
+    background-color: #CCCCCC;
+    border: 3px solid #E59C39;
+  }
+
+  input[type=password]:focus {
+    background-color: #CCCCCC;
+    border: 3px solid #E59C39;
+  }
+  /* End Input */
+
+  /* Select */
+  .custom-select {
+    background-color: #CCCCCC;
+  }
+
+  .custom-select:focus {
+    background-color: #CCCCCC;
+    border: 3px solid #E59C39;
+  }
+  /* End Select */
+
+  /* Font label */
+  label p {
+    font-size: 15px;
+  }
+  /* End Font label */
+
   /* Button All */
   .btn {
     border-radius: 50rem;
+    white-space: normal;
   }
   .btn p {
     font-size: 15px;
@@ -28,6 +68,127 @@
     background-color: white; 
     color: #4C4F4E;
   }
+
+  .crm-btn-light-purple {
+    background-color: #AB4189;
+    color: white;
+    border: 2px solid #AB4189;
+  }
+
+  .crm-btn-light-purple:hover {
+    background-color: white; 
+    color: #AB4189;
+  }
+
+  .crm-btn-purple {
+    background-color: #783F68;
+    color: white;
+    border: 2px solid #783F68;
+  }
+
+  .crm-btn-purple:hover {
+    background-color: white; 
+    color: #783F68;
+  }
+
+  .crm-btn-dark-blue {
+    background-color: #1894AE;
+    color: white;
+    border: 2px solid #1894AE;
+  }
+
+  .crm-btn-dark-blue:hover {
+    background-color: white; 
+    color: #1894AE;
+  }
+
+  .crm-btn-blue {
+    background-color: #3D96C4;
+    color: white;
+    border: 2px solid #3D96C4;
+  }
+
+  .crm-btn-blue:hover {
+    background-color: white; 
+    color: #3D96C4;
+  }
+
+  .crm-btn-dark-green {
+    background-color: #39A5A0;
+    color: white;
+    border: 2px solid #39A5A0;
+  }
+
+  .crm-btn-dark-green:hover {
+    background-color: white; 
+    color: #39A5A0;
+  }
+
+  .crm-btn-green {
+    background-color: #8CB91D;
+    color: white;
+    border: 2px solid #8CB91D;
+  }
+
+  .crm-btn-green:hover {
+    background-color: white; 
+    color: #8CB91D;
+  }
+
+  .crm-btn-yellow {
+    background-color: #F7C036;
+    color: white;
+    border: 2px solid #F7C036;
+  }
+
+  .crm-btn-yellow:hover {
+    background-color: white; 
+    color: #F7C036;
+  }
+
+  .crm-btn-light-orange {
+    background-color: #F67B23;
+    color: white;
+    border: 2px solid #F67B23;
+  }
+
+  .crm-btn-light-orange:hover {
+    background-color: white; 
+    color: #F67B23;
+  }
+
+  .crm-btn-dark-orange {
+    background-color: #D16C34;
+    color: white;
+    border: 2px solid #D16C34;
+  }
+
+  .crm-btn-dark-orange:hover {
+    background-color: white; 
+    color: #D16C34;
+  }
+
+  .crm-btn-light-red {
+    background-color: #E74345;
+    color: white;
+    border: 2px solid #E74345;
+  }
+
+  .crm-btn-light-red:hover {
+    background-color: white; 
+    color: #E74345;
+  }
+
+  .crm-btn-pink {
+    background-color: #E63E71;
+    color: white;
+    border: 2px solid #E63E71;
+  }
+
+  .crm-btn-pink:hover {
+    background-color: white; 
+    color: #E63E71;
+  }
   /* End Button All */
 
 
@@ -44,7 +205,7 @@
   }
   /* End Input Search */
 
-  /* Rating  + Start*/
+  /* Fontawesome Rating  + Start*/
   .rating {
     color: #E59C39;
     font-size: 1.5em;
@@ -58,6 +219,10 @@
   .fa.fa-star-o.select {
     color: #E59C39;
     font-size: 1em;
+  }
+
+  .fa.fa-times {
+    color: red;
   }
   /* End Rating */
 
@@ -93,3 +258,14 @@
     background-color: transparent !important;
   }
   /* End Tab Header */
+
+  /* Content collapse */
+  .active-card-header-hover {
+    background: #1894AE;
+    color: white;
+  }
+  .card-header-hover:hover {
+    background: #1894AE;
+    color: white;
+  }
+  /* End Content collapse */

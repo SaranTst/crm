@@ -32,4 +32,18 @@ class Customer extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function read_customer()
+	{
+		$this->load->view('header');
+		$this->load->view('customer/read_customer');
+		$this->load->view('footer');
+	}
+
+	public function more_read_customer()
+	{
+		$this->load->view('header');
+		$this->load->view('customer/more_read_customer');
+		$this->load->view('footer');
+	}
+
 }
