@@ -7,9 +7,7 @@
         </div>
         <div class="col-md-8"></div>
       </div>
-    </div> <!-- .container-fluid -->
 
-    <div class="container-fluid">
       <div class="row" id="header-table">
         <div class="col-md-4 pt-2">
           <div class="form-group row">

@@ -309,6 +309,17 @@
     color: #E59C39 !important;
     background-color: transparent !important;
   }
+
+  .nav-pills-add-sales li a:hover,
+  .nav-pills-add-sales li a.active{
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom-width: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: #3F8457;
+    color: #3F8457 !important;
+    background-color: transparent !important;
+  }
   /* End Tab Header */
 
   /* Content collapse */
