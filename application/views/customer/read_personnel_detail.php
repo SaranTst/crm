@@ -633,7 +633,7 @@
                       <button type="button" class="btn crm-btn-dark-blue">ต่อรองราคา</button>
                       <button type="button" class="btn crm-btn-blue">ประมูลราคา</button>
                       <button type="button" class="btn crm-btn-dark-green">ชนะประมูล</button>
-                      <button type="button" class="btn crm-btn-green">ทำสัญญา</button>
+                      <button type="button" class="btn crm-btn-light-green">ทำสัญญา</button>
                       <button type="button" class="btn crm-btn-yellow">ออกบิลแล้ว</button>
                       <button type="button" class="btn crm-btn-light-orange">ส่งของแล้ว</button>
                       <button type="button" class="btn crm-btn-dark-orange">ตรวจรับ</button>

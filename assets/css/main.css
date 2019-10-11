@@ -58,6 +58,17 @@
     color: #E59C39;
   }
 
+  .crm-btn-orange {
+    background-color: #E59C39;
+    color: white;
+    border: 2px solid #E59C39;
+  }
+
+  .crm-btn-orange:hover {
+    background-color: white;
+    color: #E59C39;
+  }
+
   .crm-btn-gray {
     background-color: #CCCCCC;
     color: black;
@@ -65,6 +76,17 @@
   }
 
   .crm-btn-gray:hover {
+    background-color: white; 
+    color: #4C4F4E;
+  }
+
+  .crm-btn-dark-gray {
+    background-color: #4C4F4E;
+    color: white;
+    border: 2px solid #4C4F4E;
+  }
+
+  .crm-btn-dark-gray:hover {
     background-color: white; 
     color: #4C4F4E;
   }
@@ -102,6 +124,17 @@
     color: #1894AE;
   }
 
+  .crm-btn-2dark-blue {
+    background-color: #166F7E;
+    color: white;
+    border: 2px solid #166F7E;
+  }
+
+  .crm-btn-2dark-blue:hover {
+    background-color: white; 
+    color: #166F7E;
+  }
+
   .crm-btn-blue {
     background-color: #3D96C4;
     color: white;
@@ -125,12 +158,23 @@
   }
 
   .crm-btn-green {
+    background-color: #3F8457;
+    color: white;
+    border: 2px solid #3F8457;
+  }
+
+  .crm-btn-green:hover {
+    background-color: white; 
+    color: #3F8457;
+  }
+
+  .crm-btn-light-green {
     background-color: #8CB91D;
     color: white;
     border: 2px solid #8CB91D;
   }
 
-  .crm-btn-green:hover {
+  .crm-btn-light-green:hover {
     background-color: white; 
     color: #8CB91D;
   }
@@ -190,6 +234,14 @@
     color: #E63E71;
   }
   /* End Button All */
+
+  /* Backgrround Color */
+  .crm-bg-dark-gray {
+    background-color: #4C4F4E;
+    color: white;
+    border: 2px solid #4C4F4E;
+  }
+  /* End Backgrround Color */
 
 
   /* Header Table */
@@ -269,3 +321,16 @@
     color: white;
   }
   /* End Content collapse */
+
+
+  /* Size Text */
+  .crm-card-sale-text-2dark-blue {
+    color: #166F7E;
+  }
+  .crm-card-sale-text {
+    font-size: 13px;
+  }
+  .crm-modal-sale-text {
+    font-size: 17px;
+  }
+  /* End Size Text */

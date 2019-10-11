@@ -24,9 +24,12 @@
   <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/js/bootstrap-datepicker.js"></script>
   <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/locales/bootstrap-datepicker.th.min.js"></script>
 
+  <!-- Pagination -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/simplePagination/simplePagination.css">
+  <script src="<?php echo base_url(); ?>assets/simplePagination/jquery.simplePagination.js"></script>
+
 </head>
 <body>
-
 
  <header class="cd-main-header js-cd-main-header">
     <div class="cd-logo-wrapper">
