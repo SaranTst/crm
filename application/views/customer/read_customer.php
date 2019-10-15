@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row mb-3" id="header-table">
         <div class="col-md-4">
-          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block">Chulalongkorn Hospital</a>
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block no-hover">Chulalongkorn Hospital</a>
         </div>
         <div class="col-md-8"></div>
       </div>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-5"></div>
         <div class="col-md-3 pt-2">
-          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>Export to PDF</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp; Export to PDF</p></a>
         </div>
       </div>
  

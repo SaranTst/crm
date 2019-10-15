@@ -47,10 +47,11 @@
     <ul class="cd-nav__list js-cd-nav__list">
       <!-- <li class="cd-nav__item"><a href="#0">Tour</a></li>
       <li class="cd-nav__item"><a href="#0">Support</a></li> -->
-      <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children">
+      <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children" id="profile_header">
         <a href="javascript:void(0)">
           <!-- <img src="<?php echo base_url(); ?>images/Icon-Sales.png" alt="avatar"> -->
-          Saran T. <i class="fa fa-angle-down fa-lg fa-fw"></i>
+          Saran T. 
+          <i class="fa fa-caret-down fa-lg fa-fw"></i>
         </a>
     
         <ul class="cd-nav__sub-list" style="width: 120px;">

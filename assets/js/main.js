@@ -34,6 +34,14 @@
             event.preventDefault();
             var item = event.target.parentNode;
             Util.toggleClass(item, 'cd-side__item--expanded', !Util.hasClass(item, 'cd-side__item--expanded'));
+
+            // click #profile_header
+            if (Util.hasClass(item, 'cd-side__item--expanded')) {
+              event.target.childNodes[3].className = 'fa fa-caret-up fa-lg fa-fw';
+            }else{
+              event.target.childNodes[3].className = 'fa fa-caret-down fa-lg fa-fw';
+            }
+            
           }
         });
       })(i);

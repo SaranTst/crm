@@ -16,6 +16,13 @@
     }
     $(".rating").rate(options_rating);
 
+    // mouseover #profile_header
+    $("#profile_header").mouseover(function() {
+      $(this).find("i.fa").addClass("fa-caret-up").removeClass("fa-caret-down");
+    })
+    .mouseout(function() {
+      $(this).find("i.fa").addClass("fa-caret-down").removeClass("fa-caret-up");
+    });
 
     function upload_and_preview(idinputfile, idshowfilename, idpreview) {
     

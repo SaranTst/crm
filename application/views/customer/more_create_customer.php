@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row" id="header-table">
         <div class="col-md-4 pt-2">
-          <a href="<?php echo base_url(); ?>customer/create_customer" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-user fa-fw"></i><p>GENERAL DETAIL</p></a>
+          <a href="<?php echo base_url(); ?>customer/create_customer" class="btn crm-btn-orange btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i><p>&nbsp; GENERAL DETAIL</p></a>
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-4 pt-2">

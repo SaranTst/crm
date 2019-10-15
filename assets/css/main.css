@@ -47,15 +47,9 @@
     font-size: 15px;
   }
 
-  .crm-btn-orange {
-    background-color: #E59C39;
-    color: white;
-    border: 2px solid #E59C39;
-  }
-
-  .crm-btn-orange:hover {
-    background-color: white;
-    color: #E59C39;
+  .no-hover {
+    pointer-events: none;
+    border-radius: 0;
   }
 
   .crm-btn-orange {
