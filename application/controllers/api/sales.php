@@ -9,7 +9,7 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_model');
 	}
 
-	public function lists_users()
+	public function lists_sales()
 	{
 		$res = $this->sales_model->lists();
 
@@ -25,7 +25,7 @@ class Sales extends MY_Controller {
 		echo json_encode($message);
 	}
 
-	public function gets_users($id=null)
+	public function gets_sales($id=null)
 	{
 		$id = (int)$id; 
 
@@ -43,7 +43,7 @@ class Sales extends MY_Controller {
 		echo json_encode($message);
 	}
 
-	public function update_users($id=null)
+	public function update_sales($id=null)
 	{
 		$id = (int)$id; 
 
@@ -66,7 +66,7 @@ class Sales extends MY_Controller {
 		echo json_encode($message);
 	}
 
-	public function delete_users($id=null)
+	public function delete_sales($id=null)
 	{
 		$id = (int)$id;
 		$message['status'] = 0;
@@ -91,7 +91,7 @@ class Sales extends MY_Controller {
 			$message['status'] = 1;
 			$message['datas'] = $res;
 
-			$userdata['sales'] = array(
+			$userdata['sale'] = array(
 			'id' => $res[0]['id'],
 			'name' => $res[0]['first_name'].' '.$res[0]['last_name'],
 			'email' => $res[0]['email'],
@@ -108,9 +108,9 @@ class Sales extends MY_Controller {
 	}
 
   	public function logout() {      
-      $this->session->unset_userdata('sales');
+      $this->session->unset_userdata('sale');
 
-      if($this->session->userdata("sales")){
+      if($this->session->userdata("sale")){
           $message['status']=0;
           $message['message']='ออกจากระบบไม่สำเร็จกรุณาลองใหม่อีกครั้ง';               
       }else{
