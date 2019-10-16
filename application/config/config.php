@@ -23,7 +23,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/crm';
+define('SERV_NAME', $_SERVER["HTTP_HOST"]);
+if (!empty($_SERVER["HTTP_X_FORWARDED_PROTO"])) {
+	define("MyProtocol", $_SERVER["HTTP_X_FORWARDED_PROTO"]);	
+} else {
+	define("MyProtocol", "http");
+}
+$config['base_url'] = MyProtocol.'://'.SERV_NAME.'/crm';
+// $config['base_url'] = 'http://localhost:8080/crm';
 
 /*
 |--------------------------------------------------------------------------
