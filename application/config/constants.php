@@ -85,3 +85,4 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('KEY_PASSWORD', '_bjc_crm');
+define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/crm');
