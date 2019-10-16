@@ -3,7 +3,7 @@
     <div class="container-fluid">
 		<div class="row mb-3" id="header-table">
 			<div class="col-md-4 pt-2">
-			  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i><p>&nbsp; Sales Contact</p></a>
+			  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp; Sales Contact</a>
 			</div>
 			<div class="col-md-8"></div>
 		</div> <!-- #header-table -->
@@ -89,7 +89,7 @@
 			  	<div class="row">
 			  		<dir class="col-md-8"></dir>
 			  		<dir class="col-md-2">
-		  				<a href="javascript:void(0)" class="btn crm-btn-2dark-blue btn-lg btn-block"><p>Search</p></a>
+		  				<a href="javascript:void(0)" class="btn crm-btn-dark-blue-sales btn-lg btn-block"><p>Search</p></a>
 			  		</dir>
 			  		<dir class="col-md-2">
 		  				<a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block"><p>Reset</p></a>

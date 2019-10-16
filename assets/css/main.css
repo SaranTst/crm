@@ -118,6 +118,17 @@
     color: #1894AE;
   }
 
+  .crm-btn-dark-blue-sales {
+    background-color: #006E7E;
+    color: white;
+    border: 2px solid #006E7E;
+  }
+
+  .crm-btn-dark-blue-sales:hover {
+    background-color: white; 
+    color: #006E7E;
+  }
+
   .crm-btn-2dark-blue {
     background-color: #166F7E;
     color: white;
@@ -171,6 +182,17 @@
   .crm-btn-light-green:hover {
     background-color: white; 
     color: #8CB91D;
+  }
+
+  .crm-btn-light-green-add-sales {
+    background-color: #70AD9C;
+    color: white;
+    border: 2px solid #70AD9C;
+  }
+
+  .crm-btn-light-green-add-sales:hover {
+    background-color: white; 
+    color: #70AD9C;
   }
 
   .crm-btn-yellow {
@@ -310,8 +332,8 @@
     font-weight: bold;
     border-bottom-width: 10px;
     border-bottom-style: solid;
-    border-bottom-color: #3F8457;
-    color: #3F8457 !important;
+    border-bottom-color: #70AD9C;
+    color: #70AD9C !important;
     background-color: transparent !important;
   }
   /* End Tab Header */

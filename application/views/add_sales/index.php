@@ -4,7 +4,7 @@
 
      	<div class="row mb-3" id="header-table">
 			<div class="col-md-4 pt-2">
-			  <a href="javascript:void(0)" class="btn crm-btn-green btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i><p>&nbsp; Add Sales</p></a>
+			  <a href="javascript:void(0)" class="btn crm-btn-light-green-add-sales btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp; Add Sales</a>
 			</div>
 			<div class="col-md-8"></div>
 		</div> <!-- #header-table -->

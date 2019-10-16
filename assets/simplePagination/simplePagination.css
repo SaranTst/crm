@@ -125,14 +125,14 @@ span.ellipse.clickable {
 
 .light-theme a:hover, .light-theme li:not(.disabled):not(.active) span:hover {
 	text-decoration: none;
-	background: #166F7E;
+	background: #006E7E;
 	color: #FFF;
 }
 
 .light-theme .current {
-	background: #166F7E;
+	background: #006E7E;
 	color: #FFF;
-	border-color: #166F7E;
+	border-color: #006E7E;
 	box-shadow: 0 1px 0 rgba(255,255,255,1), 0 0 2px rgba(0, 0, 0, 0.3) inset;
 	cursor: default;
 }

@@ -3,8 +3,8 @@
     <div class="container-fluid">
 
     	<div class="row mb-4">
-	        <div class="card-body d-sm-flex justify-content-between col-md-4">
-	          <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-bar-chart fa-fw fa-lg"></i><p>&nbsp; Dashboard</p></a>
+	        <div class="col-md-4">
+	          <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-bar-chart fa-fw fa-lg"></i>&nbsp; Dashboard</a>
 	        </div>
       	</div>
     	<div class="row">

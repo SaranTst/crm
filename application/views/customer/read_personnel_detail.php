@@ -41,7 +41,7 @@
 
                       <div class="row mb-3">
                         <div class="col-md-12">
-                          <img src="<?php echo base_url(); ?>images/login/Icon-BJHMedical.png" class="img-fluid">
+                          <img src="<?php echo base_url(); ?>images/step/step-1.png" class="img-fluid">
                         </div>
                       </div>
 
@@ -242,7 +242,7 @@
 
                       <div class="row mb-3">
                         <div class="col-md-12">
-                          <img src="<?php echo base_url(); ?>images/login/Icon-BJHMedical.png" class="img-fluid">
+                          <img src="<?php echo base_url(); ?>images/step/step-4.png" class="img-fluid">
                         </div>
                       </div>
 
@@ -443,7 +443,7 @@
 
                       <div class="row mb-3">
                         <div class="col-md-12">
-                          <img src="<?php echo base_url(); ?>images/login/Icon-BJHMedical.png" class="img-fluid">
+                          <img src="<?php echo base_url(); ?>images/step/step-8.png" class="img-fluid">
                         </div>
                       </div>
 
