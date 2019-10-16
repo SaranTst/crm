@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users_model extends CI_Model
+class Sales_model extends CI_Model
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->collection = 'users';
+		$this->collection = 'sales';
 	}
 
 	public function lists() {
