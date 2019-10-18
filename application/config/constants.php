@@ -86,3 +86,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('KEY_PASSWORD', '_bjc_crm');
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/crm');
+define('ROLE', array(1=>'Admin',2=>'Sale'));

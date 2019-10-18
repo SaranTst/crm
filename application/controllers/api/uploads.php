@@ -12,11 +12,7 @@ class Uploads extends CI_Controller {
    	{
 
 		/* check folder */
-		$folder='uploads/'.$type.'/'.date('Ym');
-		if($type=='temp'){
-			$folder='uploads/'.$type;
-		}   		
-
+		$folder='uploads/'.$type.'/'.date('Ymd');
 		if (!file_exists(DOCUMENT_ROOT.$folder)) {
 			$subfolder=explode('/', '/'.$folder);
 			foreach ($subfolder as $key => $value) {
@@ -49,7 +45,8 @@ class Uploads extends CI_Controller {
 			$uploadedImage = $this->upload->data();
 			$data['status'] = 1;
 			$data['message']= 'success';    
-			$data['path'] =  base_url().$folder.'/'.$uploadedImage['file_name'];
+			// $data['path'] =  base_url().$folder.'/'.$uploadedImage['file_name'];
+			$data['path'] =  $folder.'/'.$uploadedImage['file_name'];
 			$data['detail'] = $uploadedImage;
 		} 
 

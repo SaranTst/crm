@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sales extends MY_Controller {
+class Sales extends CI_Controller {
 
     public function __construct()
     {
@@ -11,36 +11,19 @@ class Sales extends MY_Controller {
 
 	public function lists_sales()
 	{
-		$res = $this->sales_model->lists();
-
-		if (sizeof($res['data'])>0) {
-			$message['status'] = 1;
-			$message['datas'] = $res;
-		}else{
-			$message['status'] = 0;
-			$message['message'] = 'ไม่มีข้อมูล';
-		}
+		$msg = $this->sales_model->lists();
 
 		header("Content-Type: application/json");
-		echo json_encode($message);
+		echo json_encode($msg);
 	}
 
 	public function gets_sales($id=null)
 	{
 		$id = (int)$id; 
-
-		$res = $this->sales_model->gets($id);
-
-		if (sizeof($res)>0) {
-			$message['status'] = 1;
-			$message['datas'] = $res;
-		}else{
-			$message['status'] = 0;
-			$message['message'] = 'ไม่มีข้อมูล';
-		}
+		$msg = $this->sales_model->gets($id);
 
 		header("Content-Type: application/json");
-		echo json_encode($message);
+		echo json_encode($msg);
 	}
 
 	public function update_sales($id=null)
@@ -48,38 +31,22 @@ class Sales extends MY_Controller {
 		$id = (int)$id; 
 
 		if ($id) {
-			$res = $this->sales_model->updates($id);
+			$msg = $this->sales_model->updates($id);
 		}else{
-			$res = $this->sales_model->inserts();
-		}
-
-		$txt_message = $id ? 'แก้ไข' : 'เพิ่ม';
-		$message['status'] = 0;
-		$message['message'] = 'ไม่สามารถ'.$txt_message.'ข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
-
-		if ($res) {
-			$message['status'] = 1;
-			$message['message'] = $txt_message.'ข้อมูลเรียบร้อยแล้ว';
+			$msg = $this->sales_model->inserts();
 		}
 
 		header("Content-Type: application/json");
-		echo json_encode($message);
+		echo json_encode($msg);
 	}
 
 	public function delete_sales($id=null)
 	{
 		$id = (int)$id;
-		$message['status'] = 0;
-		$message['message'] = 'ไม่สามารถลบข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
+		$msg = $this->sales_model->deletes($id);
 
-		$res = $this->sales_model->deletes($id);
-
-		if ($res) {
-			$message['status'] = 1;
-			$message['message'] = 'ลบข้อมูลเรียบร้อยแล้ว';
-		}
 		header("Content-Type: application/json");
-		echo json_encode($message);
+		echo json_encode($msg);
 	}
 
 	public function login()
@@ -88,8 +55,8 @@ class Sales extends MY_Controller {
 		$res = $this->sales_model->login();
 
 		if (sizeof($res)>0) {
-			$message['status'] = 1;
-			$message['datas'] = $res;
+			$msg['status'] = 1;
+			$msg['datas'] = $res;
 
 			$userdata['sale'] = array(
 			'id' => $res[0]['id'],
@@ -99,27 +66,27 @@ class Sales extends MY_Controller {
 			$this->session->set_userdata($userdata);
 
 		}else{
-			$message['status'] = 0;
-			$message['message'] = 'ไม่มีข้อมูล';
+			$msg['status'] = 0;
+			$msg['message'] = 'ไม่มีข้อมูล';
 		}
 
 		header("Content-Type: application/json");
-		echo json_encode($message);
+		echo json_encode($msg);
 	}
 
   	public function logout() {      
       $this->session->unset_userdata('sale');
 
       if($this->session->userdata("sale")){
-          $message['status']=0;
-          $message['message']='ออกจากระบบไม่สำเร็จกรุณาลองใหม่อีกครั้ง';               
+          $msg['status']=0;
+          $msg['message']='ออกจากระบบไม่สำเร็จกรุณาลองใหม่อีกครั้ง';               
       }else{
-          $message['status']=1;
-          $message['message']='ออกจากระบบสำเร็จ';	    
+          $msg['status']=1;
+          $msg['message']='ออกจากระบบสำเร็จ';	    
       }
 
       header('Content-Type: application/json');
-      echo json_encode($message);	           
+      echo json_encode($msg);	           
   	}  
 
 }
