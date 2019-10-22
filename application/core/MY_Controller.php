@@ -32,7 +32,7 @@ class MY_Controller extends CI_Controller
         }elseif ($class=="sales" && in_array($function, $allow_function)){
             $status=TRUE;
         }else{
-            if($admin['id']){
+            if($admin['ID_SALE']){
                 $status=TRUE;
             }
         }

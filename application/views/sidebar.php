@@ -14,6 +14,14 @@
         <li class="cd-side__item cd-side__item--has-children js-cd-item--has-children <?php echo $this->current_page == 'add_sales' ? 'cd-side__item--selected' : ''; ?>" onclick="location.href='<?php echo base_url(); ?>add_sales'">
           <a href="<?php echo base_url(); ?>add_sales"><img src="<?php echo $this->current_page == 'add_sales' ?  base_url().'/images/Icon-Add-Sales.png' : base_url().'/images/Icon-Add-Sales-White.png'; ?>" alt="add_sales" width="45">Add Sales</a>
         </li>
+
+        <li class="cd-side__item cd-side__item--has-children js-cd-item--has-children <?php echo $this->current_page == 'admins' ? 'cd-side__item--selected' : ''; ?>" onclick="location.href='<?php echo base_url(); ?>admins'">
+          <a href="<?php echo base_url(); ?>admins"><img src="<?php echo $this->current_page == 'admins' ?  base_url().'/images/Icon-Sales.png' : base_url().'/images/Icon-Sales-White.png'; ?>" alt="admins" width="45">Admins</a>
+        </li>
+        <li class="cd-side__item cd-side__item--has-children js-cd-item--has-children <?php echo $this->current_page == 'services' ? 'cd-side__item--selected' : ''; ?>" onclick="location.href='<?php echo base_url(); ?>services'">
+          <a href="<?php echo base_url(); ?>services"><img src="<?php echo $this->current_page == 'services' ?  base_url().'/images/Icon-Sales.png' : base_url().'/images/Icon-Sales-White.png'; ?>" alt="services" width="45">Services</a>
+        </li>
+
         <li class="cd-side__item cd-side__item--has-children js-cd-item--has-children <?php echo $this->current_page == 'management' ? 'cd-side__item--selected' : ''; ?>" onclick="location.href='<?php echo base_url(); ?>management'">
           <a href="<?php echo base_url(); ?>management"><img src="<?php echo $this->current_page == 'management' ?  base_url().'/images/Icon-Management.png' : base_url().'/images/Icon-Management-White.png'; ?>" alt="management" width="45">Management</a>
         </li>

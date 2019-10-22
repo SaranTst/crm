@@ -11,11 +11,10 @@
             <label class="col-md-4 col-form-label">Expertise</label>
             <div class="col">
               <select class="custom-select">
-                <option value="" selected>Choose Radiology</option>
-                <option value="1">Radiology 1</option>
-                <option value="2">Radiology 2</option>
-                <option value="3">Radiology 3</option>
-                <option value="4">Radiology 4</option>
+                <option value="" selected disabled hidden>Choose Expertise</option>
+                <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
+                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sales extends CI_Controller {
+class Sales extends MY_Controller {
 
     public function __construct()
     {
@@ -18,4 +18,15 @@ class Sales extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+  	public function logout() {      
+  		$this->session->unset_userdata('sale');
+		header('Location: '.base_url().'login' );	           
+  	}
+
+	public function create_sale()
+	{
+		$this->load->view('header');
+		$this->load->view('sales/create_sale');
+		$this->load->view('footer');
+	}
 }

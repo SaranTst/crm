@@ -1,3 +1,10 @@
+<!-- Add FontAwesome in select -->
+<style type="text/css">
+  select {
+    font-family: 'FontAwesome', 'sans-serif';
+    color: red;
+  }
+</style>
 
     <div class="cd-content-wrapper">
     <div class="container-fluid">
@@ -36,12 +43,10 @@
                       <label class="col-md-3 col-form-label">Rating</label>
                       <div class="col">
                         <select class="custom-select" name="rating">
-                          <option selected>Choose Rating</option>
-                          <option value="1">1 ดาว</option>
-                          <option value="2">2 ดาว</option>
-                          <option value="3">3 ดาว</option>
-                          <option value="4">4 ดาว</option>
-                          <option value="5">5 ดาว</option>
+                          <option value="" selected disabled hidden>Choose Rating</option>
+                          <?php foreach (ARR_RATING as $key => $value) { ?>
+                          <option value="<?php echo $key; ?>" style="font-size: 1em;"><?php echo $value; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>
@@ -119,12 +124,10 @@
                       <label class="col-md-4 col-form-label">Relationship</label>
                       <div class="col">
                         <select class="custom-select" name="relationship-doctor">
-                          <option selected>Choose Relationship</option>
-                          <option value="1">Relationship 1</option>
-                          <option value="2">Relationship 2</option>
-                          <option value="3">Relationship 3</option>
-                          <option value="4">Relationship 4</option>
-                          <option value="5">Relationship 5</option>
+                          <option value="" selected disabled hidden>Choose Relationship</option>
+                          <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
+                          <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>
@@ -207,12 +210,10 @@
                       <label class="col-md-4 col-form-label">Relationship</label>
                       <div class="col">
                         <select class="custom-select" name="relationship-purchase">
-                          <option selected>Choose Relationship</option>
-                          <option value="1">Relationship 1</option>
-                          <option value="2">Relationship 2</option>
-                          <option value="3">Relationship 3</option>
-                          <option value="4">Relationship 4</option>
-                          <option value="5">Relationship 5</option>
+                          <option value="" selected disabled hidden>Choose Relationship</option>
+                          <?php foreach (ARR_GENDER as $key => $value) { ?>
+                          <option value="<?php echo $value; ?>"><?php echo $key; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>

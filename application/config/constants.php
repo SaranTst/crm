@@ -86,4 +86,168 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('KEY_PASSWORD', '_bjc_crm');
 define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/crm');
-define('ROLE', array(1=>'Admin',2=>'Sale'));
+define('ARR_ROLE', array(1=>'Admin',2=>'Sale'));
+
+// define Data CRM
+define('ARR_RATING', array(
+	5 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf005;',
+	4 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf006;',
+	3 => '&#xf005;&#xf005;&#xf005;&#xf006;&#xf006;',
+	2 => '&#xf005;&#xf005;&#xf006;&#xf006;&#xf006;',
+	1 => '&#xf005;&#xf006;&#xf006;&#xf006;&#xf006;'
+));
+
+define('ARR_RELATIONSHIP', array(
+	5,
+	4,
+	3,
+	2,
+	1
+));
+
+define('ARR_STATUS', array(
+	'นำเสนอลูกค้า' => 'Status Propose',
+	'สาธิตสินค้า' => 'Demo',
+	'ต่อรองราคา' => 'Negotiation',
+	'ประมูลราคา' => 'Bidding',
+	'ชนะประมูล' => 'Win',
+	'ทำสัญญาแล้ว' => 'Contract',
+	'ออกบิลแล้ว' => 'Billing',
+	'ส่งของแล้วตรวจรับ' => 'Delivery',
+	'แพ้ประมูล' => 'Lose',
+	'เกินกำหนดการส่งสินค้า' => 'Overdue'
+));
+
+define('ARR_CONFIDENT', array(
+	0 => 'ไม่ได้แน่นอน',
+	25 => 'นำเสนอแล้ว แต่ยังมีแนวโน้มตัดสินใจเลือกคู่แข่ง',
+	50 => 'นำเสนอแล้ว แต่มีแนวโน้มเลือกทั้งเราและคู่แข่งเท่าๆกัน',
+	75 => 'ลูกค้าตัดใจเลือกเราแล้ว แต่ยังไม่ส่ง PO และทำสัญญา',
+	100 => 'ลูกค้าส่ง PO หรือทำสัญญาเรียบร้อยแล้ว'
+));
+
+define('ARR_DEPARTMENT', array(
+	'แพทย์' => 'Medical Doctor',
+	'ทันตแพทย์' => 'Dentist',
+	'พยาบาล' => 'Nurse',
+	'เภสัชกร' => 'Pharmacist',
+	'นักกายภาพบำบัด' => 'Physiotherapist',
+	'นักเทคนิคการแพทย์' => 'Medical technologist',
+	'อื่นๆ' => 'Others'
+));
+
+define('ARR_ZONE', array(
+	'ภาคเหนือ',
+	'ภาคเหนือ-บน',
+	'ภาคเหนือ-ล่าง',
+	'ภาคกลาง',
+	'ภาคอีสาน',
+	'ภาคตะวันตก',
+	'ภาคตะวันออก',
+	'ภาคใต้-บน',
+	'ภาคใต้-ล่าง'
+));
+
+define('ARR_PREFIX', array(
+	'นาย' => 'Mr.',
+	'นาง' => 'Ms.',
+	'นางสาว' => 'Miss.',
+	'นพ.' => 'Dr.',
+	'พญ.' => 'Ass.Prof.Dr',
+	'ทพ.' => 'Prof.',
+	'ทพ.ญ.' => 'Prof.Dr.',
+	'พว.' => '',
+	'ภก.' => '',
+	'ภญ.' => '',
+	'กภ.' => ''
+));
+
+define('ARR_GENDER', array(
+	'ชาย' => 'Male',
+	'หญิง' => 'Female'
+));
+
+define('ARR_CONTACT_CHANNAL', array(
+	'Direct Sales',
+	'Event & Activities'
+));
+
+define('ARR_EXPERTISE', array(
+	'LABORATORY',
+	'REHABILITATION',
+	'CARDIOLOGY',
+	'RADIOLOGY',
+	'ORTHOPEDIC',
+	'EDUCATIONAL MED',
+	'DENTAL',
+	'CSSD',
+	'VET',
+	'TELEMEDICINE',
+	'EMERGENCY & TRAUMA/ICU',
+	'HOSPITAL SUPPLY',
+	'UROLOGY',
+	'OPTHAMOLOGY',
+	'GENERAL SURGERY',
+	'NEUROLOGY/NEUROMED',
+	'OB-GYNE'
+));
+
+define('ARR_POSITION', array(
+	'sale' => array(
+		'Application Specialist Supervisor',
+		'Application Specialist',
+		'Assistant Product Manager',
+		'Assistant R&D Manager',
+		'Assistant Sales Manager',
+		'Group Product Manager',
+		'Product Manager',
+		'Product Specialist',
+		'Programmer',
+		'Project Coordinator',
+		'Research & Development Manager',
+		'Sales Manager',
+		'Sales Supervisor',
+		'Senior Application Specialist',
+		'Senior Laboratory Solution Manager',
+		'Senior Product Specialist',
+		'Senior Project Coordinator',
+		'Senior Sales Manager',
+		'Senior Technical Sales Representative',
+		'Senior Business Development Manager',
+		'Senior Product Specialist',
+		'Senior Programmer',
+		'Senior Project Coordinator',
+		'Technical Sales Representative'
+	),
+	'service' => array(
+		"Admin Officer",
+		"Assistant Service Engineer",
+		"Assistant Service Manager",
+		"Senior Service Engineer",
+		"Service Department Manager",
+		"Service Engineer",
+		"Service Int'l Support",
+		"Service Manager",
+		"Service Supervisor",
+		"Service Support",
+		"Service Support Engineer",
+		"Service Support Officer",
+		"Senior IT Specialist",
+		"Senior Sales Engineer",
+		"Senior Service Engineer",
+		"Senior Service Support Officer",
+		"Senior System Engineer",
+		"Senior Service Department Manager",
+		"Senior Service Engineer",
+		"System Engineer",
+		"System Engineer Supervisor"
+	),
+	'marketing' => array(
+		'Graphic Designer',
+		'Marketing Executive',
+		'Marketing Officer',
+		'Marketing Supervisor',
+		'Senior Marketing Executive',
+		'Senior Marketing Manager'
+	)
+));

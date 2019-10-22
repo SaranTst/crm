@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login CRM</title>
 
+  	<!-- Font Awesome -->
+  	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.min.css">
+
+  	<!-- Bootstrap -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap-4.3.1/css/bootstrap.min.css">
 	<style type="text/css">
 	.login,
@@ -49,6 +53,10 @@
 </head>
 <body>
 
+<script type="text/javascript">
+	var base_url = '<?php echo base_url();?>';
+</script>
+
 <div class="container-fluid">
     <div class="row no-gutter">
 
@@ -65,25 +73,28 @@
 							</div>
 
                             <p class="text-center text-muted mb-3">use your email account:</p>
-                            <form>
+                            <form id="frm_login" onsubmit="login(); return false;">
 
                             	<div class="form-group mb-3">
                             		<div class="has-search">
 									  <span class="form-control-feedback"><img src="<?php echo base_url(); ?>images/login/Icon-User.png" class="img-fluid"></span>
-									  <input type="text" class="form-control" placeholder="Login">
+									  <input type="text" class="form-control" placeholder="Login" name="id_sale">
+									  <p class="text-danger" style="display: none;">*กรุณากรอกรหัสพนักงาน</p>
 									</div>
 								</div>
 								<div class="form-group mb-4">
                             		<div class="has-search">
 									  <span class="form-control-feedback"><img src="<?php echo base_url(); ?>images/login/Icon-Password.png" class="img-fluid"></span>
-									  <input type="password" class="form-control" placeholder="Password">
+									  <input type="password" class="form-control" placeholder="Password" name="password">
+									  <p class="text-danger" style="display: none;">*กรุณากรอกรหัสผ่าน</p>
 									</div>
 								</div>
                                 <div class="text-center mb-4">
                                 	<a href="javascript:void(0)"><u>Forgot your Password?</u></a>
                                 </div>
                                 <div class="text-center">
-	                                <button type="button" class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm" onclick="window.location.href = '<?php echo base_url(); ?>dashboard';">Sign in</button>
+	                                <!-- <button type="button" class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm" onclick="window.location.href = '<?php echo base_url(); ?>dashboard';">Sign in</button> -->
+	                                <button class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm">Sign in</button>
 	                            </div>
                             </form>
                         </div>
@@ -102,9 +113,31 @@
     </div>
 </div>
 
+<!-- Modal Alert -->
+<div id="login_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal-dialog modal-md" style="top: 25%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-fw fa-md"></i></button>
+        </div>
+        <div class="modal-body text-center">
+        	<div class="form-group">
+				<span class="fa-stack fa-2x">
+					<i class="fa fa-times fa-stack-1x text-danger"></i>
+					<i class="fa fa-circle-o-notch fa-spin fa-stack-2x text-danger"></i>
+				</span>
+            </div> 
+            <div class="form-group">
+                <h5 id="msg-error" class="text-danger"></h5>
+            </div>          
+        </div>
+    </div>
+</div>
+</div>
+
 <script src="<?php echo base_url(); ?>assets/jquery/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/js/bootstrap.min.js"></script>
-
+<script src="<?php echo base_url(); ?>assets/js/login.js"></script>
 
 </body>
 </html>

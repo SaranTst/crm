@@ -2,25 +2,25 @@
     <div class="cd-content-wrapper">
     <div class="container-fluid">
 
-   	<div class="row mb-3" id="header-table">
+     	<div class="row mb-3" id="header-table">
 			<div class="col-md-4 pt-2">
-			  <a href="javascript:void(0)" class="btn crm-btn-light-green-add-sales btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp; Add Sales</a>
+			  <a href="javascript:void(0)" class="btn crm-btn-light-green-add-sales btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp; Add Service</a>
 			</div>
 			<div class="col-md-8"></div>
 		</div> <!-- #header-table -->
 
 		<div class="row mb-3">
-        <div class="col-md-4">
-          <ul class="nav nav-pills nav-pills-add-sales nav-fill flex-column flex-sm-row">
+        <div class="col-md-6">
+          <ul class="nav nav-pills nav-pills-add-sales">
             <li class="nav-item p-1">
               <a class="nav-link active" id="GENERAL-tab" data-toggle="tab" href="#GENERAL" role="tab" aria-controls="GENERAL" aria-selected="true">GENERAL DETAIL</a>
             </li>
           </ul>
         </div>
-        <div class="col-md-8"></div>
-    </div>
+        <div class="col-md-6"></div>
+      </div>
 
-    <div class="tab-content">
+      <div class="tab-content">
       <div class="tab-pane fade show active" id="GENERAL" role="tabpanel" aria-labelledby="GENERAL-tab">
         
         <form id="add-sales">

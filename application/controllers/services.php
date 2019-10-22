@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Add_sales extends MY_Controller {
+class Services extends MY_Controller {
 
     public function __construct()
     {
 		parent::__construct ();
-		$this->current_page = 'add_sales';
+		$this->current_page = 'services';
 	}
 
 	public function index()
@@ -14,14 +14,14 @@ class Add_sales extends MY_Controller {
 		$data['current_page'] = $this->current_page;
 		
 		$this->load->view('header');
-		$this->load->view('add_sales/index', $data);
+		$this->load->view('services/index', $data);
 		$this->load->view('footer');
 	}
 
-	public function create_sales()
+	public function create_service()
 	{
 		$this->load->view('header');
-		$this->load->view('add_sales/create_sales');
+		$this->load->view('services/create_service');
 		$this->load->view('footer');
 	}
 

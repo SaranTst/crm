@@ -23,15 +23,15 @@ class Logs_model extends CI_Model
 		$this->db->order_by('id', $sort);
 		$query = $this->db->get();
 
-		$data['data'] = $query->result_array();
+		$msg['data'] = $query->result_array();
 
 		$this->db->select('*');
 		$this->db->from($this->table);
 		$query_total = $this->db->get();
 
-		$data['total'] = $query_total->num_rows();
-		$data['limit'] = (int)$limit;
-		return $data;
+		$msg['total'] = $query_total->num_rows();
+		$msg['limit'] = (int)$limit;
+		return $msg;
 	}
 
 	public function gets($id) {
@@ -41,8 +41,8 @@ class Logs_model extends CI_Model
 		$this->db->order_by('id', 'DESC');
 		$query = $this->db->get();
 
-		$data = $query->result_array();
-		return $data;
+		$msg = $query->result_array();
+		return $msg;
 	}
 
 	public function gets_where($wheres=array()) {
@@ -51,11 +51,11 @@ class Logs_model extends CI_Model
 		foreach ($wheres as $key => $value) {
 			$this->db->where($key, $value);
 		}
-		$this->db->order_by('id', 'DESC');
+		$this->db->order_by('ID', 'DESC');
 		$query = $this->db->get();
 
-		$data = $query->result_array();
-		return $data;
+		$msg = $query->result_array();
+		return $msg;
 	}
 
 	public function inserts($action_table,$action_id,$action,$action_user) {

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Management extends CI_Controller {
+class Management extends MY_Controller {
 
     public function __construct()
     {
@@ -22,15 +22,6 @@ class Management extends CI_Controller {
 	{
 		$this->load->view('header');
 		$this->load->view('management/create_lists');
-		$this->load->view('footer');
-	}
-
-	public function lists($name_lists='')
-	{
-		$data['name_lists'] = $name_lists ? $name_lists : '';
-
-		$this->load->view('header');
-		$this->load->view('management/lists', $data);
 		$this->load->view('footer');
 	}
 

@@ -50,14 +50,18 @@
       <li class="cd-nav__item cd-nav__item--has-children cd-nav__item--account js-cd-item--has-children" id="profile_header">
         <a href="javascript:void(0)">
           <!-- <img src="<?php echo base_url(); ?>images/Icon-Sales.png" alt="avatar"> -->
-          Saran T. 
+          <?php
+          if ($this->session->userdata("sale")) {
+            echo $this->session->userdata("sale")['FIRST_NAME_ENG'].' '.strtoupper($this->session->userdata("sale")['LAST_NAME_ENG'][0]).'.';
+          }
+          ?>
           <i class="fa fa-caret-down fa-lg fa-fw"></i>
         </a>
     
         <ul class="cd-nav__sub-list" style="width: 120px;">
 <!--           <li class="cd-nav__sub-item"><a href="#0">My Account</a></li>
           <li class="cd-nav__sub-item"><a href="#0">Edit Account</a></li> -->
-          <li class="cd-nav__sub-item"><a href="<?php echo base_url(); ?>login">Logout</a></li>
+          <li class="cd-nav__sub-item"><a href="<?php echo base_url().'sales/logout'; ?>">Logout</a></li>
         </ul>
       </li>
     </ul>
