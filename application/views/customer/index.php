@@ -72,7 +72,29 @@
         </table>
         </div>
       </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <small class="text-muted">Showing 1 to 4 of 48 entries</small>
+        </div>
+        <div class="col-md-6">
+          <div class="float-right" id="pagination-customer"></div>
+        </div>
+      </div>
 
     </div> <!-- .container-fluid -->
     </div> <!-- .content-wrapper -->
   </main> <!-- .cd-main-content -->
+
+  <script type="text/javascript">
+
+    $("#pagination-customer").pagination({
+        items: 500,
+        itemsOnPage: 10,
+        displayedPages: 3,
+        edges: 1,
+        onPageClick: function(pageNumber) {
+            window.location.hash = '#page-'+pageNumber;
+            console.log(pageNumber);
+      }
+    });
+  </script>

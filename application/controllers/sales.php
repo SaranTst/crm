@@ -27,6 +27,7 @@ class Sales extends MY_Controller {
 	{
 		$this->load->view('header');
 		$this->load->view('sales/create_sale');
+		$this->load->view('modal');
 		$this->load->view('footer');
 	}
 }

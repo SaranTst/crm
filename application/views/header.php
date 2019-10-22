@@ -30,6 +30,10 @@
 
 </head>
 <body>
+  
+ <script type="text/javascript">
+  var base_url = '<?php echo base_url();?>';
+ </script>
 
  <header class="cd-main-header js-cd-main-header">
     <div class="cd-logo-wrapper">

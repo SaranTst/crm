@@ -122,7 +122,8 @@
         </div>
         <div class="modal-body text-center">
         	<div class="form-group">
-				<span class="fa-stack fa-2x">
+        		<h5 id="status-error" class="text-danger" style="display: none;"></h5>
+				<span class="fa-stack fa-2x" id="icon-error">
 					<i class="fa fa-times fa-stack-1x text-danger"></i>
 					<i class="fa fa-circle-o-notch fa-spin fa-stack-2x text-danger"></i>
 				</span>

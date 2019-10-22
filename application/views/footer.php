@@ -39,6 +39,39 @@
       });
     }
 
+    function upload_and_preview_ajax(idinputfile, idshowfilename, idpreview) {
+
+      $("#"+idinputfile).trigger("click");
+      $("#"+idinputfile).one( "change", function(e) {
+        var url = base_url+'api/uploads/from';
+        var fdataimg = new FormData();    
+        fdataimg.append( 'file', e.target.files[0] );
+        $.ajax({
+          url: url,
+          type:"POST",
+          data: fdataimg,
+          processData: false,
+          contentType: false,
+          dataType:"json",
+          success: function( resp ){
+
+            if (resp.status==1) {
+              $("#"+idpreview).attr('src', base_url+resp.path);
+              $("#"+idshowfilename).val(resp.path);
+            }else{
+              $('#msg-error').text(resp.message);
+              $('#alert_modal').modal('show');
+            }
+          },
+          error: function( jqXhr, textStatus, errorThrown ){
+            $('#status-error').append( "<h5 class='text-danger'>"+ jqXhr.status +"</h5>" ).children("span").remove();
+            $('#msg-error').text( errorThrown );
+            $('#alert_modal').modal('show');
+          }
+        });
+      });
+    }
+
 </script>
 
 </body>

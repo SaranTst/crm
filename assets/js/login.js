@@ -27,7 +27,10 @@ function login() {
               }
           },
           error: function( jqXhr, textStatus, errorThrown ){
-              console.log( errorThrown );
+                $('#icon-error').css('display', 'none');
+                $('#status-error').text( jqXhr.status ).css('display', 'block');
+                $('#msg-error').text( errorThrown );
+                $('#login_modal').modal('show');
           }
       });
   }

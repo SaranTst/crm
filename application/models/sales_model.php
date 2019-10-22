@@ -130,7 +130,7 @@ class Sales_model extends CI_Model
 		$data['ROLE'] = 2;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = (int)$ip_post['user_create'];
-		$data['PASSWORD'] = md5($data['FIRST_NAME_ENG']).KEY_PASSWORD);
+		$data['PASSWORD'] = md5($data['FIRST_NAME_ENG'].KEY_PASSWORD);
 
 		$this->db->insert($this->table, $data);
 		$res_insert = $this->db->affected_rows()>0 ? true : false;
