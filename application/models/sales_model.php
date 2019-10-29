@@ -14,13 +14,46 @@ class Sales_model extends CI_Model
 
 	public function lists() {
 
-		$limit = $this->input->get('limit') ? $this->input->get('limit') : 10;
+		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
 		$offset = ($page - 1) * $limit;
 		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
 
+		$ip_post = $this->input->post();
+		$where = '';
+		if ($ip_post) {
+
+			if (isset($ip_post['department']) && !empty($ip_post['department'])) {
+				$where .= "DEPARTMENT = '".$this->general_model->clearbadstr($ip_post['department'])."' AND ";
+			}
+
+			if (isset($ip_post['zone']) && !empty($ip_post['zone'])) {
+				$where .= "ZONE = '".$this->general_model->clearbadstr($ip_post['zone'])."' AND ";
+			}
+
+			if (isset($ip_post['county']) && !empty($ip_post['county'])) {
+				$where .= "COUNTY = '".$this->general_model->clearbadstr($ip_post['county'])."' AND ";
+			}
+
+			if (isset($ip_post['position']) && !empty($ip_post['position'])) {
+				$where .= "POSITION = '".$this->general_model->clearbadstr($ip_post['position'])."' AND ";
+			}
+
+			if (isset($ip_post['brand']) && !empty($ip_post['brand'])) {
+				$where .= "BRAND = '".$this->general_model->clearbadstr($ip_post['brand'])."' AND ";
+			}
+
+			if (isset($ip_post['keyword']) && !empty($ip_post['keyword'])) {
+				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['keyword']));
+				$where .= "CONCAT(FIRST_NAME_TH, LAST_NAME_TH, FIRST_NAME_ENG, LAST_NAME_ENG, NICKNAME_TH, NICKNAME_ENG) LIKE '%".$keyword."%' AND ";
+			}
+
+			$where = substr($where, 0, -5);
+		}
+
 		$this->db->select('*');
 		$this->db->from($this->table);
+		$ip_post ? $this->db->where($where, NULL, FALSE) : '';
 		$this->db->limit($limit,$offset);
 		$this->db->order_by('ID', $sort);
 		$query = $this->db->get();
@@ -36,10 +69,12 @@ class Sales_model extends CI_Model
 
 		$this->db->select('*');
 		$this->db->from($this->table);
+		$ip_post ? $this->db->where($where, NULL, FALSE) : '';
 		$query_total = $this->db->get();
 
 		$msg['total'] = $query_total->num_rows();
 		$msg['limit'] = (int)$limit;
+		$msg['page'] = (int)$page;
 
 		error:
 		return $msg;
@@ -102,25 +137,50 @@ class Sales_model extends CI_Model
 		$data['PREFIX'] = $this->general_model->clearbadstr($ip_post['prefix']);
 
 		// move image
-        $new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
-        if (!$new_path_image['status']) {
-			$msg=$new_path_image;
-        	return $msg;
-        }
-		$data['IMAGE'] = $new_path_image['message'];
+		if (isset($ip_post['image']) && !empty($ip_post['image'])) {
+			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
+	        if (!$new_path_image['status']) {
+				$msg=$new_path_image;
+	        	return $msg;
+	        }
+			$data['IMAGE'] = $new_path_image['message'];
+		}else{
+			$data['IMAGE'] = '';
+		}
 
 		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
+		if (empty($explode_name_th[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาไทยด้วยครับ';
+			goto error;
+		}
 		$data['FIRST_NAME_TH'] = $explode_name_th[0];
 		$data['LAST_NAME_TH'] = $explode_name_th[1];
 
 		$explode_name_eng = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_eng']));
+		if (empty($explode_name_eng[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาอังกฤษด้วยครับ';
+			goto error;
+		}
 		$data['FIRST_NAME_ENG'] = $explode_name_eng[0];
 		$data['LAST_NAME_ENG'] = $explode_name_eng[1];
 
 		$data['NICKNAME_TH'] = $this->general_model->clearbadstr($ip_post['nickname_th']);
 		$data['NICKNAME_ENG'] = $this->general_model->clearbadstr($ip_post['nickname_eng']);
-		$data['EMAIL'] = $this->general_model->clearbadstr($ip_post['e_mail']);
-		$data['TELEPHONE'] = $this->general_model->clearbadstr($ip_post['telephone']);
+
+		$chk_mail = $this->general_model->clearbadstr($ip_post['e_mail']);
+		if (!$this->general_model->check_email($chk_mail)) {
+			$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
+			goto error;
+		}
+		$data['EMAIL'] = $chk_mail;
+
+		$chk_tel = $this->general_model->clearbadstr($ip_post['telephone']);
+		if (!$this->general_model->check_telephone_number($chk_tel)) {
+			$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
+			goto error;
+		}
+		$data['TELEPHONE'] = $chk_tel;
+
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
 		$data['POSITION'] = $this->general_model->clearbadstr($ip_post['position']);
 		$data['DEPARTMENT'] = $this->general_model->clearbadstr($ip_post['department']);
@@ -140,11 +200,7 @@ class Sales_model extends CI_Model
 			if ($res_insert_log) {
 				$msg['status']=1;
 				$msg['message']='เพิ่มข้อมูลลงฐานข้อมูลเรียบร้อย';
-			}else{
-				goto error;
 			}
-		}else{
-			goto error;
 		}
 
 		error:
@@ -239,9 +295,9 @@ class Sales_model extends CI_Model
 		$query = $this->db->get();
 		$res_query = $query->result_array();
 
-		$msg['status']=1;
+		$msg['status']=0;
+		$msg['message']='ไม่สามารถเพิ่มช้อมูลลงฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
 		if (sizeof($res_query)>0) {
-			$msg['status']=0;
 			$msg['message']='มีข้อมูลแอดมินอยู่ในระบบนี้แล้ว';
 			goto error;
 		}else{
@@ -250,11 +306,9 @@ class Sales_model extends CI_Model
 			$res_insert = $this->db->affected_rows()>0 ? true : false;
 
 			if ($res_insert) {
+				$msg['status']=1;
 				$msg['message'] = 'เพิ่มข้อมูลแอดมินเรียบร้อย';
 				$this->logs_model->inserts($this->table, $this->db->insert_id(), 'insert', $data['USER_CREATE']);
-			}else{
-				$msg['status']=0;
-				$msg['message']='ไม่สามารถเพิ่มช้อมูลลงฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
 			}
 		}
 

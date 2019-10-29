@@ -16,86 +16,88 @@
 		    <div class="card">
 			  <div class="card-header crm-bg-dark-gray">Search</div>
 			  <div class="card-body">
-			  	<div class="row">
-			  		<div class="col-md-6">
-		  			<div class="form-group">
-	                    <label>Department</label>
-	                    <select class="custom-select" name="department">
-	                      <option value="" selected>Select a Department</option>
-	                      <option value="1">Department 1</option>
-	                      <option value="2">Department 2</option>
-	                      <option value="3">Department 3</option>
-	                      <option value="4">Department 4</option>
-	                      <option value="5">Department 5</option>
-	                    </select>
-                  	</div>
-			  		</div>
-			  		<div class="col-md-6">
-			  		<div class="form-group">
-	                    <label>Zone</label>
-	                    <select class="custom-select" name="zone">
-	                      <option value="" selected>Select a Zone</option>
-	                      <option value="1">Zone 1</option>
-	                      <option value="2">Zone 2</option>
-	                      <option value="3">Zone 3</option>
-	                      <option value="4">Zone 4</option>
-	                      <option value="5">Zone 5</option>
-	                    </select>
-                  	</div>
-			  		</div>
-			  		<div class="col-md-6">
-			  		<div class="form-group">
-	                    <label>County</label>
-	                    <select class="custom-select" name="county">
-	                      <option value="" selected>Select a County</option>
-	                      <option value="1">County 1</option>
-	                      <option value="2">County 2</option>
-	                      <option value="3">County 3</option>
-	                      <option value="4">County 4</option>
-	                      <option value="5">County 5</option>
-	                    </select>
-                  	</div>
-			  		</div>
-			  		<div class="col-md-6">
-			  		<div class="form-group">
-	                    <label>Position</label>
-	                    <select class="custom-select" name="position">
-	                      <option value="" selected>Select a Position</option>
-	                      <option value="1">Position 1</option>
-	                      <option value="2">Position 2</option>
-	                      <option value="3">Position 3</option>
-	                      <option value="4">Position 4</option>
-	                      <option value="5">Position 5</option>
-	                    </select>
-                  	</div>
-			  		</div>
-			  		<div class="col-md-6">
-			  		<div class="form-group">
-	                    <label>Brand</label>
-	                    <select class="custom-select" name="brand">
-	                      <option value="" selected>Select a Brand</option>
-	                      <option value="1">Brand 1</option>
-	                      <option value="2">Brand 2</option>
-	                      <option value="3">Brand 3</option>
-	                      <option value="4">Brand 4</option>
-	                      <option value="5">Brand 5</option>
-	                    </select>
-                  	</div>
-			  		</div>
-			  		<div class="col-md-6">
-			  		<div class="form-group">
-	                    <label>Keyword</label>
-	                    <input type="text" class="form-control" placeholder="Enter a keyword (Sale name, Nickname)" name="keyword">
-                  	</div>
-			  		</div>
-			  	</div>
+			  	<form id="frm_serach" onsubmit="return false;">
+				  	<div class="row">
+				  		<div class="col-md-6">
+			  			<div class="form-group">
+		                    <label>Department</label>
+		                    <select class="custom-select" name="department">
+		                      <option value="" selected readonly hidden>Select a Department</option>
+		                      <option value="1">Department 1</option>
+		                      <option value="2">Department 2</option>
+		                      <option value="3">Department 3</option>
+		                      <option value="4">Department 4</option>
+		                      <option value="5">Department 5</option>
+		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>Zone</label>
+		                    <select class="custom-select" name="zone">
+		                      <option value="" selected readonly hidden>Select a Zone</option>
+		                      <option value="1">Zone 1</option>
+		                      <option value="2">Zone 2</option>
+		                      <option value="3">Zone 3</option>
+		                      <option value="4">Zone 4</option>
+		                      <option value="5">Zone 5</option>
+		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>County</label>
+		                    <select class="custom-select" name="county">
+		                      <option value="" selected readonly hidden>Select a County</option>
+		                      <option value="1">County 1</option>
+		                      <option value="2">County 2</option>
+		                      <option value="3">County 3</option>
+		                      <option value="4">County 4</option>
+		                      <option value="5">County 5</option>
+		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>Position</label>
+		                    <select class="custom-select" name="position">
+		                      <option value="" selected readonly hidden>Select a Position</option>
+		                      <option value="1">Position 1</option>
+		                      <option value="2">Position 2</option>
+		                      <option value="3">Position 3</option>
+		                      <option value="4">Position 4</option>
+		                      <option value="5">Position 5</option>
+		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>Brand</label>
+		                    <select class="custom-select" name="brand">
+		                      <option value="" selected readonly hidden>Select a Brand</option>
+		                      <option value="1">Brand 1</option>
+		                      <option value="2">Brand 2</option>
+		                      <option value="3">Brand 3</option>
+		                      <option value="4">Brand 4</option>
+		                      <option value="5">Brand 5</option>
+		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>Keyword</label>
+		                    <input type="text" class="form-control" placeholder="Enter a keyword (Sale name, Nickname)" name="keyword">
+	                  	</div>
+				  		</div>
+				  	</div>
+				</form>
 			  	<div class="row">
 			  		<dir class="col-md-8"></dir>
 			  		<dir class="col-md-2">
-		  				<a href="javascript:void(0)" class="btn crm-btn-dark-blue-sales btn-lg btn-block"><p>Search</p></a>
+		  				<a href="javascript:void(0)" class="btn crm-btn-dark-blue-sales btn-lg btn-block" id="btn-search"><p>Search</p></a>
 			  		</dir>
 			  		<dir class="col-md-2">
-		  				<a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block"><p>Reset</p></a>
+		  				<a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block" id="btn-reset"><p>Reset</p></a>
 			  		</dir>
 			  	</div>
 			  </div>
@@ -108,36 +110,37 @@
 
 			  	<div class="row mb-3">
 			  		<div class="col-md-6">
-			  			<small class="text-muted">Showing 1 to 4 of 48 entries</small>
+			  			<?php $current_page = $this->input->get('page') ? $this->input->get('page') : 1; ?>
+			  			<small class="text-muted" id="text-showing">Showing <?php echo $current_page; ?> to <?php echo ($current_page*$datas['limit'])>$datas['total'] ? $datas['total'] : ($current_page*$datas['limit']); ?> of <?php echo $datas['total']; ?> entries</small>
 			  		</div>
 			  		<div class="col-md-6">
 			  			<div class="float-right" id="pagination-sales"></div>
 			  		</div>
 			  	</div>
 
-			  	<div class="row">
-			  		<?php for ($i=0; $i < 9; $i++) { ?>
+			  	<div class="row" id="content-result">
+			  		<?php foreach ($datas['data'] as $key => $value) { ?>
 			  		<div class="col-md-4 mb-3">
-			  			<div class="card" onclick="show_contact_sales(<?php echo ($i+1); ?>)">
+			  			<div class="card" onclick='show_contact_sales(<?php echo json_encode($value); ?>)'>
 						  <div class="card-body">
 						  	<div class="row">
 						  		<div class="col-md-4 mb-3 text-center">
-						  			<img src="<?php echo base_url(); ?>images/150.png" class="img-fluid rounded-circle">
+						  			<img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-fluid rounded-circle">
 						  		</div>
 						  		<div class="col-md-8">
-					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue"><b>Medical Innovation Technology</b></p>
-					  				<p class="crm-card-sale-text"><b>Jutarat Chanakitkarnchok (Toon)</b></p>
+					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue" id="txt-department"><b><?php echo $value['DEPARTMENT']; ?></b></p>
+					  				<p class="crm-card-sale-text" id="txt-name-nickname"><b><?php echo $value['FIRST_NAME_ENG'].' '.$value['LAST_NAME_ENG'].' ('.$value['NICKNAME_ENG'].')'; ?></b></p>
 						  		</div>
 						  	</div>
 						  	<div class="row">
 						  		<div class="col-md-12">
-						  			<p class="crm-card-sale-text">Marketing Supervisor</p>
+						  			<p class="crm-card-sale-text" id="txt-position"><?php echo $value['POSITION']; ?></p>
 						  		</div>
 						  		<div class="col-md-12">
-						  			<p class="crm-card-sale-text">Email : JutaratC@bjc.co.th</p>
+						  			<p class="crm-card-sale-text" id="txt-email">Email : <?php echo $value['EMAIL']; ?></p>
 						  		</div>
 						  		<div class="col-md-12">
-						  			<p class="crm-card-sale-text">Tel : 089-1080988</p>
+						  			<p class="crm-card-sale-text" id="txt-telephone">Tel : <?php echo $value['TELEPHONE']; ?></p>
 						  		</div>
 						  	</div>
 						  </div>
@@ -163,7 +166,7 @@
             	<div class="container-fluid">
                 <div class="row" id="header-table">
 					<div class="col-md-4">
-					  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block"><i class="fa fa-user fa-fw"></i><p>&nbsp; Sales Contact</p></a>
+					  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i><p>&nbsp; Sales Contact</p></a>
 					</div>
 				</div> <!-- #header-table -->
 				</div>
@@ -173,7 +176,7 @@
             	<div class="container-fluid">
 	                <div class="row">
 						<div class="col-md-3 text-center mb-3">
-							<img src="<?php echo base_url(); ?>images/150.png" class="img-fluid rounded-circle">
+							<img src="<?php echo base_url(); ?>images/150.png" class="img-fluid rounded-circle" id="modal-image">
 						</div>
 						<div class="col-md-9">
 						
@@ -182,7 +185,7 @@
 									<p class="crm-modal-sale-text"><b>Name - English : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Jutarat Chanakitkarnchok</p>
+									<p class="crm-modal-sale-text" id="modal-name-eng">Jutarat Chanakitkarnchok</p>
 								</label>
 							</div>
 						
@@ -192,7 +195,7 @@
 									<p class="crm-modal-sale-text"><b>Name - Thai : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">จุฑารัตน์ ชนะกิจการโชค</p>
+									<p class="crm-modal-sale-text" id="modal-name-th">จุฑารัตน์ ชนะกิจการโชค</p>
 								</label>
 							</div>
 					
@@ -202,7 +205,7 @@
 									<p class="crm-modal-sale-text"><b>Nickname : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">ตูน</p>
+									<p class="crm-modal-sale-text" id="modal-nickname">ตูน</p>
 								</label>
 							</div>
 						
@@ -213,7 +216,7 @@
 									<p class="crm-modal-sale-text"><b>ID : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">1012678</p>
+									<p class="crm-modal-sale-text" id="modal-id">1012678</p>
 								</label>
 							</div>
 						
@@ -223,7 +226,7 @@
 									<p class="crm-modal-sale-text"><b>Department : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Medical Innovation Technology (MIT)</p>
+									<p class="crm-modal-sale-text" id="modal-department">Medical Innovation Technology (MIT)</p>
 								</label>
 							</div>
 						
@@ -233,7 +236,7 @@
 									<p class="crm-modal-sale-text"><b>Position : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Marketing Supervisor</p>
+									<p class="crm-modal-sale-text" id="modal-position">Marketing Supervisor</p>
 								</label>
 							</div>
 							
@@ -243,7 +246,7 @@
 									<p class="crm-modal-sale-text"><b>Zone : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Central Thailand</p>
+									<p class="crm-modal-sale-text" id="modal-zone">Central Thailand</p>
 								</label>
 							</div>
 						
@@ -253,7 +256,7 @@
 									<p class="crm-modal-sale-text"><b>County : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Bangkok, Ang Thong, Chainat, Lopburi, Nakhonnayok, Nakhonpathom, Nonthaburi</p>
+									<p class="crm-modal-sale-text" id="modal-county">Bangkok, Ang Thong, Chainat, Lopburi, Nakhonnayok, Nakhonpathom, Nonthaburi</p>
 								</label>
 				
 							</div>
@@ -263,7 +266,7 @@
 									<p class="crm-modal-sale-text"><b>Brand : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">Hitachi, Ziehm, Shimadzu, Hologic</p>
+									<p class="crm-modal-sale-text" id="modal-brand">Hitachi, Ziehm, Shimadzu, Hologic</p>
 								</label>
 							</div>
 					
@@ -274,7 +277,7 @@
 									<p class="crm-modal-sale-text"><b>Tel : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">089-1080988</p>
+									<p class="crm-modal-sale-text" id="modal-telephone">089-1080988</p>
 								</label>
 							</div>
 					
@@ -284,7 +287,7 @@
 									<p class="crm-modal-sale-text"><b>Email : </b></p>
 								</label>
 								<label class="col-md-8">
-									<p class="crm-modal-sale-text">JutaratC@bjc.co.th</p>
+									<p class="crm-modal-sale-text" id="modal-email">JutaratC@bjc.co.th</p>
 								</label>
 							</div>
 
@@ -298,19 +301,140 @@
 
   <script type="text/javascript">
 
-  	$("#pagination-sales").pagination({
-        items: 500,
-        itemsOnPage: 10,
-        displayedPages: 3,
-        edges: 1,
-        onPageClick: function(pageNumber) {
-            window.location.hash = '#page-'+pageNumber;
-            console.log(pageNumber);
-	    }
-    });
+  	$(document).ready(function(){ 
 
-    function show_contact_sales(id_dom) {
-      $('#sale_contact_modal').find('#header-table div a p').text('Sales Contact ['+id_dom+']');
-	  $('#sale_contact_modal').modal('show');
-	}
+	  	var total = <?php echo $datas['total']; ?>;
+	  	var perpage = <?php echo $datas['limit']; ?>;
+	  	var current_page = <?php echo $current_page; ?>;
+	  	set_pagination(current_page, total, perpage); // set pagination firsttime
+
+	    $('#btn-search').click(function(){
+			ajax_data();
+	    });
+
+	    $('#btn-reset').click(function(){
+	    	$('form#frm_serach')[0].reset();
+	    });
+
+		$("#sale_contact_modal").on('hide.bs.modal', function() { 
+	        $('#sale_contact_modal').find('#modal-image').attr('src',base_url+'images/150.png');
+	    });
+
+	});
+
+	    function show_contact_sales(values) {
+			if (values.IMAGE) {
+				$('#sale_contact_modal').find('#modal-image').attr('src',base_url+values.IMAGE);
+			}
+			$('#sale_contact_modal').find('#modal-name-eng').text(values.FIRST_NAME_ENG+' '+values.LAST_NAME_ENG);
+			$('#sale_contact_modal').find('#modal-name-th').text(values.FIRST_NAME_TH+' '+values.LAST_NAME_TH);
+			$('#sale_contact_modal').find('#modal-nickname').text(values.NICKNAME_ENG);
+			$('#sale_contact_modal').find('#modal-id').text(values.ID);
+			$('#sale_contact_modal').find('#modal-department').text(values.DEPARTMENT);
+			$('#sale_contact_modal').find('#modal-position').text(values.POSITION);
+			$('#sale_contact_modal').find('#modal-zone').text(values.ZONE);
+			$('#sale_contact_modal').find('#modal-county').text(values.COUNTY);
+			$('#sale_contact_modal').find('#modal-brand').text(values.BRAND);
+			$('#sale_contact_modal').find('#modal-telephone').text(values.TELEPHONE);
+			$('#sale_contact_modal').find('#modal-email').text(values.EMAIL);
+
+			$('#sale_contact_modal').modal('show');
+		}
+
+		function ajax_data(pageNumber=1) {
+
+		    var url = base_url+'api/sales/lists_sales?page='+pageNumber;
+	    	var formDataArr = $("form#frm_serach").serializeArray();
+			var formData = {};
+			for (var i = 0; i < formDataArr.length; i++){
+				if (formDataArr[i]['value']) {
+				  formData[formDataArr[i]['name']] = formDataArr[i]['value'];
+				}
+			}
+
+	        $.ajax({
+	            url: url,
+	            type:"POST",
+	            data: formData,
+	            dataType:"json",
+	            success: function( resp ){
+
+	                if (resp.status==1) {
+
+	                	var content_result = $('#content-result').children().last().clone();
+	                	$('#content-result').children().remove();
+	                	var data = resp.data;
+	                	$.each(data, function(i, v){
+
+	                		content_result.find('.card').attr('onclick', 'show_contact_sales('+JSON.stringify(v)+')');
+	                		if (v.IMAGE=='') {
+	                			content_result.find('img').attr('src', base_url+'images/150.png');
+	                		}else{
+	                			content_result.find('img').attr('src', base_url+v.IMAGE);
+	                		}
+	                		content_result.find('#txt-department').html('<b>'+v.DEPARTMENT+'</b>');
+	                		content_result.find('#txt-name-nickname').html('<b>'+v.FIRST_NAME_ENG+' '+v.LAST_NAME_ENG+' ('+v.NICKNAME_ENG+') </b>');
+	                		content_result.find('#txt-position').text(v.POSITION);
+	                		content_result.find('#txt-email').text('Email : '+v.EMAIL);
+	                		content_result.find('#txt-telephone').text('Tel : '+v.TELEPHONE);
+
+	                		// append DOM
+	                		content_result.appendTo('#content-result');
+
+	                		// clone DOM last content-result
+	                		content_result = $('#content-result').children().last().clone();
+	                	})
+
+	                	// set pagination
+                		set_pagination(pageNumber, resp.total, resp.limit);
+
+	                }else{
+	                  Swal.fire({
+	                    title: 'Warning!',
+	                    text: resp.message,
+	                    type: 'warning'
+	                  }).then((result) => {
+	                    if (result.value || result.dismiss == "backdrop") {
+	                      $('form#frm_serach')[0].reset();
+	                      ajax_data();
+	                    }
+	                  })
+	                }
+	            },
+	            error: function( jqXhr, textStatus, errorThrown ){
+					Swal.fire({
+						title: jqXhr.status,
+						text: errorThrown,
+						type: 'error'
+					})
+	            }
+	        });
+		}
+
+		function set_pagination(currentpage=1,total,limit) {
+
+			$("#pagination-sales").pagination({
+		        items: total,
+		        itemsOnPage: limit,
+		        displayedPages: 3,
+		        edges: 1,
+		        hrefTextPrefix: "#page=",
+		        onPageClick: function(pageNumber) {
+		            ajax_data(pageNumber);
+			    }
+		    });
+		    $('#pagination-sales').pagination('drawPage', currentpage);
+
+		    // set text showing pagination
+		    set_showing_text(currentpage,total,limit);
+		}
+
+		function set_showing_text(currentpage=1,total,limit) {
+
+        	var showing = ( ((currentpage-1) * limit)>0 ? ((currentpage-1) * limit)+1 : 1 );
+        	var showing_to = ( (currentpage * limit)<total ? (currentpage * limit) : total );
+        	$("#text-showing").text('Showing '+showing+' to '+showing_to+' of '+total+' entries');
+		}
+
+
   </script>

@@ -28,6 +28,9 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/simplePagination/simplePagination.css">
   <script src="<?php echo base_url(); ?>assets/simplePagination/jquery.simplePagination.js"></script>
 
+  <!-- Sweetalert2 -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/sweetalert2/sweetalert2.min.css">
+
 </head>
 <body>
   

@@ -9,7 +9,8 @@ class General_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function move_images($path_from, $path_to) {
+	public function move_images($path_from, $path_to) 
+	{
 
 		// check file is not empty
 		if (file_exists($path_from)) {
@@ -53,9 +54,26 @@ class General_model extends CI_Model
 		}
 	}
 
-	public function clearbadstr($string){
+	public function clearbadstr($string)
+	{
         $string=htmlspecialchars(strip_tags(trim($string)));
         return $string;
     }
+
+    public function check_email($email="")
+	{
+		if (strlen($email) < 1 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			return false;
+		}
+		return true;
+	}
+
+	public function check_telephone_number($str="")
+	{
+		if (strlen($str)!=10 || !preg_match("/^[0-9]*$/", $str)) {
+			return false;
+		}
+		return true;
+	}
 }
 ?>

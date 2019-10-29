@@ -6,6 +6,9 @@
 <!-- JS Rating -->
 <script src="<?php echo base_url(); ?>assets/js/rater.min.js"></script>
 
+<!-- Sweetalert2 -->
+<script src="<?php echo base_url(); ?>assets/sweetalert2/sweetalert2.min.js"></script>
+
 <script type="text/javascript">
 
     // rating
@@ -59,14 +62,23 @@
               $("#"+idpreview).attr('src', base_url+resp.path);
               $("#"+idshowfilename).val(resp.path);
             }else{
-              $('#msg-error').text(resp.message);
-              $('#alert_modal').modal('show');
+              Swal.fire({
+                title: 'Warning!',
+                text: resp.message,
+                type: 'warning'
+              })
             }
           },
           error: function( jqXhr, textStatus, errorThrown ){
-            $('#status-error').append( "<h5 class='text-danger'>"+ jqXhr.status +"</h5>" ).children("span").remove();
-            $('#msg-error').text( errorThrown );
-            $('#alert_modal').modal('show');
+            Swal.fire({
+              title: jqXhr.status,
+              text: errorThrown,
+              type: 'error'
+            }).then((result) => {
+              if (result.value) {
+                $('form#frm_login')[0].reset();
+              }
+            })
           }
         });
       });

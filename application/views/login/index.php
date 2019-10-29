@@ -10,6 +10,9 @@
 
   	<!-- Bootstrap -->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap-4.3.1/css/bootstrap.min.css">
+
+	<!-- Sweetalert2 -->
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/sweetalert2/sweetalert2.min.css">
 	<style type="text/css">
 	.login,
 	.image {
@@ -113,31 +116,11 @@
     </div>
 </div>
 
-<!-- Modal Alert -->
-<div id="login_modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-<div class="modal-dialog modal-md" style="top: 25%;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-fw fa-md"></i></button>
-        </div>
-        <div class="modal-body text-center">
-        	<div class="form-group">
-        		<h5 id="status-error" class="text-danger" style="display: none;"></h5>
-				<span class="fa-stack fa-2x" id="icon-error">
-					<i class="fa fa-times fa-stack-1x text-danger"></i>
-					<i class="fa fa-circle-o-notch fa-spin fa-stack-2x text-danger"></i>
-				</span>
-            </div> 
-            <div class="form-group">
-                <h5 id="msg-error" class="text-danger"></h5>
-            </div>          
-        </div>
-    </div>
-</div>
-</div>
-
 <script src="<?php echo base_url(); ?>assets/jquery/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Sweetalert2 -->
+<script src="<?php echo base_url(); ?>assets/sweetalert2/sweetalert2.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
 
 </body>

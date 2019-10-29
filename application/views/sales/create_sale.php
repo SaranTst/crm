@@ -23,6 +23,15 @@
     <div class="tab-content">
       <div class="tab-pane fade show active" id="GENERAL" role="tabpanel" aria-labelledby="GENERAL-tab">
         
+        <?php
+        if ($actions=='update') {
+          $data = $datas['data'][0];
+        }else if ($actions=='create') {
+          $data = array();
+        }
+
+        echo sizeof($data)>0 ? 'update' : 'create';
+        ?>
         <form id="add-sales">
           <div class="jumbotron jumbotron-fluid p-3">
             <div class="container-fluid">
@@ -30,14 +39,14 @@
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <div class="z-depth-1-half text-center">
-                    <img src="<?php echo base_url(); ?>images/180.png" id="preview-add-sales" class="img-thumbnail" style="height: 180px;">
+                    <img src="<?php echo sizeof($data)>0&&$data['IMAGE'] ?  base_url().$data['IMAGE'] : base_url().'images/180.png'; ?>" id="preview-add-sales" class="img-thumbnail" style="height: 180px;">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Upload Image" name="image" id="show-file-name-add-sales" disabled>
+                        <input type="text" class="form-control" placeholder="Upload Image" name="image" id="show-file-name-add-sales" value="<?php echo sizeof($data)>0 ? $data['IMAGE'] : ''; ?>" readonly>
                         <ul class="mb-4">
                           <li><small class="text-muted">*Maximum Size 1 MB</small></li>
                           <li><small class="text-muted">*Please select the picture first</small></li>
@@ -56,10 +65,10 @@
                       <div class="form-group">
                         <label>Prefix</label>
                         <select class="custom-select" name="prefix">
-                          <option value="" selected disabled hidden>Choose Prefix</option>
+                          <option value="" selected readonly hidden>Choose Prefix</option>
                           <?php foreach (ARR_PREFIX as $key => $value) { 
                             if ($value) { ?>
-                          <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
+                          <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['PREFIX']==$key ? 'selected' : ''; ?>><?php echo $key; ?></option>
                           <?php } 
                             } ?>
                         </select>
@@ -68,7 +77,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>ID</label>
-                        <input type="text" class="form-control" placeholder="ID" name="id_sale">
+                        <input type="text" class="form-control" placeholder="ID" name="id_sale" value="<?php echo sizeof($data)>0 ? $data['ID_SALE'] : ''; ?>">
                       </div>
                     </div>
                   </div>
@@ -79,13 +88,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name - Surname (Thai)</label>
-                    <input type="text" class="form-control" placeholder="Name - Surname (Thai)" name="name_surname_th">
+                    <input type="text" class="form-control" placeholder="Name - Surname (Thai)" name="name_surname_th" value="<?php echo sizeof($data)>0 ? $data['FIRST_NAME_TH'].' '.$data['LAST_NAME_TH'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name - Surname (Eng)</label>
-                    <input type="text" class="form-control" placeholder="Name - Surname (Eng)" name="name_surname_eng">
+                    <input type="text" class="form-control" placeholder="Name - Surname (Eng)" name="name_surname_eng" value="<?php echo sizeof($data)>0 ? $data['FIRST_NAME_ENG'].' '.$data['LAST_NAME_ENG'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -94,13 +103,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Thai)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Thai)" name="nickname_th">
+                    <input type="text" class="form-control" placeholder="Nickname (Thai)" name="nickname_th" value="<?php echo sizeof($data)>0 ? $data['NICKNAME_TH'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Eng)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Eng)" name="nickname_eng">
+                    <input type="text" class="form-control" placeholder="Nickname (Eng)" name="nickname_eng" value="<?php echo sizeof($data)>0 ? $data['NICKNAME_ENG'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -109,13 +118,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>E-mail</label>
-                    <input type="text" class="form-control" placeholder="E-mail" name="e_mail">
+                    <input type="text" class="form-control" placeholder="E-mail" name="e_mail" value="<?php echo sizeof($data)>0 ? $data['EMAIL'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel.</label>
-                    <input type="text" class="form-control" placeholder="Tel." name="telephone">
+                    <input type="text" class="form-control" placeholder="Tel." name="telephone" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -125,7 +134,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="birthday" id="date-birthday">
+                      <input type="text" class="form-control" name="birthday" id="date-birthday" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY'] : ''; ?>">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -179,7 +188,7 @@
               	<div class="col-md-6">
                   <div class="form-group">
                     <label>County</label>
-                    <input type="text" class="form-control" placeholder="County" name="county">
+                    <input type="text" class="form-control" placeholder="County" name="county" value="<?php echo sizeof($data)>0 ? $data['COUNTY'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -220,6 +229,10 @@
 
   <script type="text/javascript">
 
+  var id = '<?php echo sizeof($data)>0 ? $id : ''; ?>';
+
+  $(document).ready(function(){ 
+
     $('#date-birthday').datepicker({
       format: "dd-mm-yyyy",
       language: "th",
@@ -227,74 +240,78 @@
     })
 
     $('#insert-sales').click(function(e) {
-      var url = base_url+'api/sales/update_sales';
-      var data = $("form#add-sales").serialize();
-      console.log(data);
+      var url = base_url+'api/sales/update_sales/'+id;
+      var formDataSale = checkForm('add-sales');
 
-      $.ajax({
-        url: url,
-        type:"POST",
-        data: data,
-        dataType:"json",
-        success: function( resp ){
-          // if (resp.status==1) {
-          //   window.location.href = base_url+"dashboard";
-          // }else{
-          //   $('#msg-error').text(resp.message);
-          //   $('#alert_modal').modal('show');
-          //   $('form#frm_login')[0].reset();
-          // }
-          console.log(resp);
-        },
-        error: function( jqXhr, textStatus, errorThrown ){
-          $('#icon-error').css('display', 'none');
-          $('#status-error').text( jqXhr.status ).css('display', 'block');
-          $('#msg-error').text( errorThrown );
-          $('#alert_modal').modal('show');
-        }
-      });
-
+      if (formDataSale) {
+        $.ajax({
+          url: url,
+          type:"POST",
+          data: formDataSale,
+          dataType:"json",
+          success: function( resp ){
+            if (resp.status==1) {
+              Swal.fire({
+                title: 'Success!',
+                text: resp.message,
+                type: 'success'
+              }).then((result) => {
+                if (result.value) {
+                  $('form#add-sales')[0].reset();
+                }
+              })
+            }else{
+              Swal.fire({
+                title: 'Warning!',
+                text: resp.message,
+                type: 'warning'
+              }).then((result) => {
+                if (result.value || result.dismiss == "backdrop") {
+                  $('form#add-sales')[0].reset();
+                }
+              })
+            }
+          },
+          error: function( jqXhr, textStatus, errorThrown ){
+            Swal.fire({
+              title: jqXhr.status,
+              text: errorThrown,
+              type: 'error'
+            }).then((result) => {
+              if (result.value) {
+                $('form#add-sales')[0].reset();
+              }
+            })
+          }
+        });
+      }
     });
 
-    // function login() {
 
-    //   var url = base_url+'api/sales/login';
-    //   var data = $( "form#frm_login" ).serialize();
-
-    //   var id_sale = $("input[name^=id_sale]");
-    //   var password = $("input[name^=password]");
-
-    //   if (! id_sale.val()) {
-    //       id_sale.addClass("border border-danger").siblings("p.text-danger").css("display","block");
-    //   }else if (! password.val()){
-    //       password.addClass("border border-danger").siblings("p.text-danger").css("display","block");
-    //   }else{
-
-    //     $.ajax({
-    //       url: url,
-    //       type:"POST",
-    //       data: data,
-    //       dataType:"json",
-    //       success: function( resp ){
-    //         if (resp.status==1) {
-    //           window.location.href = base_url+"dashboard";
-    //         }else{
-    //           $('#msg-error').text(resp.message);
-    //           $('#alert_modal').modal('show');
-    //           $('form#frm_login')[0].reset();
-    //         }
-    //       },
-    //       error: function( jqXhr, textStatus, errorThrown ){
-    //         $('#status-error').append( "<h5 class='text-danger'>"+ jqXhr.status +"</h5>" ).children("span").remove();
-    //         $('#msg-error').text( errorThrown );
-    //         $('#alert_modal').modal('show');
-    //       }
-    //     });
-    //   }
-    // }
-
-    $("input", $("form#frm_login")).on("keyup", function(){
-      $(this).removeClass("border border-danger").siblings("p.text-danger").css("display","none");
+    $("input", $("form#add-sales")).on("keyup", function(){
+      $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
     })
+    $("select", $("form#add-sales")).on("change", function(){
+      $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
+    })
+
+    function checkForm(idform) {
+     $("form#"+idform).removeClass("border border-danger").siblings("small.text-danger").remove();
+      var formDataArr = $("form#"+idform).serializeArray();
+      var formData = {};
+      for (var i = 0; i < formDataArr.length; i++){
+
+        if (formDataArr[i]['value'] || formDataArr[i]['name']=='image') {
+          formData[formDataArr[i]['name']] = formDataArr[i]['value'];
+        }else{
+          $("[name='"+formDataArr[i]['name']+"']").removeClass("border border-danger").siblings("small.text-danger").remove();
+          $("[name='"+formDataArr[i]['name']+"']").addClass("border border-danger").parent().last().append('<small class="text-danger" style="display: block;">*กรุณากรอกข้อมูล '+formDataArr[i]['name']+'</small>');
+          return false
+        }
+      }
+      return formData;
+    }
+
+  });
 
   </script>
