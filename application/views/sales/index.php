@@ -121,8 +121,15 @@
 			  	<div class="row" id="content-result">
 			  		<?php foreach ($datas['data'] as $key => $value) { ?>
 			  		<div class="col-md-4 mb-3">
-			  			<div class="card" onclick='show_contact_sales(<?php echo json_encode($value); ?>)'>
-						  <div class="card-body">
+			  			<div class="card">
+			  			  <div class="row pr-2 pt-2">
+					  		<div class="col-sm-8">
+					  		</div>
+					  		<div class="col-sm-4 text-right">
+				  				<a href="<?php echo base_url().'sales/update_sale/'.$value['ID']; ?>" id="link-update"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+					  		</div>
+					  	  </div>
+						  <div class="card-body" onclick='show_contact_sales(<?php echo json_encode($value); ?>)'>
 						  	<div class="row">
 						  		<div class="col-md-4 mb-3 text-center">
 						  			<img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-fluid rounded-circle">
@@ -303,6 +310,8 @@
 
   	$(document).ready(function(){ 
 
+  		window.history.replaceState(null, null, window.location.pathname); // remove all url param
+
 	  	var total = <?php echo $datas['total']; ?>;
 	  	var perpage = <?php echo $datas['limit']; ?>;
 	  	var current_page = <?php echo $current_page; ?>;
@@ -314,6 +323,7 @@
 
 	    $('#btn-reset').click(function(){
 	    	$('form#frm_serach')[0].reset();
+	    	ajax_data();
 	    });
 
 		$("#sale_contact_modal").on('hide.bs.modal', function() { 
@@ -366,7 +376,8 @@
 	                	var data = resp.data;
 	                	$.each(data, function(i, v){
 
-	                		content_result.find('.card').attr('onclick', 'show_contact_sales('+JSON.stringify(v)+')');
+	                		content_result.find('#link-update').attr('href', base_url+'sales/update_sale/'+v.ID);
+	                		content_result.find('.card-body').attr('onclick', 'show_contact_sales('+JSON.stringify(v)+')');
 	                		if (v.IMAGE=='') {
 	                			content_result.find('img').attr('src', base_url+'images/150.png');
 	                		}else{
