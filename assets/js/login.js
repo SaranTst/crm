@@ -26,7 +26,7 @@
                     text: resp.message,
                     type: 'warning'
                   }).then((result) => {
-                    if (result.value || result.dismiss == "backdrop") {
+                    if (result.value || result.dismiss) {
                       $('form#frm_login')[0].reset();
                     }
                   })

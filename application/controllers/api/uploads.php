@@ -34,7 +34,7 @@ class Uploads extends MY_Controller {
 		}else{
 			$config['allowed_types'] = 'gif|jpg|png';
 		}
-		$config['upload_path']  = DOCUMENT_ROOT.'./'.$folder;
+		$config['upload_path']  = DOCUMENT_ROOT.$folder;
 	 	if($type=='video'){
 			$config['max_size'] = 102400; // 100MB
 		}else{

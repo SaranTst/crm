@@ -30,7 +30,7 @@
           $data = array();
         }
 
-        echo sizeof($data)>0 ? 'update' : 'create';
+        echo $actions;
         ?>
         <form id="add-sales">
           <div class="jumbotron jumbotron-fluid p-3">
@@ -46,6 +46,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
+                        <input type="hidden" class="form-control" name="old_image" value="<?php echo sizeof($data)>0 ? $data['IMAGE'] : ''; ?>" readonly>
                         <input type="text" class="form-control" placeholder="Upload Image" name="image" id="show-file-name-add-sales" value="<?php echo sizeof($data)>0 ? $data['IMAGE'] : ''; ?>" readonly>
                         <ul class="mb-4">
                           <li><small class="text-muted">*Maximum Size 1 MB</small></li>
@@ -242,6 +243,9 @@
     $('#insert-sales').click(function(e) {
       var url = base_url+'api/sales/update_sales/'+id;
       var formDataSale = checkForm('add-sales');
+      console.log(url);
+      console.log(formDataSale);
+
 
       if (formDataSale) {
         $.ajax({
@@ -250,25 +254,20 @@
           data: formDataSale,
           dataType:"json",
           success: function( resp ){
+            console.log(resp);
             if (resp.status==1) {
               Swal.fire({
                 title: 'Success!',
                 text: resp.message,
                 type: 'success'
               }).then((result) => {
-                if (result.value) {
-                  $('form#add-sales')[0].reset();
-                }
+                window.location.href = base_url+'sales';
               })
             }else{
               Swal.fire({
                 title: 'Warning!',
                 text: resp.message,
                 type: 'warning'
-              }).then((result) => {
-                if (result.value || result.dismiss == "backdrop") {
-                  $('form#add-sales')[0].reset();
-                }
               })
             }
           },
@@ -277,10 +276,6 @@
               title: jqXhr.status,
               text: errorThrown,
               type: 'error'
-            }).then((result) => {
-              if (result.value) {
-                $('form#add-sales')[0].reset();
-              }
             })
           }
         });
@@ -301,7 +296,7 @@
       var formData = {};
       for (var i = 0; i < formDataArr.length; i++){
 
-        if (formDataArr[i]['value'] || formDataArr[i]['name']=='image') {
+        if (formDataArr[i]['value'] || formDataArr[i]['name']=='image' || formDataArr[i]['name']=='old_image') {
           formData[formDataArr[i]['name']] = formDataArr[i]['value'];
         }else{
           $("[name='"+formDataArr[i]['name']+"']").removeClass("border border-danger").siblings("small.text-danger").remove();

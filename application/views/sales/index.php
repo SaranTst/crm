@@ -122,12 +122,10 @@
 			  		<?php foreach ($datas['data'] as $key => $value) { ?>
 			  		<div class="col-md-4 mb-3">
 			  			<div class="card">
-			  			  <div class="row pr-2 pt-2">
-					  		<div class="col-sm-8">
-					  		</div>
-					  		<div class="col-sm-4 text-right">
-				  				<a href="<?php echo base_url().'sales/update_sale/'.$value['ID']; ?>" id="link-update"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-					  		</div>
+
+			  			  <div class="card-header pt-0 pb-0">
+						  	  <a href="javascript:void(0)" id="link-delete" onclick='btn_delete(<?php echo $value['ID']; ?>)'><i class="fa fa-times fa-lg float-right p-1 my-1" data-toggle="tooltip" data-placement="top" title="Delete"></i></a>
+	      					  <a href="<?php echo base_url().'sales/update_sale/'.$value['ID']; ?>" id="link-update"><i class="fa fa-pencil-square-o fa-lg float-right p-1 my-1 mr-2" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
 					  	  </div>
 						  <div class="card-body" onclick='show_contact_sales(<?php echo json_encode($value); ?>)'>
 						  	<div class="row">
@@ -377,6 +375,7 @@
 	                	$.each(data, function(i, v){
 
 	                		content_result.find('#link-update').attr('href', base_url+'sales/update_sale/'+v.ID);
+	                		content_result.find('#link-delete').attr('onclick', 'btn_delete('+v.ID+')');
 	                		content_result.find('.card-body').attr('onclick', 'show_contact_sales('+JSON.stringify(v)+')');
 	                		if (v.IMAGE=='') {
 	                			content_result.find('img').attr('src', base_url+'images/150.png');
@@ -405,7 +404,7 @@
 	                    text: resp.message,
 	                    type: 'warning'
 	                  }).then((result) => {
-	                    if (result.value || result.dismiss == "backdrop") {
+	                    if (result.value || result.dismiss) {
 	                      $('form#frm_serach')[0].reset();
 	                      ajax_data();
 	                    }
@@ -420,6 +419,61 @@
 					})
 	            }
 	        });
+		}
+
+		function ajax_delete(id=12345) {
+
+		    var url = base_url+'api/sales/delete_sales/'+id;
+
+	        $.ajax({
+	            url: url,
+	            type:"GET",
+	            dataType:"json",
+	            success: function( resp ){
+	            	console.log(resp);
+
+	                if (resp.status==1) {
+						Swal.fire({
+							type: 'success',
+							title: resp.message,
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+						})
+
+						ajax_data($('#pagination-sales').pagination('getCurrentPage'));
+	                }else{
+						Swal.fire({
+							title: 'Warning!',
+							text: resp.message,
+							type: 'warning'
+						})
+	                }
+	            },
+	            error: function( jqXhr, textStatus, errorThrown ){
+					Swal.fire({
+						title: jqXhr.status,
+						text: errorThrown,
+						type: 'error'
+					})
+	            }
+	        });
+		}
+
+		function btn_delete(id) {
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'No',
+			}).then((result) => {
+			  if (typeof result.dismiss === "undefined") {
+			  	ajax_delete(id);
+			  }
+			})
 		}
 
 		function set_pagination(currentpage=1,total,limit) {

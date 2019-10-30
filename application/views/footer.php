@@ -74,10 +74,6 @@
               title: jqXhr.status,
               text: errorThrown,
               type: 'error'
-            }).then((result) => {
-              if (result.value) {
-                $('form#frm_login')[0].reset();
-              }
             })
           }
         });
