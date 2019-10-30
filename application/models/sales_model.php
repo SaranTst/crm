@@ -238,6 +238,11 @@ class Sales_model extends CI_Model
 		$ip_login = $this->input->post();
 
 		$data['ID_SALE'] = $ip_login['id_sale'];
+		if (!is_numeric($data['ID_SALE'])) {
+			$msg['status'] = 0;
+			$msg['message'] = 'กรุณากรอกรหัสพนักงานให้ถูกต้องด้วยครับ';
+			goto error;
+		}
 		$data['PASSWORD'] = md5($ip_login['password'].KEY_PASSWORD);
 
 		$this->db->from($this->table);
@@ -262,6 +267,7 @@ class Sales_model extends CI_Model
 			$msg['message'] = 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
 		}
 
+		error:
 		return $msg;
 	}
 
