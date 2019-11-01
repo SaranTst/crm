@@ -13,7 +13,7 @@
                       <select class="custom-select" name="personnel_detail[0][relationship]">
                         <option value="" selected disabled hidden>Choose Relationship</option>
                         <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                        <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                        <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                         <?php } ?>
                       </select>
                     </div>
@@ -51,8 +51,8 @@
                         <label>Prefix</label>
                         <select class="custom-select" name="personnel_detail[0][prefix]">
                           <option value="" selected disabled hidden>Choose Prefix</option>
-                          <?php foreach (ARR_PREFIX as $key => $value) { ?>
-                          <option value="<?php echo $value ? $value : $key; ?>"><?php echo $key; ?></option>
+                          <?php foreach (ARR_PREFIX_TH as $key => $value) { ?>
+                          <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -114,8 +114,8 @@
                     <label>Gender</label>
                     <select class="custom-select" name="personnel_detail[0][gender]">
                       <option value="" selected disabled hidden>Choose Gender</option>
-                      <?php foreach (ARR_GENDER as $key => $value) { ?>
-                      <option value="<?php echo $value; ?>"><?php echo $key; ?></option>
+                      <?php foreach (ARR_GENDER_TH as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -135,7 +135,7 @@
                     <select class="custom-select" name="personnel_detail[0][contact_channal]">
                       <option value="" selected disabled hidden>Choose Contact Channal</option>
                       <?php foreach (ARR_CONTACT_CHANNAL as $key => $value) { ?>
-                      <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -197,8 +197,8 @@
                     <label>Status</label>
                     <select class="custom-select" name="personnel_detail[0][status]">
                       <option value="" selected disabled hidden>Choose Status</option>
-                      <?php foreach (ARR_STATUS as $key => $value) { ?>
-                      <option value="<?php echo $value; ?>"><?php echo $key; ?></option>
+                      <?php foreach (ARR_STATUS_TH as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>

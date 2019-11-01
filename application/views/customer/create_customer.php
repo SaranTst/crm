@@ -126,7 +126,7 @@
                         <select class="custom-select" name="relationship-doctor">
                           <option value="" selected disabled hidden>Choose Relationship</option>
                           <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                          <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                          <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -211,8 +211,8 @@
                       <div class="col">
                         <select class="custom-select" name="relationship-purchase">
                           <option value="" selected disabled hidden>Choose Relationship</option>
-                          <?php foreach (ARR_GENDER as $key => $value) { ?>
-                          <option value="<?php echo $value; ?>"><?php echo $key; ?></option>
+                          <?php foreach (ARR_GENDER_TH as $key => $value) { ?>
+                          <option value="<?php echo $key; ?>"><?php echo $key; ?></option>
                           <?php } ?>
                         </select>
                       </div>

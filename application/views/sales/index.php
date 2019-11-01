@@ -22,12 +22,10 @@
 			  			<div class="form-group">
 		                    <label>Department</label>
 		                    <select class="custom-select" name="department">
-		                      <option value="" selected readonly hidden>Select a Department</option>
-		                      <option value="1">Department 1</option>
-		                      <option value="2">Department 2</option>
-		                      <option value="3">Department 3</option>
-		                      <option value="4">Department 4</option>
-		                      <option value="5">Department 5</option>
+		                      <option value="" selected readonly hidden>Choose Department</option>
+		                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+		                      <?php } ?>
 		                    </select>
 	                  	</div>
 				  		</div>
@@ -35,43 +33,15 @@
 				  		<div class="form-group">
 		                    <label>Zone</label>
 		                    <select class="custom-select" name="zone">
-		                      <option value="" selected readonly hidden>Select a Zone</option>
-		                      <option value="1">Zone 1</option>
-		                      <option value="2">Zone 2</option>
-		                      <option value="3">Zone 3</option>
-		                      <option value="4">Zone 4</option>
-		                      <option value="5">Zone 5</option>
+		                      <option value="" selected readonly hidden>Choose Zone</option>
+		                      <?php foreach (ARR_ZONE as $key => $value) { ?>
+		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+		                      <?php } ?>
 		                    </select>
 	                  	</div>
 				  		</div>
 				  		<div class="col-md-6">
-				  		<div class="form-group">
-		                    <label>County</label>
-		                    <select class="custom-select" name="county">
-		                      <option value="" selected readonly hidden>Select a County</option>
-		                      <option value="1">County 1</option>
-		                      <option value="2">County 2</option>
-		                      <option value="3">County 3</option>
-		                      <option value="4">County 4</option>
-		                      <option value="5">County 5</option>
-		                    </select>
-	                  	</div>
-				  		</div>
-				  		<div class="col-md-6">
-				  		<div class="form-group">
-		                    <label>Position</label>
-		                    <select class="custom-select" name="position">
-		                      <option value="" selected readonly hidden>Select a Position</option>
-		                      <option value="1">Position 1</option>
-		                      <option value="2">Position 2</option>
-		                      <option value="3">Position 3</option>
-		                      <option value="4">Position 4</option>
-		                      <option value="5">Position 5</option>
-		                    </select>
-	                  	</div>
-				  		</div>
-				  		<div class="col-md-6">
-				  		<div class="form-group">
+	                  	<div class="form-group">
 		                    <label>Brand</label>
 		                    <select class="custom-select" name="brand">
 		                      <option value="" selected readonly hidden>Select a Brand</option>
@@ -81,6 +51,28 @@
 		                      <option value="4">Brand 4</option>
 		                      <option value="5">Brand 5</option>
 		                    </select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>Position</label>
+		                    <select class="custom-select" name="position">
+		                    <option value="" selected readonly hidden>Select a Position</option>
+							<?php foreach (ARR_POSITION as $key => $value) { 
+								if (!empty(ARR_POSITION_OPTGROUP[$key])) {
+									echo '<optgroup label="'.ARR_POSITION_OPTGROUP[$key].'">';
+									echo '<option value="'.$key.'">'.$value.'</option>';
+								}else{
+									echo '<option value="'.$key.'">'.$value.'</option>';
+								}
+							} ?>
+							</select>
+	                  	</div>
+				  		</div>
+				  		<div class="col-md-6">
+				  		<div class="form-group">
+		                    <label>County</label>
+		                    <input type="text" class="form-control" placeholder="Enter a County" name="county">
 	                  	</div>
 				  		</div>
 				  		<div class="col-md-6">
@@ -107,11 +99,19 @@
 			<div class="card">
 			  <div class="card-header crm-bg-dark-gray">Result</div>
 			  <div class="card-body">
-
+			  	<?php if ($datas['status']==1) {
+		          $data = $datas['data'];
+		          $total = $datas['total'];
+		          $limit = $datas['limit'];
+		        }else {
+		          $data = array();
+		          $limit = 9;
+		          $total = 9;
+		        } ?>
 			  	<div class="row mb-3">
 			  		<div class="col-md-6">
 			  			<?php $current_page = $this->input->get('page') ? $this->input->get('page') : 1; ?>
-			  			<small class="text-muted" id="text-showing">Showing <?php echo $current_page; ?> to <?php echo ($current_page*$datas['limit'])>$datas['total'] ? $datas['total'] : ($current_page*$datas['limit']); ?> of <?php echo $datas['total']; ?> entries</small>
+			  			<small class="text-muted" id="text-showing">Showing <?php echo $current_page; ?> to <?php echo ($current_page*$limit)>$total ? $total : ($current_page*$limit); ?> of <?php echo $total; ?> entries</small>
 			  		</div>
 			  		<div class="col-md-6">
 			  			<div class="float-right" id="pagination-sales"></div>
@@ -119,7 +119,7 @@
 			  	</div>
 
 			  	<div class="row" id="content-result">
-			  		<?php foreach ($datas['data'] as $key => $value) { ?>
+			  		<?php foreach ($data as $key => $value) { ?>
 			  		<div class="col-md-4 mb-3">
 			  			<div class="card">
 
@@ -310,8 +310,8 @@
 
   		window.history.replaceState(null, null, window.location.pathname); // remove all url param
 
-	  	var total = <?php echo $datas['total']; ?>;
-	  	var perpage = <?php echo $datas['limit']; ?>;
+	  	var total = <?php echo $total; ?>;
+	  	var perpage = <?php echo $limit; ?>;
 	  	var current_page = <?php echo $current_page; ?>;
 	  	set_pagination(current_page, total, perpage); // set pagination firsttime
 
@@ -421,13 +421,16 @@
 	        });
 		}
 
-		function ajax_delete(id=12345) {
+		function ajax_delete(id) {
 
 		    var url = base_url+'api/sales/delete_sales/'+id;
+		    var formData = {};
+			formData['USER_DELETE'] = ID_LOGIN;
 
 	        $.ajax({
 	            url: url,
-	            type:"GET",
+	            type:"POST",
+	            data: formData,
 	            dataType:"json",
 	            success: function( resp ){
 	            	console.log(resp);

@@ -36,6 +36,7 @@
   
  <script type="text/javascript">
   var base_url = '<?php echo base_url();?>';
+  var ID_LOGIN = <?php echo $this->session->userdata("sale")['ID_SALE']; ?>;
  </script>
 
  <header class="cd-main-header js-cd-main-header">

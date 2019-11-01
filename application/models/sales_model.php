@@ -32,7 +32,8 @@ class Sales_model extends CI_Model
 			}
 
 			if (isset($ip_post['county']) && !empty($ip_post['county'])) {
-				$where .= "COUNTY = '".$this->general_model->clearbadstr($ip_post['county'])."' AND ";
+				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['county']));
+				$where .= "COUNTY LIKE '%".$keyword."%' AND ";
 			}
 
 			if (isset($ip_post['position']) && !empty($ip_post['position'])) {
@@ -144,7 +145,7 @@ class Sales_model extends CI_Model
 		}
 
 		$data['ID_SALE'] = (int)$ip_post['id_sale'];
-		$data['PREFIX'] = $this->general_model->clearbadstr($ip_post['prefix']);
+		$data['PREFIX'] = (int)$ip_post['prefix'];
 
 		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
 		if (empty($explode_name_th[1])) {
@@ -180,11 +181,11 @@ class Sales_model extends CI_Model
 		$data['TELEPHONE'] = $chk_tel;
 
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
-		$data['POSITION'] = $this->general_model->clearbadstr($ip_post['position']);
-		$data['DEPARTMENT'] = $this->general_model->clearbadstr($ip_post['department']);
-		$data['ZONE'] = $this->general_model->clearbadstr($ip_post['zone']);
+		$data['POSITION'] = (int)$ip_post['position'];
+		$data['DEPARTMENT'] = (int)$ip_post['department'];
+		$data['ZONE'] = (int)$ip_post['zone'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND'] = $this->general_model->clearbadstr($ip_post['brand']);
+		$data['BRAND'] = (int)$ip_post['brand'];
 		$data['ROLE'] = 2;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = (int)$ip_post['user_create'];
@@ -224,7 +225,7 @@ class Sales_model extends CI_Model
 		$ip_post = $this->input->post();
 
 		$data['ID_SALE'] = (int)$ip_post['id_sale'];
-		$data['PREFIX'] = $this->general_model->clearbadstr($ip_post['prefix']);
+		$data['PREFIX'] = (int)$ip_post['prefix'];
 
 		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
 		if (empty($explode_name_th[1])) {
@@ -260,11 +261,11 @@ class Sales_model extends CI_Model
 		$data['TELEPHONE'] = $chk_tel;
 
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
-		$data['POSITION'] = $this->general_model->clearbadstr($ip_post['position']);
-		$data['DEPARTMENT'] = $this->general_model->clearbadstr($ip_post['department']);
-		$data['ZONE'] = $this->general_model->clearbadstr($ip_post['zone']);
+		$data['POSITION'] = (int)$ip_post['position'];
+		$data['DEPARTMENT'] = (int)$ip_post['department'];
+		$data['ZONE'] = (int)$ip_post['zone'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND'] = $this->general_model->clearbadstr($ip_post['brand']);
+		$data['BRAND'] = (int)$ip_post['brand'];
 		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
 
@@ -318,6 +319,8 @@ class Sales_model extends CI_Model
 			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
 			goto error;
 		}
+		$ip_post = $this->input->post();
+		$user_delete = (int)$ip_post['USER_DELETE'];
 
 		$data['STATUS_DELETE'] = 1;
 		$this->db->where('ID', $id);
@@ -325,8 +328,12 @@ class Sales_model extends CI_Model
 		$res_delete = $this->db->affected_rows();
 
 		if ($res_delete > 0) {
-			$msg['status'] = 1;
-			$msg['message'] = 'ลบข้อมูลสำเร็จ';
+
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'delete', $user_delete);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='ลบข้อมูลสำเร็จ';
+			}
 		}
 
 		error:
@@ -375,7 +382,7 @@ class Sales_model extends CI_Model
 
 		// create admin
 		$data['ID_SALE'] = 1018601;
-		$data['PREFIX'] = 'Mr.';
+		$data['PREFIX'] = 1;
 		$data['IMAGE'] = 'uploads/sales/img-admin.jpg';
 		$data['FIRST_NAME_TH'] = 'ผู้ดูแล';
 		$data['LAST_NAME_TH'] = 'ระบบ';
@@ -386,11 +393,11 @@ class Sales_model extends CI_Model
 		$data['EMAIL'] = 'sarant@bjc.co.th';
 		$data['TELEPHONE'] = '0999999999';
 		$data['BIRTHDAY'] = date('Y-m-d');
-		$data['POSITION'] = 'Admin';
-		$data['DEPARTMENT'] = 'Admin';
-		$data['ZONE'] = 'Admin';
-		$data['COUNTY'] = 'Admin';
-		$data['BRAND'] = 'Admin';
+		$data['POSITION'] = 100;
+		$data['DEPARTMENT'] = 100;
+		$data['ZONE'] = 100;
+		$data['COUNTY'] = 100;
+		$data['BRAND'] = 100;
 		$data['ROLE'] = 1;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = 1018601;

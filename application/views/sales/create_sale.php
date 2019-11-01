@@ -67,11 +67,9 @@
                         <label>Prefix</label>
                         <select class="custom-select" name="prefix">
                           <option value="" selected readonly hidden>Choose Prefix</option>
-                          <?php foreach (ARR_PREFIX as $key => $value) { 
-                            if ($value) { ?>
-                          <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['PREFIX']==$key ? 'selected' : ''; ?>><?php echo $key; ?></option>
-                          <?php } 
-                            } ?>
+                          <?php foreach (ARR_PREFIX_TH as $key => $value) { ?>
+                          <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['PREFIX']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>
@@ -146,11 +144,18 @@
                   <div class="form-group">
                     <label>Position</label>
                     <select class="custom-select" name="position">
-                      <option value="" selected>Choose Position</option>
-                      <option value="1">Position 1</option>
-                      <option value="2">Position 2</option>
-                      <option value="3">Position 3</option>
-                      <option value="4">Position 4</option>
+                    <option value="" selected readonly hidden>Select a Position</option>
+                    <?php foreach (ARR_POSITION as $key => $value) { 
+
+                      $selected="";
+                      sizeof($data)>0 && $data['POSITION']==$key ? $selected="selected" : $selected="";
+                      if (!empty(ARR_POSITION_OPTGROUP[$key])) {
+                        echo '<optgroup label="'.ARR_POSITION_OPTGROUP[$key].'">';
+                        echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                      }else{
+                        echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                      }
+                    } ?>
                     </select>
                   </div>
                 </div>
@@ -161,12 +166,10 @@
                   <div class="form-group">
                     <label>Department</label>
                     <select class="custom-select" name="department">
-                      <option value="" selected>Choose Department</option>
-                      <option value="1">Department 1</option>
-                      <option value="2">Department 2</option>
-                      <option value="3">Department 3</option>
-                      <option value="4">Department 4</option>
-                      <option value="5">Department 5</option>
+                      <option value="" selected readonly hidden>Choose Department</option>
+                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -174,12 +177,10 @@
                   <div class="form-group">
                     <label>Zone</label>
                     <select class="custom-select" name="zone">
-                      <option value="" selected>Choose Zone</option>
-                      <option value="1">Zone 1</option>
-                      <option value="2">Zone 2</option>
-                      <option value="3">Zone 3</option>
-                      <option value="4">Zone 4</option>
-                      <option value="5">Zone 5</option>
+                      <option value="" selected readonly hidden>Choose Zone</option>
+                      <?php foreach (ARR_ZONE as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['ZONE']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>

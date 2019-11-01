@@ -90,32 +90,45 @@ define('ARR_ROLE', array(1=>'Admin',2=>'Sale'));
 
 // define Data CRM
 define('ARR_RATING', array(
-	5 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf005;',
-	4 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf006;',
-	3 => '&#xf005;&#xf005;&#xf005;&#xf006;&#xf006;',
+	1 => '&#xf005;&#xf006;&#xf006;&#xf006;&#xf006;',
 	2 => '&#xf005;&#xf005;&#xf006;&#xf006;&#xf006;',
-	1 => '&#xf005;&#xf006;&#xf006;&#xf006;&#xf006;'
+	3 => '&#xf005;&#xf005;&#xf005;&#xf006;&#xf006;',
+	4 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf006;',
+	5 => '&#xf005;&#xf005;&#xf005;&#xf005;&#xf005;',
 ));
 
 define('ARR_RELATIONSHIP', array(
-	5,
-	4,
-	3,
+	1,
 	2,
-	1
+	3,
+	4,
+	5
 ));
 
-define('ARR_STATUS', array(
-	'นำเสนอลูกค้า' => 'Status Propose',
-	'สาธิตสินค้า' => 'Demo',
-	'ต่อรองราคา' => 'Negotiation',
-	'ประมูลราคา' => 'Bidding',
-	'ชนะประมูล' => 'Win',
-	'ทำสัญญาแล้ว' => 'Contract',
-	'ออกบิลแล้ว' => 'Billing',
-	'ส่งของแล้วตรวจรับ' => 'Delivery',
-	'แพ้ประมูล' => 'Lose',
-	'เกินกำหนดการส่งสินค้า' => 'Overdue'
+define('ARR_STATUS_TH', array(
+	1 => 'นำเสนอลูกค้า',
+	2 => 'สาธิตสินค้า',
+	3 => 'ต่อรองราคา',
+	4 => 'ประมูลราคา',
+	5 => 'ชนะประมูล',
+	6 => 'ทำสัญญาแล้ว',
+	7 => 'ออกบิลแล้ว',
+	8 => 'ส่งของแล้วตรวจรับ',
+	9 => 'แพ้ประมูล',
+	10 => 'เกินกำหนดการส่งสินค้า'
+));
+
+define('ARR_STATUS_ENG', array(
+	1 => 'Status Propose',
+	2 => 'Demo',
+	3 => 'Negotiation',
+	4 => 'Bidding',
+	5 => 'Win',
+	6 => 'Contract',
+	7 => 'Billing',
+	8 => 'Delivery',
+	9 => 'Lose',
+	10 => 'Overdue'
 ));
 
 define('ARR_CONFIDENT', array(
@@ -126,73 +139,102 @@ define('ARR_CONFIDENT', array(
 	100 => 'ลูกค้าส่ง PO หรือทำสัญญาเรียบร้อยแล้ว'
 ));
 
-define('ARR_DEPARTMENT', array(
-	'แพทย์' => 'Medical Doctor',
-	'ทันตแพทย์' => 'Dentist',
-	'พยาบาล' => 'Nurse',
-	'เภสัชกร' => 'Pharmacist',
-	'นักกายภาพบำบัด' => 'Physiotherapist',
-	'นักเทคนิคการแพทย์' => 'Medical technologist',
-	'อื่นๆ' => 'Others'
+define('ARR_DEPARTMENT_TH', array(
+	1 => 'แพทย์',
+	2 => 'ทันตแพทย์',
+	3 => 'พยาบาล',
+	4 => 'เภสัชกร',
+	5 => 'นักกายภาพบำบัด',
+	6 => 'นักเทคนิคการแพทย์',
+	7 => 'อื่นๆ'
+));
+
+define('ARR_DEPARTMENT_ENG', array(
+	1 => 'Medical Doctor',
+	2 => 'Dentist',
+	3 => 'Nurse',
+	4 => 'Pharmacist',
+	5 => 'Physiotherapist',
+	6 => 'Medical technologist',
+	7 => 'Others'
 ));
 
 define('ARR_ZONE', array(
-	'ภาคเหนือ',
-	'ภาคเหนือ-บน',
-	'ภาคเหนือ-ล่าง',
-	'ภาคกลาง',
-	'ภาคอีสาน',
-	'ภาคตะวันตก',
-	'ภาคตะวันออก',
-	'ภาคใต้-บน',
-	'ภาคใต้-ล่าง'
+	1 => 'ภาคเหนือ',
+	2 => 'ภาคเหนือ-บน',
+	3 => 'ภาคเหนือ-ล่าง',
+	4 => 'ภาคกลาง',
+	5 => 'ภาคอีสาน',
+	6 => 'ภาคตะวันตก',
+	7 => 'ภาคตะวันออก',
+	8 => 'ภาคใต้-บน',
+	9 => 'ภาคใต้-ล่าง'
 ));
 
-define('ARR_PREFIX', array(
-	'นาย' => 'Mr.',
-	'นาง' => 'Ms.',
-	'นางสาว' => 'Miss.',
-	'นพ.' => 'Dr.',
-	'พญ.' => 'Ass.Prof.Dr',
-	'ทพ.' => 'Prof.',
-	'ทพ.ญ.' => 'Prof.Dr.',
-	'พว.' => '',
-	'ภก.' => '',
-	'ภญ.' => '',
-	'กภ.' => ''
+define('ARR_PREFIX_TH', array(
+	1 => 'นาย',
+	2 => 'นาง',
+	3 => 'นางสาว',
+	4 => 'นพ.',
+	5 => 'พญ.',
+	6 => 'ทพ.',
+	7 => 'ทพ.ญ.',
+	8 => 'พว.',
+	9 => 'ภก.',
+	10 => 'ภญ.',
+	11 => 'กภ.'
 ));
 
-define('ARR_GENDER', array(
-	'ชาย' => 'Male',
-	'หญิง' => 'Female'
+define('ARR_PREFIX_ENG', array(
+	1 => 'Mr.',
+	2 => 'Ms.',
+	3 => 'Miss.',
+	4 => 'Dr.',
+	5 => 'Ass.Prof.Dr',
+	6 => 'Prof.',
+	7 => 'Prof.Dr.',
+	8 => '',
+	9 => '',
+	10 => '',
+	11 => ''
+));
+
+define('ARR_GENDER_TH', array(
+	1 => 'ชาย',
+	2 => 'หญิง'
+));
+
+define('ARR_GENDER_ENG', array(
+	1 => 'Male',
+	2 => 'Female'
 ));
 
 define('ARR_CONTACT_CHANNAL', array(
-	'Direct Sales',
-	'Event & Activities'
+	1 => 'Direct Sales',
+	2 => 'Event & Activities'
 ));
 
 define('ARR_EXPERTISE', array(
-	'LABORATORY',
-	'REHABILITATION',
-	'CARDIOLOGY',
-	'RADIOLOGY',
-	'ORTHOPEDIC',
-	'EDUCATIONAL MED',
-	'DENTAL',
-	'CSSD',
-	'VET',
-	'TELEMEDICINE',
-	'EMERGENCY & TRAUMA/ICU',
-	'HOSPITAL SUPPLY',
-	'UROLOGY',
-	'OPTHAMOLOGY',
-	'GENERAL SURGERY',
-	'NEUROLOGY/NEUROMED',
-	'OB-GYNE'
+	1 => 'LABORATORY',
+	2 => 'REHABILITATION',
+	3 => 'CARDIOLOGY',
+	4 => 'RADIOLOGY',
+	5 => 'ORTHOPEDIC',
+	6 => 'EDUCATIONAL MED',
+	7 => 'DENTAL',
+	8 => 'CSSD',
+	9 => 'VET',
+	10 => 'TELEMEDICINE',
+	11 => 'EMERGENCY & TRAUMA/ICU',
+	12 => 'HOSPITAL SUPPLY',
+	13 => 'UROLOGY',
+	14 => 'OPTHAMOLOGY',
+	15 => 'GENERAL SURGERY',
+	16 => 'NEUROLOGY/NEUROMED',
+	17 => 'OB-GYNE'
 ));
 
-define('ARR_POSITION', array(
+define('ARR_POSITION_2', array(
 	'sale' => array(
 		'Application Specialist Supervisor',
 		'Application Specialist',
@@ -251,3 +293,64 @@ define('ARR_POSITION', array(
 		'Senior Marketing Manager'
 	)
 ));
+
+define('ARR_POSITION', array(
+	1 => 'Application Specialist Supervisor',
+	2 => 'Application Specialist',
+	3 => 'Assistant Product Manager',
+	4 => 'Assistant R&D Manager',
+	5 => 'Assistant Sales Manager',
+	6 => 'Group Product Manager',
+	7 => 'Product Manager',
+	8 => 'Product Specialist',
+	9 => 'Programmer',
+	10 => 'Project Coordinator',
+	11 => 'Research & Development Manager',
+	12 => 'Sales Manager',
+	13 => 'Sales Supervisor',
+	14 => 'Senior Application Specialist',
+	15 => 'Senior Laboratory Solution Manager',
+	16 => 'Senior Product Specialist',
+	17 => 'Senior Project Coordinator',
+	18 => 'Senior Sales Manager',
+	19 => 'Senior Technical Sales Representative',
+	20 => 'Senior Business Development Manager',
+	21 => 'Senior Product Specialist',
+	22 => 'Senior Programmer',
+	23 => 'Senior Project Coordinator',
+	24 => 'Technical Sales Representative',
+	25 => "Admin Officer",
+	26 => "Assistant Service Engineer",
+	27 => "Assistant Service Manager",
+	28 => "Senior Service Engineer",
+	29 => "Service Department Manager",
+	30 => "Service Engineer",
+	31 => "Service Int'l Support",
+	32 => "Service Manager",
+	33 => "Service Supervisor",
+	34 => "Service Support",
+	35 => "Service Support Engineer",
+	36 => "Service Support Officer",
+	37 => "Senior IT Specialist",
+	38 => "Senior Sales Engineer",
+	39 => "Senior Service Engineer",
+	40 => "Senior Service Support Officer",
+	41 => "Senior System Engineer",
+	42 => "Senior Service Department Manager",
+	43 => "Senior Service Engineer",
+	44 => "System Engineer",
+	45 => "System Engineer Supervisor",
+	46 => 'Graphic Designer',
+	47 => 'Marketing Executive',
+	48 => 'Marketing Officer',
+	49 => 'Marketing Supervisor',
+	50 => 'Senior Marketing Executive',
+	51 => 'Senior Marketing Manager'
+));
+
+define('ARR_POSITION_OPTGROUP', array(
+	'1' => 'SALE',
+	'25' => 'SERVICE',
+	'46' => 'MARKETING'
+));
+

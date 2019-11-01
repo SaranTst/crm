@@ -13,7 +13,7 @@
               <select class="custom-select">
                 <option value="" selected disabled hidden>Choose Expertise</option>
                 <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
-                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                 <?php } ?>
               </select>
             </div>
