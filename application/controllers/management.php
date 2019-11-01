@@ -7,21 +7,46 @@ class Management extends MY_Controller {
     {
 		parent::__construct ();
 		$this->current_page = 'management';
+		$this->load->model('brands_model');
 	}
 
 	public function index()
 	{
-		$data['current_page'] = $this->current_page;
+		$data['datas'] = $this->brands_model->lists();
+
+		if ($this->input->get('json')) {
+			header("Content-Type: application/json");
+			echo json_encode($data);
+			exit;
+		}
 		
 		$this->load->view('header');
 		$this->load->view('management/index', $data);
 		$this->load->view('footer');
 	}
 
-	public function create_lists()
+	public function create_brand()
 	{
 		$this->load->view('header');
-		$this->load->view('management/create_lists');
+		$this->load->view('management/create_brand');
+		$this->load->view('footer');
+	}
+
+	public function update_brand($id='')
+	{
+		$id = (int)$id; 
+
+		$data['datas'] = $this->brands_model->gets($id);
+		$data['id'] = $id;
+
+		if ($this->input->get('json')) {
+			header("Content-Type: application/json");
+			echo json_encode($data);
+			exit;
+		}
+
+		$this->load->view('header');
+		$this->load->view('management/create_brand', $data);
 		$this->load->view('footer');
 	}
 

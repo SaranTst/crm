@@ -24,14 +24,20 @@
       <div class="tab-pane fade show active" id="GENERAL" role="tabpanel" aria-labelledby="GENERAL-tab">
         
         <?php
-        if ($actions=='update') {
-          $data = $datas['data'][0];
-        }else if ($actions=='create') {
-          $data = array();
-        }
+        $j_status = 1;
+        $j_message = '';
 
-        echo $actions;
-        ?>
+        if (isset($datas) && !empty($datas)) {
+          if ($datas['status']==1) {
+            $data = $datas['data'][0];
+          }else{
+            $j_status = $datas['status'];
+            $j_message = $datas['message'];
+            $data = array();
+          }
+        }else{
+          $data = array();
+        }?>
         <form id="add-sales">
           <div class="jumbotron jumbotron-fluid p-3">
             <div class="container-fluid">
@@ -232,8 +238,21 @@
   <script type="text/javascript">
 
   var id = '<?php echo sizeof($data)>0 ? $id : ''; ?>';
+  var j_status = <?php echo $j_status; ?>;
+  var j_message = '<?php echo $j_message; ?>';
 
   $(document).ready(function(){ 
+
+    // if data null show modal alert
+    if (j_status==0) {
+      Swal.fire({
+        title: 'Warning!',
+        text: j_message,
+        type: 'warning'
+      }).then((result) => {
+        window.location.href = base_url+'sales';
+      })
+    }
 
     $('#date-birthday').datepicker({
       format: "dd-mm-yyyy",
@@ -244,9 +263,6 @@
     $('#insert-sales').click(function(e) {
       var url = base_url+'api/sales/update_sales/'+id;
       var formDataSale = checkForm('add-sales');
-      console.log(url);
-      console.log(formDataSale);
-
 
       if (formDataSale) {
         $.ajax({
@@ -255,7 +271,6 @@
           data: formDataSale,
           dataType:"json",
           success: function( resp ){
-            console.log(resp);
             if (resp.status==1) {
               Swal.fire({
                 title: 'Success!',

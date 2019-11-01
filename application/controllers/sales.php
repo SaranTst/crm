@@ -8,11 +8,13 @@ class Sales extends MY_Controller {
 		parent::__construct ();
 		$this->current_page = 'sales';
 		$this->load->model('sales_model');
+		$this->load->model('brands_model');
 	}
 
 	public function index()
 	{
 		$data['datas'] = $this->sales_model->lists();
+		$data['brands'] = $this->brands_model->lists_vendorname();
 
 		if ($this->input->get('json')) {
 			header("Content-Type: application/json");
@@ -32,10 +34,8 @@ class Sales extends MY_Controller {
 
 	public function create_sale()
 	{
-		$data['actions'] = 'create';
-
 		$this->load->view('header');
-		$this->load->view('sales/create_sale', $data);
+		$this->load->view('sales/create_sale');
 		$this->load->view('footer');
 	}
 
@@ -43,7 +43,6 @@ class Sales extends MY_Controller {
 	{
 		$id = (int)$id; 
 		$data['datas'] = $this->sales_model->gets($id);
-		$data['actions'] = 'update';
 		$data['id'] = $id;
 
 		if ($this->input->get('json')) {

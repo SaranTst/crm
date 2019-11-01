@@ -11,6 +11,25 @@
 			</div>
 		</div> <!-- #header-table -->
 
+	  	<?php 
+	  	// Cehack Datas
+	  	if ($datas['status']==1) {
+          $data = $datas['data'];
+          $total = $datas['total'];
+          $limit = $datas['limit'];
+        }else {
+          $data = array();
+          $limit = 10;
+          $total = 10;
+        } 
+
+        // Check Brand
+        if ($brands['status']==1) {
+          $data_brand = $brands['data'];
+        }else {
+          $data_brand = array();
+        } 
+        ?>
 		<div class="row">
 		  <div class="col-md-12 mb-3">
 		    <div class="card">
@@ -45,11 +64,9 @@
 		                    <label>Brand</label>
 		                    <select class="custom-select" name="brand">
 		                      <option value="" selected readonly hidden>Select a Brand</option>
-		                      <option value="1">Brand 1</option>
-		                      <option value="2">Brand 2</option>
-		                      <option value="3">Brand 3</option>
-		                      <option value="4">Brand 4</option>
-		                      <option value="5">Brand 5</option>
+		                      <?php foreach ($data_brand as $key => $value) { ?>
+		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+		                      <?php } ?>
 		                    </select>
 	                  	</div>
 				  		</div>
@@ -99,15 +116,6 @@
 			<div class="card">
 			  <div class="card-header crm-bg-dark-gray">Result</div>
 			  <div class="card-body">
-			  	<?php if ($datas['status']==1) {
-		          $data = $datas['data'];
-		          $total = $datas['total'];
-		          $limit = $datas['limit'];
-		        }else {
-		          $data = array();
-		          $limit = 9;
-		          $total = 9;
-		        } ?>
 			  	<div class="row mb-3">
 			  		<div class="col-md-6">
 			  			<?php $current_page = $this->input->get('page') ? $this->input->get('page') : 1; ?>
@@ -433,7 +441,6 @@
 	            data: formData,
 	            dataType:"json",
 	            success: function( resp ){
-	            	console.log(resp);
 
 	                if (resp.status==1) {
 						Swal.fire({
