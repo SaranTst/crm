@@ -20,21 +20,23 @@ class MY_Controller extends CI_Controller
 
     protected function permission($admin){
 
-        $allow_function=array('login','logout');
+        $allow_function=array('login');
 
         $folder = $this->uri->segment(1);
         $class = $this->uri->segment(2);
         $function = $this->uri->segment(3);
 
         $status=FALSE;
-        if($folder=="api"){
+        if($admin['ID_EMPLOYEE']){
             $status=TRUE;
-        }elseif ($class=="sales" && in_array($function, $allow_function)){
+        }else if ($class=="sales" && in_array($function, $allow_function)){
             $status=TRUE;
-        }else{
-            if($admin['ID_SALE']){
-                $status=TRUE;
-            }
+        }else if ($folder=="api"){
+            $msg['status'] = 0;
+            $msg['message'] = 'กรุณาเข้าสู่ระบบเพื่อใช้งาน';
+            header("Content-Type: application/json");
+            echo json_encode($msg);
+            exit;
         }
         
         return $status;

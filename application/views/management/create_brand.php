@@ -94,10 +94,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Expertise</label>
-                    <select class="custom-select" name="expertise">
+                    <select class="custom-select" name="expertise_id">
                       <option value="" selected readonly hidden>Choose Expertise</option>
                       <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
-                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['EXPERTISE']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['EXPERTISE_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -152,7 +152,7 @@
               <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4 mb-2 text-center">
-                  <input type="hidden" class="form-control" name="user_create" value="<?php echo $this->session->userdata("sale")['ID_SALE']; ?>">
+                  <input type="hidden" class="form-control" name="user_create" value="<?php echo $this->session->userdata("sale")['ID_EMPLOYEE']; ?>">
                   <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" id="insert-brands"><p>SAVE</p></a>
                 </div>
                 <div class="col-md-4"></div>

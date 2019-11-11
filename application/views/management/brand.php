@@ -6,7 +6,7 @@
         <form class="form-inline md-form form-sm active-pink-2 mt-1">
           <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
             aria-label="Search">
-          <a href="javascript:void(0)"><i class="fa fa-search fa-lg"></i></a>
+          <a href="javascript:void(0)" id="ic-search"><i class="fa fa-search fa-lg"></i></a>
         </form>
       </div>
       <div class="col-md-3 pt-2">
@@ -49,7 +49,7 @@
             <td><img src="<?php echo $value['LOGO'] ? base_url().$value['LOGO'] : base_url().'images/150.png'; ?>" class="img-thumbnail" style="height: 75px;"></td>
             <td id="txt-county"><?php echo $value['COUNTY']; ?></td>
             <td id="txt-team"><?php echo $value['TEAM']; ?></td>
-            <td id="txt-expertise"><?php echo ARR_EXPERTISE[$value['EXPERTISE']]; ?></td>
+            <td id="txt-expertise"><?php echo ARR_EXPERTISE[$value['EXPERTISE_ID']]; ?></td>
             <td>
               <div class="text-center">
                 <a href="<?php echo base_url().'management/update_brand/'.$value['ID']; ?>" id="link-update" title="Edit"><i class="fa fa-pencil-square-o fa-2x"></i></a>
@@ -91,18 +91,17 @@
       var perpage = <?php echo $limit; ?>;
       var current_page = <?php echo $current_page; ?>;
       set_pagination(current_page, total, perpage); // set pagination firsttime
+
+      $('#ic-search').click(function(){
+        ajax_data();
+      });
   });
 
   function ajax_data(pageNumber=1) {
 
     var url = base_url+'api/brands/lists_brands?page='+pageNumber;
-    // var formDataArr = $("form#frm_serach").serializeArray();
     var formData = {};
-    // for (var i = 0; i < formDataArr.length; i++){
-    //   if (formDataArr[i]['value']) {
-    //     formData[formDataArr[i]['name']] = formDataArr[i]['value'];
-    //   }
-    // }
+    formData['search'] = $('#crm-input-search').val();
 
     $.ajax({
         url: url,
@@ -118,7 +117,7 @@
               var data = resp.data;
               $.each(data, function(i, v){
 
-                content_result.find('#txt-id').text(v.ID);
+                content_result.find('#txt-id').text(((resp.page - 1) * resp.limit) + (i + 1));
                 content_result.find('#txt-vendor-name').text(v.VENDOR_NAME);
                 if (v.LOGO=='') {
                   content_result.find('img').attr('src', base_url+'images/150.png');
@@ -169,9 +168,6 @@
     var url = base_url+'api/brands/delete_brands/'+id;
     var formData = {};
     formData['USER_DELETE'] = ID_LOGIN;
-
-    console.log(id);
-    return false;
 
     $.ajax({
         url: url,

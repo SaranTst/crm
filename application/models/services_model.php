@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Brands_model extends CI_Model
+class Services_model extends CI_Model
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->table = 'BRANDS';
+		$this->table = 'SERVICES';
 		$this->load->model('general_model');
 		$this->load->model('logs_model');
 	}
@@ -23,9 +23,30 @@ class Brands_model extends CI_Model
 		$where = "";
 		if ($ip_post) {
 
-			if (isset($ip_post['search']) && !empty($ip_post['search'])) {
-				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
-				$where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
+			if (isset($ip_post['department_id']) && !empty($ip_post['department_id'])) {
+				$where .= "DEPARTMENT_ID = '".$this->general_model->clearbadstr($ip_post['department_id'])."' AND ";
+			}
+
+			if (isset($ip_post['zone_id']) && !empty($ip_post['zone_id'])) {
+				$where .= "ZONE_ID = '".$this->general_model->clearbadstr($ip_post['zone_id'])."' AND ";
+			}
+
+			if (isset($ip_post['county']) && !empty($ip_post['county'])) {
+				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['county']));
+				$where .= "COUNTY LIKE '%".$keyword."%' AND ";
+			}
+
+			if (isset($ip_post['position_id']) && !empty($ip_post['position_id'])) {
+				$where .= "POSITION_ID = '".$this->general_model->clearbadstr($ip_post['position_id'])."' AND ";
+			}
+
+			if (isset($ip_post['brand_id']) && !empty($ip_post['brand_id'])) {
+				$where .= "BRAND_ID = '".$this->general_model->clearbadstr($ip_post['brand_id'])."' AND ";
+			}
+
+			if (isset($ip_post['keyword']) && !empty($ip_post['keyword'])) {
+				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['keyword']));
+				$where .= "CONCAT(FIRST_NAME_TH, LAST_NAME_TH, FIRST_NAME_ENG, LAST_NAME_ENG, NICKNAME_TH, NICKNAME_ENG) LIKE '%".$keyword."%' AND ";
 			}
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
@@ -54,44 +75,6 @@ class Brands_model extends CI_Model
 		$msg['total'] = $query_total->num_rows();
 		$msg['limit'] = (int)$limit;
 		$msg['page'] = (int)$page;
-
-		error:
-		return $msg;
-	}
-
-	public function lists_vendorname() {
-
-		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
-		$where = "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
-
-		$this->db->select('ID,VENDOR_NAME');
-		$this->db->from($this->table);
-		$this->db->where($where, NULL, FALSE);
-		$this->db->order_by('ID', $sort);
-		$query = $this->db->get();
-
-		$msg['status']=1;
-		$msg['data'] = $query->result_array();
-		if (sizeof($msg['data'])<1) {
-			$msg['status']=0;
-			$msg['message']='ไม่มีข้อมูล';
-			unset($msg['data']);
-			goto error;
-		}else{
-			$data = $msg['data'];
-			$arr_vendername = array();
-			foreach ($data as $key => $value) {
-				$arr_vendername[$value['ID']] = $value['VENDOR_NAME'];
-			}
-			$msg['data'] = $arr_vendername;
-		}
-
-		$this->db->select('VENDOR_NAME');
-		$this->db->from($this->table);
-		$this->db->where($where, NULL, FALSE);
-		$query_total = $this->db->get();
-
-		$msg['total'] = $query_total->num_rows();
 
 		error:
 		return $msg;
@@ -148,11 +131,10 @@ class Brands_model extends CI_Model
 		$msg['status']=0;
 		$msg['message']='ไม่สามารถเพิ่มช้อมูลลงฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
 		$ip_post = $this->input->post();
-		$vender_name = strtoupper($this->general_model->clearbadstr($ip_post['vendor_name']));
 
-		// check id brand duplicate
+		// check id service duplicate
 		$this->db->from($this->table);
-		$this->db->where('VENDOR_NAME',$vender_name);
+		$this->db->where('ID_EMPLOYEE',(int)$ip_post['id_employee']);
 		$query = $this->db->get();
 		$res_query = $query->result_array();
 		if (sizeof($res_query)>0) {
@@ -161,30 +143,63 @@ class Brands_model extends CI_Model
 			goto error;
 		}
 
-		$data['VENDOR_NAME'] = $vender_name;
+		$data['ID_EMPLOYEE'] = (int)$ip_post['id_employee'];
+		$data['PREFIX'] = (int)$ip_post['prefix'];
+
+		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
+		if (empty($explode_name_th[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาไทยด้วยครับ';
+			goto error;
+		}
+		$data['FIRST_NAME_TH'] = $explode_name_th[0];
+		$data['LAST_NAME_TH'] = $explode_name_th[1];
+
+		$explode_name_eng = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_eng']));
+		if (empty($explode_name_eng[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาอังกฤษด้วยครับ';
+			goto error;
+		}
+		$data['FIRST_NAME_ENG'] = $explode_name_eng[0];
+		$data['LAST_NAME_ENG'] = $explode_name_eng[1];
+
+		$data['NICKNAME_TH'] = $this->general_model->clearbadstr($ip_post['nickname_th']);
+		$data['NICKNAME_ENG'] = $this->general_model->clearbadstr($ip_post['nickname_eng']);
+
+		$chk_mail = $this->general_model->clearbadstr($ip_post['e_mail']);
+		if (!$this->general_model->check_email($chk_mail)) {
+			$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
+			goto error;
+		}
+		$data['EMAIL'] = $chk_mail;
+
+		$chk_tel = $this->general_model->clearbadstr($ip_post['telephone']);
+		if (!$this->general_model->check_telephone_number($chk_tel)) {
+			$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
+			goto error;
+		}
+		$data['TELEPHONE'] = $chk_tel;
+
+		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
+		$data['POSITION_ID'] = (int)$ip_post['position_id'];
+		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
+		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['TEAM'] = $this->general_model->clearbadstr($ip_post['team']);
-		$data['EXPERTISE_ID'] = (int)$ip_post['expertise_id'];
-		$data['SOLUTION_EQUIPMENT'] = $this->general_model->clearbadstr($ip_post['solution_equipment']);
-		$data['ADDRESS'] = $this->general_model->clearbadstr($ip_post['address']);
-		$data['WEBSITE'] = $this->general_model->clearbadstr($ip_post['website']);
-		$data['CONTACT_PERSON_RA'] = $this->general_model->clearbadstr($ip_post['contact_person_ra']);
-		$data['CONTACT_INTER_SUPPORT'] = $this->general_model->clearbadstr($ip_post['contact_inter_support']);
-		$data['MANUFACTURING'] = $this->general_model->clearbadstr($ip_post['manufacturing']);
+		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
 		$data['STATUS_DELETE'] = 0;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = (int)$ip_post['user_create'];
+		$data['PASSWORD'] = md5($data['FIRST_NAME_ENG'].KEY_PASSWORD);
 
 		// move image
 		if (isset($ip_post['image']) && !empty($ip_post['image'])) {
-			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'brands');
+			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'services');
 	        if (!$new_path_image['status']) {
 				$msg_img=$new_path_image;
 	        	return $msg_img;
 	        }
-			$data['LOGO'] = $new_path_image['message'];
+			$data['IMAGE'] = $new_path_image['message'];
 		}else{
-			$data['LOGO'] = '';
+			$data['IMAGE'] = '';
 		}
 
 		$this->db->insert($this->table, $data);
@@ -209,30 +224,62 @@ class Brands_model extends CI_Model
 		$ip_post = $this->input->post();
 		$status_upload_new = FALSE;
 
-		$data['VENDOR_NAME'] = $this->general_model->clearbadstr($ip_post['vendor_name']);
+		$data['ID_EMPLOYEE'] = (int)$ip_post['id_employee'];
+		$data['PREFIX'] = (int)$ip_post['prefix'];
+
+		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
+		if (empty($explode_name_th[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาไทยด้วยครับ';
+			goto error;
+		}
+		$data['FIRST_NAME_TH'] = $explode_name_th[0];
+		$data['LAST_NAME_TH'] = $explode_name_th[1];
+
+		$explode_name_eng = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_eng']));
+		if (empty($explode_name_eng[1])) {
+			$msg['message']='กรุณากรอกนามสกุลภาษาอังกฤษด้วยครับ';
+			goto error;
+		}
+		$data['FIRST_NAME_ENG'] = $explode_name_eng[0];
+		$data['LAST_NAME_ENG'] = $explode_name_eng[1];
+
+		$data['NICKNAME_TH'] = $this->general_model->clearbadstr($ip_post['nickname_th']);
+		$data['NICKNAME_ENG'] = $this->general_model->clearbadstr($ip_post['nickname_eng']);
+
+		$chk_mail = $this->general_model->clearbadstr($ip_post['e_mail']);
+		if (!$this->general_model->check_email($chk_mail)) {
+			$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
+			goto error;
+		}
+		$data['EMAIL'] = $chk_mail;
+
+		$chk_tel = $this->general_model->clearbadstr($ip_post['telephone']);
+		if (!$this->general_model->check_telephone_number($chk_tel)) {
+			$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
+			goto error;
+		}
+		$data['TELEPHONE'] = $chk_tel;
+
+		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
+		$data['POSITION_ID'] = (int)$ip_post['position_id'];
+		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
+		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['TEAM'] = $this->general_model->clearbadstr($ip_post['team']);
-		$data['EXPERTISE_ID'] = (int)$ip_post['expertise_id'];
-		$data['SOLUTION_EQUIPMENT'] = $this->general_model->clearbadstr($ip_post['solution_equipment']);
-		$data['ADDRESS'] = $this->general_model->clearbadstr($ip_post['address']);
-		$data['WEBSITE'] = $this->general_model->clearbadstr($ip_post['website']);
-		$data['CONTACT_PERSON_RA'] = $this->general_model->clearbadstr($ip_post['contact_person_ra']);
-		$data['CONTACT_INTER_SUPPORT'] = $this->general_model->clearbadstr($ip_post['contact_inter_support']);
-		$data['MANUFACTURING'] = $this->general_model->clearbadstr($ip_post['manufacturing']);
+		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
 		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
 
 		// move image
 		if (isset($ip_post['image']) && !empty($ip_post['image']) && $ip_post['image']!=$ip_post['old_image']) {
-			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'brands');
+			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'services');
 	        if (!$new_path_image['status']) {
 				$msg_img=$new_path_image;
 	        	return $msg_img;
 	        }
-			$data['LOGO'] = $new_path_image['message'];
+			$data['IMAGE'] = $new_path_image['message'];
 			$status_upload_new = TRUE;
 		}else{
-			$data['LOGO'] = $ip_post['image'];
+			$data['IMAGE'] = $ip_post['image'];
 		}
 
 

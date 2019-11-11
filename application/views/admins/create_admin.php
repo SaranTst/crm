@@ -23,28 +23,45 @@
       <div class="tab-content">
       <div class="tab-pane fade show active" id="GENERAL" role="tabpanel" aria-labelledby="GENERAL-tab">
         
-        <form id="add-sales">
+        <?php
+        $j_status = 1;
+        $j_message = '';
+
+        // Cehack Datas
+        if (isset($datas) && !empty($datas)) {
+          if ($datas['status']==1) {
+            $data = $datas['data'][0];
+          }else{
+            $j_status = $datas['status'];
+            $j_message = $datas['message'];
+            $data = array();
+          }
+        }else{
+          $data = array();
+        }
+
+        // Check Brand
+        if ($brands['status']==1) {
+          $data_brand = $brands['data'];
+        }else {
+          $data_brand = array();
+        } ?>
+        <form id="add-admins">
           <div class="jumbotron jumbotron-fluid p-3">
             <div class="container-fluid">
-              
-              <div class="row">
-                <div class="col-md-7">
-                  <h3 id="id-jumbotron-add-sales">1.</h3>
-                </div>
-                <div class="col-md-5"></div>
-              </div>
 
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <div class="z-depth-1-half text-center">
-                    <img src="<?php echo base_url(); ?>images/180.png" id="preview-add-sales-1" class="img-thumbnail" style="height: 180px;">
+                    <img src="<?php echo sizeof($data)>0&&$data['IMAGE'] ?  base_url().$data['IMAGE'] : base_url().'images/180.png'; ?>" id="preview-add-admins" class="img-thumbnail" style="height: 180px;">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Upload Image" id="show-file-name-add-sales-1" disabled>
+                        <input type="hidden" class="form-control" name="old_image" value="<?php echo sizeof($data)>0 ? $data['IMAGE'] : ''; ?>" readonly>
+                        <input type="text" class="form-control" placeholder="Upload Image" name="image" id="show-file-name-add-admins" value="<?php echo sizeof($data)>0 ? $data['IMAGE'] : ''; ?>" readonly>
                         <ul class="mb-4">
                           <li><small class="text-muted">*Maximum Size 1 MB</small></li>
                           <li><small class="text-muted">*Please select the picture first</small></li>
@@ -52,8 +69,8 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <input id="input-file-add-sales-1" type="file" name="add_sales[0][img_add_sales]" class="form-control" accept="image/*" style="visibility: hidden; position: absolute;">
-                      <button type="button" class="btn crm-btn-gray btn-lg btn-block" style="border-radius: 0;" id="btn-upload-file-add-sales-1" onclick="upload_and_preview('input-file-add-sales-1' ,'show-file-name-add-sales-1' ,'preview-add-sales-1')"><i class="fa fa-upload" style="padding-right: 10px;"></i>Upload Image</button>
+                      <input id="input-file-add-admins" type="file" class="form-control" accept="image/*" style="visibility: hidden; position: absolute;">
+                      <button type="button" class="btn crm-btn-gray btn-lg btn-block" style="border-radius: 0;" id="btn-upload-file-add-admins" onclick="upload_and_preview_ajax('input-file-add-admins' ,'show-file-name-add-admins' ,'preview-add-admins')"><i class="fa fa-upload" style="padding-right: 10px;"></i>Upload Image</button>
                     </div>
                   </div>
                 </div>
@@ -62,20 +79,18 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Prefix</label>
-                        <select class="custom-select" name="add_sales[0][prefix]">
-                          <option value="" selected>Choose Prefix</option>
-                          <option value="1">Prefix 1</option>
-                          <option value="2">Prefix 2</option>
-                          <option value="3">Prefix 3</option>
-                          <option value="4">Prefix 4</option>
-                          <option value="5">Prefix 5</option>
+                        <select class="custom-select" name="prefix">
+                          <option value="" selected readonly hidden>Choose Prefix</option>
+                          <?php foreach (ARR_PREFIX_TH as $key => $value) { ?>
+                          <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['PREFIX']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>ID</label>
-                        <input type="text" class="form-control" placeholder="ID" name="add_sales[0][id]">
+                        <input type="text" class="form-control" placeholder="ID" name="id_employee" value="<?php echo sizeof($data)>0 ? $data['ID_EMPLOYEE'] : ''; ?>">
                       </div>
                     </div>
                   </div>
@@ -86,13 +101,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name - Surname (Thai)</label>
-                    <input type="text" class="form-control" placeholder="Name - Surname (Thai)" name="add_sales[0][name_surname_th]">
+                    <input type="text" class="form-control" placeholder="Name - Surname (Thai)" name="name_surname_th" value="<?php echo sizeof($data)>0 ? $data['FIRST_NAME_TH'].' '.$data['LAST_NAME_TH'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name - Surname (Eng)</label>
-                    <input type="text" class="form-control" placeholder="Name - Surname (Eng)" name="add_sales[0][name_surname_eng]">
+                    <input type="text" class="form-control" placeholder="Name - Surname (Eng)" name="name_surname_eng" value="<?php echo sizeof($data)>0 ? $data['FIRST_NAME_ENG'].' '.$data['LAST_NAME_ENG'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -101,13 +116,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Thai)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Thai)" name="add_sales[0][nickname_th]">
+                    <input type="text" class="form-control" placeholder="Nickname (Thai)" name="nickname_th" value="<?php echo sizeof($data)>0 ? $data['NICKNAME_TH'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Eng)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Eng)" name="add_sales[0][nickname_eng]">
+                    <input type="text" class="form-control" placeholder="Nickname (Eng)" name="nickname_eng" value="<?php echo sizeof($data)>0 ? $data['NICKNAME_ENG'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -116,13 +131,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>E-mail</label>
-                    <input type="text" class="form-control" placeholder="E-mail" name="add_sales[0][e_mail]">
+                    <input type="text" class="form-control" placeholder="E-mail" name="e_mail" value="<?php echo sizeof($data)>0 ? $data['EMAIL'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel.</label>
-                    <input type="text" class="form-control" placeholder="Tel." name="add_sales[0][tel]">
+                    <input type="text" class="form-control" placeholder="Tel." name="telephone" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE'] : ''; ?>">
                   </div>
                 </div>
               </div>
@@ -132,7 +147,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="add_sales[0][date_birthday]" id="date-birthday">
+                      <input type="text" class="form-control" name="birthday" id="date-birthday" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY'] : ''; ?>">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -142,12 +157,19 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Position</label>
-                    <select class="custom-select" name="add_sales[0][position]">
-                      <option value="" selected>Choose Position</option>
-                      <option value="1">Position 1</option>
-                      <option value="2">Position 2</option>
-                      <option value="3">Position 3</option>
-                      <option value="4">Position 4</option>
+                    <select class="custom-select" name="position_id">
+                    <option value="" selected readonly hidden>Select a Position</option>
+                    <?php foreach (ARR_POSITION as $key => $value) { 
+
+                      $selected="";
+                      sizeof($data)>0 && $data['POSITION_ID']==$key ? $selected="selected" : $selected="";
+                      if (!empty(ARR_POSITION_OPTGROUP[$key])) {
+                        echo '<optgroup label="'.ARR_POSITION_OPTGROUP[$key].'">';
+                        echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                      }else{
+                        echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                      }
+                    } ?>
                     </select>
                   </div>
                 </div>
@@ -157,48 +179,42 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Department</label>
-                    <select class="custom-select" name="add_sales[0][department]">
-                      <option value="" selected>Choose Department</option>
-                      <option value="1">Department 1</option>
-                      <option value="2">Department 2</option>
-                      <option value="3">Department 3</option>
-                      <option value="4">Department 4</option>
-                      <option value="5">Department 5</option>
+                    <select class="custom-select" name="department_id">
+                      <option value="" selected readonly hidden>Choose Department</option>
+                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Zone</label>
-                    <select class="custom-select" name="add_sales[0][zone]">
-                      <option value="" selected>Choose Zone</option>
-                      <option value="1">Zone 1</option>
-                      <option value="2">Zone 2</option>
-                      <option value="3">Zone 3</option>
-                      <option value="4">Zone 4</option>
-                      <option value="5">Zone 5</option>
+                    <select class="custom-select" name="zone_id">
+                      <option value="" selected readonly hidden>Choose Zone</option>
+                      <?php foreach (ARR_ZONE as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['ZONE_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
               </div>
 
               <div class="row">
-              	<div class="col-md-6">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>County</label>
-                    <input type="text" class="form-control" placeholder="County" name="add_sales[0][county]">
+                    <input type="text" class="form-control" placeholder="County" name="county" value="<?php echo sizeof($data)>0 ? $data['COUNTY'] : ''; ?>">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Brand</label>
-                    <select class="custom-select" name="add_sales[0][brand]">
-                      <option value="" selected>Choose Brand</option>
-                      <option value="1">Brand 1</option>
-                      <option value="2">Brand 2</option>
-                      <option value="3">Brand 3</option>
-                      <option value="4">Brand 4</option>
-                      <option value="5">Brand 5</option>
+                    <select class="custom-select" name="brand_id">
+                      <option value="" selected readonly hidden>Select a Brand</option>
+                      <?php foreach ($data_brand as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['BRAND_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -207,7 +223,8 @@
               <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4 mb-2 text-center">
-                  <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><p>SAVE</p></a>
+                  <input type="hidden" class="form-control" name="user_create" value="<?php echo $this->session->userdata("sale")['ID_EMPLOYEE']; ?>">
+                  <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" id="insert-admins"><p>SAVE</p></a>
                 </div>
                 <div class="col-md-4"></div>
               </div>
@@ -226,10 +243,92 @@
 
   <script type="text/javascript">
 
+  var id = '<?php echo sizeof($data)>0 ? $id : ''; ?>';
+  var j_status = <?php echo $j_status; ?>;
+  var j_message = '<?php echo $j_message; ?>';
+
+  $(document).ready(function(){ 
+
+    // if data null show modal alert
+    if (j_status==0) {
+      Swal.fire({
+        title: 'Warning!',
+        text: j_message,
+        type: 'warning'
+      }).then((result) => {
+        window.location.href = base_url+'admins';
+      })
+    }
+
     $('#date-birthday').datepicker({
       format: "dd-mm-yyyy",
       language: "th",
       autoclose: true
     })
+
+    $('#insert-admins').click(function(e) {
+      var url = base_url+'api/admins/update_admins/'+id;
+      var formDataAdmin = checkForm('add-admins');
+
+      if (formDataAdmin) {
+        $.ajax({
+          url: url,
+          type:"POST",
+          data: formDataAdmin,
+          dataType:"json",
+          success: function( resp ){
+            if (resp.status==1) {
+              Swal.fire({
+                title: 'Success!',
+                text: resp.message,
+                type: 'success'
+              }).then((result) => {
+                window.location.href = base_url+'admins';
+              })
+            }else{
+              Swal.fire({
+                title: 'Warning!',
+                text: resp.message,
+                type: 'warning'
+              })
+            }
+          },
+          error: function( jqXhr, textStatus, errorThrown ){
+            Swal.fire({
+              title: jqXhr.status,
+              text: errorThrown,
+              type: 'error'
+            })
+          }
+        });
+      }
+    });
+
+
+    $("input", $("form#add-admins")).on("keyup", function(){
+      $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
+    })
+    $("select", $("form#add-admins")).on("change", function(){
+      $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
+    })
+
+    function checkForm(idform) {
+     $("form#"+idform).removeClass("border border-danger").siblings("small.text-danger").remove();
+      var formDataArr = $("form#"+idform).serializeArray();
+      var formData = {};
+      for (var i = 0; i < formDataArr.length; i++){
+
+        if (formDataArr[i]['value'] || formDataArr[i]['name']=='image' || formDataArr[i]['name']=='old_image') {
+          formData[formDataArr[i]['name']] = formDataArr[i]['value'];
+        }else{
+          $("[name='"+formDataArr[i]['name']+"']").removeClass("border border-danger").siblings("small.text-danger").remove();
+          $("[name='"+formDataArr[i]['name']+"']").addClass("border border-danger").parent().last().append('<small class="text-danger" style="display: block;">*กรุณากรอกข้อมูล '+formDataArr[i]['name']+'</small>');
+          return false
+        }
+      }
+      return formData;
+    }
+
+  });
 
   </script>

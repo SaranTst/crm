@@ -40,7 +40,7 @@
 				  		<div class="col-md-6">
 			  			<div class="form-group">
 		                    <label>Department</label>
-		                    <select class="custom-select" name="department">
+		                    <select class="custom-select" name="department_id">
 		                      <option value="" selected readonly hidden>Choose Department</option>
 		                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
 		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -51,7 +51,7 @@
 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>Zone</label>
-		                    <select class="custom-select" name="zone">
+		                    <select class="custom-select" name="zone_id">
 		                      <option value="" selected readonly hidden>Choose Zone</option>
 		                      <?php foreach (ARR_ZONE as $key => $value) { ?>
 		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -62,7 +62,7 @@
 				  		<div class="col-md-6">
 	                  	<div class="form-group">
 		                    <label>Brand</label>
-		                    <select class="custom-select" name="brand">
+		                    <select class="custom-select" name="brand_id">
 		                      <option value="" selected readonly hidden>Select a Brand</option>
 		                      <?php foreach ($data_brand as $key => $value) { ?>
 		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -73,7 +73,7 @@
 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>Position</label>
-		                    <select class="custom-select" name="position">
+		                    <select class="custom-select" name="position_id">
 		                    <option value="" selected readonly hidden>Select a Position</option>
 							<?php foreach (ARR_POSITION as $key => $value) { 
 								if (!empty(ARR_POSITION_OPTGROUP[$key])) {
@@ -141,13 +141,13 @@
 						  			<img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-fluid rounded-circle">
 						  		</div>
 						  		<div class="col-md-8">
-					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue" id="txt-department"><b><?php echo $value['DEPARTMENT']; ?></b></p>
+					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue" id="txt-department"><b><?php echo ARR_DEPARTMENT_TH[$value['DEPARTMENT_ID']]; ?></b></p>
 					  				<p class="crm-card-sale-text" id="txt-name-nickname"><b><?php echo $value['FIRST_NAME_ENG'].' '.$value['LAST_NAME_ENG'].' ('.$value['NICKNAME_ENG'].')'; ?></b></p>
 						  		</div>
 						  	</div>
 						  	<div class="row">
 						  		<div class="col-md-12">
-						  			<p class="crm-card-sale-text" id="txt-position"><?php echo $value['POSITION']; ?></p>
+						  			<p class="crm-card-sale-text" id="txt-position"><?php echo ARR_POSITION[$value['POSITION_ID']]; ?></p>
 						  		</div>
 						  		<div class="col-md-12">
 						  			<p class="crm-card-sale-text" id="txt-email">Email : <?php echo $value['EMAIL']; ?></p>
@@ -314,6 +314,11 @@
 
   <script type="text/javascript">
 
+  	var ARR_DEPARTMENT_TH = <?php echo json_encode(ARR_DEPARTMENT_TH); ?>;
+  	var ARR_POSITION = <?php echo json_encode(ARR_POSITION); ?>;
+  	var ARR_ZONE = <?php echo json_encode(ARR_ZONE); ?>;
+  	var ARR_BRAND = <?php echo json_encode($data_brand); ?>;
+
   	$(document).ready(function(){ 
 
   		window.history.replaceState(null, null, window.location.pathname); // remove all url param
@@ -345,12 +350,12 @@
 			$('#sale_contact_modal').find('#modal-name-eng').text(values.FIRST_NAME_ENG+' '+values.LAST_NAME_ENG);
 			$('#sale_contact_modal').find('#modal-name-th').text(values.FIRST_NAME_TH+' '+values.LAST_NAME_TH);
 			$('#sale_contact_modal').find('#modal-nickname').text(values.NICKNAME_ENG);
-			$('#sale_contact_modal').find('#modal-id').text(values.ID);
-			$('#sale_contact_modal').find('#modal-department').text(values.DEPARTMENT);
-			$('#sale_contact_modal').find('#modal-position').text(values.POSITION);
-			$('#sale_contact_modal').find('#modal-zone').text(values.ZONE);
+			$('#sale_contact_modal').find('#modal-id').text(values.ID_EMPLOYEE);
+			$('#sale_contact_modal').find('#modal-department').text(ARR_DEPARTMENT_TH[values.DEPARTMENT_ID]);
+			$('#sale_contact_modal').find('#modal-position').text(ARR_POSITION[values.POSITION_ID]);
+			$('#sale_contact_modal').find('#modal-zone').text(ARR_ZONE[values.ZONE_ID]);
 			$('#sale_contact_modal').find('#modal-county').text(values.COUNTY);
-			$('#sale_contact_modal').find('#modal-brand').text(values.BRAND);
+			$('#sale_contact_modal').find('#modal-brand').text(ARR_BRAND[values.BRAND_ID]);
 			$('#sale_contact_modal').find('#modal-telephone').text(values.TELEPHONE);
 			$('#sale_contact_modal').find('#modal-email').text(values.EMAIL);
 
@@ -390,9 +395,9 @@
 	                		}else{
 	                			content_result.find('img').attr('src', base_url+v.IMAGE);
 	                		}
-	                		content_result.find('#txt-department').html('<b>'+v.DEPARTMENT+'</b>');
+	                		content_result.find('#txt-department').html('<b>'+ARR_DEPARTMENT_TH[v.DEPARTMENT_ID]+'</b>');
 	                		content_result.find('#txt-name-nickname').html('<b>'+v.FIRST_NAME_ENG+' '+v.LAST_NAME_ENG+' ('+v.NICKNAME_ENG+') </b>');
-	                		content_result.find('#txt-position').text(v.POSITION);
+	                		content_result.find('#txt-position').text(ARR_POSITION[v.POSITION_ID]);
 	                		content_result.find('#txt-email').text('Email : '+v.EMAIL);
 	                		content_result.find('#txt-telephone').text('Tel : '+v.TELEPHONE);
 

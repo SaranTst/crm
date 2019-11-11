@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sales extends MY_Controller {
+class Admins extends MY_Controller {
 
     public function __construct()
     {
@@ -9,7 +9,7 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_model');
 	}
 
-	public function lists_sales()
+	public function lists_admins()
 	{
 		$msg = $this->sales_model->lists();
 
@@ -17,7 +17,7 @@ class Sales extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function gets_sales($id=null)
+	public function gets_admins($id=null)
 	{
 		$id = (int)$id; 
 		$msg = $this->sales_model->gets($id);
@@ -26,14 +26,14 @@ class Sales extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function update_sales($id=null)
+	public function update_admins($id=null)
 	{
 		$id = (int)$id; 
 
 		if ($id) {
 			$msg = $this->sales_model->updates($id);
 		}else{
-			$_POST['ROLE'] = 2;
+			$_POST['ROLE'] = 1;
 			$msg = $this->sales_model->inserts();
 		}
 
@@ -41,7 +41,7 @@ class Sales extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function delete_sales($id=null)
+	public function delete_admins($id=null)
 	{
 		$id = (int)$id;
 		$msg = $this->sales_model->deletes($id);
@@ -50,12 +50,16 @@ class Sales extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function login()
+  	public function initial_admin()
 	{
-		$msg = $this->sales_model->login();
+		$msg = $this->sales_model->initial_admin();
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
+	}
+
+	public function echodefind() {
+		echo json_encode(ARR_EXPERTISE);
 	}
 
 }

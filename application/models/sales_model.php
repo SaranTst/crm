@@ -23,12 +23,12 @@ class Sales_model extends CI_Model
 		$where = "";
 		if ($ip_post) {
 
-			if (isset($ip_post['department']) && !empty($ip_post['department'])) {
-				$where .= "DEPARTMENT = '".$this->general_model->clearbadstr($ip_post['department'])."' AND ";
+			if (isset($ip_post['department_id']) && !empty($ip_post['department_id'])) {
+				$where .= "DEPARTMENT_ID = '".$this->general_model->clearbadstr($ip_post['department_id'])."' AND ";
 			}
 
-			if (isset($ip_post['zone']) && !empty($ip_post['zone'])) {
-				$where .= "ZONE = '".$this->general_model->clearbadstr($ip_post['zone'])."' AND ";
+			if (isset($ip_post['zone_id']) && !empty($ip_post['zone_id'])) {
+				$where .= "ZONE_ID = '".$this->general_model->clearbadstr($ip_post['zone_id'])."' AND ";
 			}
 
 			if (isset($ip_post['county']) && !empty($ip_post['county'])) {
@@ -36,12 +36,12 @@ class Sales_model extends CI_Model
 				$where .= "COUNTY LIKE '%".$keyword."%' AND ";
 			}
 
-			if (isset($ip_post['position']) && !empty($ip_post['position'])) {
-				$where .= "POSITION = '".$this->general_model->clearbadstr($ip_post['position'])."' AND ";
+			if (isset($ip_post['position_id']) && !empty($ip_post['position_id'])) {
+				$where .= "POSITION_ID = '".$this->general_model->clearbadstr($ip_post['position_id'])."' AND ";
 			}
 
-			if (isset($ip_post['brand']) && !empty($ip_post['brand'])) {
-				$where .= "BRAND = '".$this->general_model->clearbadstr($ip_post['brand'])."' AND ";
+			if (isset($ip_post['brand_id']) && !empty($ip_post['brand_id'])) {
+				$where .= "BRAND_ID = '".$this->general_model->clearbadstr($ip_post['brand_id'])."' AND ";
 			}
 
 			if (isset($ip_post['keyword']) && !empty($ip_post['keyword'])) {
@@ -135,7 +135,7 @@ class Sales_model extends CI_Model
 
 		// check id sale duplicate
 		$this->db->from($this->table);
-		$this->db->where('ID_SALE',(int)$ip_post['id_sale']);
+		$this->db->where('ID_EMPLOYEE',(int)$ip_post['id_employee']);
 		$query = $this->db->get();
 		$res_query = $query->result_array();
 		if (sizeof($res_query)>0) {
@@ -144,7 +144,7 @@ class Sales_model extends CI_Model
 			goto error;
 		}
 
-		$data['ID_SALE'] = (int)$ip_post['id_sale'];
+		$data['ID_EMPLOYEE'] = (int)$ip_post['id_employee'];
 		$data['PREFIX'] = (int)$ip_post['prefix'];
 
 		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
@@ -181,12 +181,12 @@ class Sales_model extends CI_Model
 		$data['TELEPHONE'] = $chk_tel;
 
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
-		$data['POSITION'] = (int)$ip_post['position'];
-		$data['DEPARTMENT'] = (int)$ip_post['department'];
-		$data['ZONE'] = (int)$ip_post['zone'];
+		$data['POSITION_ID'] = (int)$ip_post['position_id'];
+		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
+		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND'] = (int)$ip_post['brand'];
-		$data['ROLE'] = 2;
+		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
+		$data['ROLE'] = isset($ip_post['ROLE'])&&!empty($ip_post['ROLE']) ? (int)$ip_post['ROLE'] : 2;
 		$data['STATUS_DELETE'] = 0;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = (int)$ip_post['user_create'];
@@ -196,8 +196,8 @@ class Sales_model extends CI_Model
 		if (isset($ip_post['image']) && !empty($ip_post['image'])) {
 			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
 	        if (!$new_path_image['status']) {
-				$msg=$new_path_image;
-	        	return $msg;
+				$msg_img=$new_path_image;
+	        	return $msg_img;
 	        }
 			$data['IMAGE'] = $new_path_image['message'];
 		}else{
@@ -224,8 +224,9 @@ class Sales_model extends CI_Model
 		$msg['status']=0;
 		$msg['message']='ไม่สามารถแก้ไขข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
 		$ip_post = $this->input->post();
+		$status_upload_new = FALSE;
 
-		$data['ID_SALE'] = (int)$ip_post['id_sale'];
+		$data['ID_EMPLOYEE'] = (int)$ip_post['id_employee'];
 		$data['PREFIX'] = (int)$ip_post['prefix'];
 
 		$explode_name_th = explode(' ', $this->general_model->clearbadstr($ip_post['name_surname_th']));
@@ -262,24 +263,25 @@ class Sales_model extends CI_Model
 		$data['TELEPHONE'] = $chk_tel;
 
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
-		$data['POSITION'] = (int)$ip_post['position'];
-		$data['DEPARTMENT'] = (int)$ip_post['department'];
-		$data['ZONE'] = (int)$ip_post['zone'];
+		$data['POSITION_ID'] = (int)$ip_post['position_id'];
+		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
+		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
 		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND'] = (int)$ip_post['brand'];
+		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
 		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
 
 		// move image
-		if (isset($ip_post['image']) && !empty($ip_post['image'])) {
+		if (isset($ip_post['image']) && !empty($ip_post['image']) && $ip_post['image']!=$ip_post['old_image']) {
 			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
 	        if (!$new_path_image['status']) {
-				$msg=$new_path_image;
-	        	return $msg;
+				$msg_img=$new_path_image;
+	        	return $msg_img;
 	        }
 			$data['IMAGE'] = $new_path_image['message'];
+			$status_upload_new = TRUE;
 		}else{
-			$data['IMAGE'] = '';
+			$data['IMAGE'] = $ip_post['image'];
 		}
 
 
@@ -288,16 +290,18 @@ class Sales_model extends CI_Model
 		$res_update = $this->db->affected_rows();
 		if ($res_update > 0) {
 
-			// delete old image
-	        if (isset($ip_post['old_image']) && !empty($ip_post['old_image'])) {
-	        	$old_image = $this->general_model->clearbadstr($ip_post['old_image']);
-	        	$res_delete_image = unlink(DOCUMENT_ROOT.$old_image);
-	        	if (!$res_delete_image) {
-	        		$msg['status']=0;
-					$msg['message']='ไม่สามารถลบไฟล์รูปได้ กรุณาลองใหม่อีกครั้ง';
-	        		goto error;
-	        	}
-	        }
+			if ($status_upload_new) {
+				// delete old image
+		        if (isset($ip_post['old_image']) && !empty($ip_post['old_image'])) {
+		        	$old_image = $this->general_model->clearbadstr($ip_post['old_image']);
+		        	$res_delete_image = unlink(DOCUMENT_ROOT.$old_image);
+		        	if (!$res_delete_image) {
+		        		$msg['status']=0;
+						$msg['message']='ไม่สามารถลบไฟล์รูปได้ กรุณาลองใหม่อีกครั้ง';
+		        		goto error;
+		        	}
+		        }
+	    	}
 
 			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
 			if ($res_insert_log) {
@@ -345,8 +349,8 @@ class Sales_model extends CI_Model
 
 		$ip_login = $this->input->post();
 
-		$data['ID_SALE'] = $ip_login['id_sale'];
-		if (!is_numeric($data['ID_SALE'])) {
+		$data['ID_EMPLOYEE'] = $ip_login['id_employee'];
+		if (!is_numeric($data['ID_EMPLOYEE'])) {
 			$msg['status'] = 0;
 			$msg['message'] = 'กรุณากรอกรหัสพนักงานให้ถูกต้องด้วยครับ';
 			goto error;
@@ -354,7 +358,7 @@ class Sales_model extends CI_Model
 		$data['PASSWORD'] = md5($ip_login['password'].KEY_PASSWORD);
 
 		$this->db->from($this->table);
-		$this->db->where('ID_SALE',$data['ID_SALE']);
+		$this->db->where('ID_EMPLOYEE',$data['ID_EMPLOYEE']);
 		$this->db->where('PASSWORD',$data['PASSWORD']);
 		$query = $this->db->get();
 		$res_query = $query->result_array();
@@ -363,7 +367,7 @@ class Sales_model extends CI_Model
 			$msg['datas'] = 'เข้าสู่ระบบสำเร็จ';
 
 			$userdata['sale'] = array(
-			'ID_SALE' => $res_query[0]['ID_SALE'],
+			'ID_EMPLOYEE' => $res_query[0]['ID_EMPLOYEE'],
 			'FIRST_NAME_ENG' => $res_query[0]['FIRST_NAME_ENG'],
 			'LAST_NAME_ENG' => $res_query[0]['LAST_NAME_ENG'],
 			'ROLE' => $res_query[0]['ROLE'],
@@ -382,9 +386,9 @@ class Sales_model extends CI_Model
 	public function initial_admin() {
 
 		// create admin
-		$data['ID_SALE'] = 1018601;
+		$data['ID_EMPLOYEE'] = 1018601;
 		$data['PREFIX'] = 1;
-		$data['IMAGE'] = 'uploads/sales/img-admin.jpg';
+		$data['IMAGE'] = '';
 		$data['FIRST_NAME_TH'] = 'ผู้ดูแล';
 		$data['LAST_NAME_TH'] = 'ระบบ';
 		$data['FIRST_NAME_ENG'] = 'System';
@@ -394,18 +398,18 @@ class Sales_model extends CI_Model
 		$data['EMAIL'] = 'sarant@bjc.co.th';
 		$data['TELEPHONE'] = '0999999999';
 		$data['BIRTHDAY'] = date('Y-m-d');
-		$data['POSITION'] = 100;
-		$data['DEPARTMENT'] = 100;
-		$data['ZONE'] = 100;
-		$data['COUNTY'] = 100;
-		$data['BRAND'] = 100;
+		$data['POSITION_ID'] = 1;
+		$data['DEPARTMENT_ID'] = 1;
+		$data['ZONE_ID'] = 1;
+		$data['COUNTY'] = 1;
+		$data['BRAND_ID'] = 1;
 		$data['ROLE'] = 1;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = 1018601;
 		$data['PASSWORD'] = md5('saran'.KEY_PASSWORD);
 
 		$this->db->from($this->table);
-		$this->db->where('ID_SALE',$data['ID_SALE']);
+		$this->db->where('ID_EMPLOYEE',$data['ID_EMPLOYEE']);
 		$query = $this->db->get();
 		$res_query = $query->result_array();
 

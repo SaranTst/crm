@@ -27,6 +27,7 @@
         $j_status = 1;
         $j_message = '';
 
+        // Cehack Datas
         if (isset($datas) && !empty($datas)) {
           if ($datas['status']==1) {
             $data = $datas['data'][0];
@@ -37,7 +38,14 @@
           }
         }else{
           $data = array();
-        }?>
+        }
+
+        // Check Brand
+        if ($brands['status']==1) {
+          $data_brand = $brands['data'];
+        }else {
+          $data_brand = array();
+        } ?>
         <form id="add-sales">
           <div class="jumbotron jumbotron-fluid p-3">
             <div class="container-fluid">
@@ -82,7 +90,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>ID</label>
-                        <input type="text" class="form-control" placeholder="ID" name="id_sale" value="<?php echo sizeof($data)>0 ? $data['ID_SALE'] : ''; ?>">
+                        <input type="text" class="form-control" placeholder="ID" name="id_employee" value="<?php echo sizeof($data)>0 ? $data['ID_EMPLOYEE'] : ''; ?>">
                       </div>
                     </div>
                   </div>
@@ -149,12 +157,12 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Position</label>
-                    <select class="custom-select" name="position">
+                    <select class="custom-select" name="position_id">
                     <option value="" selected readonly hidden>Select a Position</option>
                     <?php foreach (ARR_POSITION as $key => $value) { 
 
                       $selected="";
-                      sizeof($data)>0 && $data['POSITION']==$key ? $selected="selected" : $selected="";
+                      sizeof($data)>0 && $data['POSITION_ID']==$key ? $selected="selected" : $selected="";
                       if (!empty(ARR_POSITION_OPTGROUP[$key])) {
                         echo '<optgroup label="'.ARR_POSITION_OPTGROUP[$key].'">';
                         echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
@@ -171,10 +179,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Department</label>
-                    <select class="custom-select" name="department">
+                    <select class="custom-select" name="department_id">
                       <option value="" selected readonly hidden>Choose Department</option>
                       <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
-                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -182,10 +190,10 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Zone</label>
-                    <select class="custom-select" name="zone">
+                    <select class="custom-select" name="zone_id">
                       <option value="" selected readonly hidden>Choose Zone</option>
                       <?php foreach (ARR_ZONE as $key => $value) { ?>
-                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['ZONE']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['ZONE_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -202,13 +210,11 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Brand</label>
-                    <select class="custom-select" name="brand">
-                      <option value="" selected>Choose Brand</option>
-                      <option value="1">Brand 1</option>
-                      <option value="2">Brand 2</option>
-                      <option value="3">Brand 3</option>
-                      <option value="4">Brand 4</option>
-                      <option value="5">Brand 5</option>
+                    <select class="custom-select" name="brand_id">
+                      <option value="" selected readonly hidden>Select a Brand</option>
+                      <?php foreach ($data_brand as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['BRAND_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -217,7 +223,7 @@
               <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4 mb-2 text-center">
-                  <input type="hidden" class="form-control" name="user_create" value="<?php echo $this->session->userdata("sale")['ID_SALE']; ?>">
+                  <input type="hidden" class="form-control" name="user_create" value="<?php echo $this->session->userdata("sale")['ID_EMPLOYEE']; ?>">
                   <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" id="insert-sales"><p>SAVE</p></a>
                 </div>
                 <div class="col-md-4"></div>

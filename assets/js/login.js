@@ -3,11 +3,11 @@
     var url = base_url+'api/sales/login';
     var data = $( "form#frm_login" ).serialize();
 
-    var id_sale = $("input[name^=id_sale]");
+    var id_employee = $("input[name^=id_employee]");
     var password = $("input[name^=password]");
 
-    if (! id_sale.val()) {
-        id_sale.addClass("border border-danger").siblings("p.text-danger").css("display","block");
+    if (! id_employee.val()) {
+        id_employee.addClass("border border-danger").siblings("p.text-danger").css("display","block");
     }else if (! password.val()){
         password.addClass("border border-danger").siblings("p.text-danger").css("display","block");
     }else{

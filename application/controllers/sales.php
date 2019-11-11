@@ -34,8 +34,10 @@ class Sales extends MY_Controller {
 
 	public function create_sale()
 	{
+		$data['brands'] = $this->brands_model->lists_vendorname();
+
 		$this->load->view('header');
-		$this->load->view('sales/create_sale');
+		$this->load->view('sales/create_sale', $data);
 		$this->load->view('footer');
 	}
 
@@ -43,6 +45,7 @@ class Sales extends MY_Controller {
 	{
 		$id = (int)$id; 
 		$data['datas'] = $this->sales_model->gets($id);
+		$data['brands'] = $this->brands_model->lists_vendorname();
 		$data['id'] = $id;
 
 		if ($this->input->get('json')) {

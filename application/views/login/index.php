@@ -81,7 +81,7 @@
                             	<div class="form-group mb-3">
                             		<div class="has-search">
 									  <span class="form-control-feedback"><img src="<?php echo base_url(); ?>images/login/Icon-User.png" class="img-fluid"></span>
-									  <input type="text" class="form-control" placeholder="Login" name="id_sale">
+									  <input type="text" class="form-control" placeholder="Login" name="id_employee">
 									  <p class="text-danger" style="display: none;">*กรุณากรอกรหัสพนักงาน</p>
 									</div>
 								</div>
@@ -96,7 +96,6 @@
                                 	<a href="javascript:void(0)"><u>Forgot your Password?</u></a>
                                 </div>
                                 <div class="text-center">
-	                                <!-- <button type="button" class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm" onclick="window.location.href = '<?php echo base_url(); ?>dashboard';">Sign in</button> -->
 	                                <button class="btn btn-lg btn-login text-uppercase rounded-pill shadow-sm">Sign in</button>
 	                            </div>
                             </form>
