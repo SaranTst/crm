@@ -390,7 +390,7 @@
 	                		content_result.find('#link-update').attr('href', base_url+'services/update_service/'+v.ID);
 	                		content_result.find('#link-delete').attr('onclick', 'btn_delete('+v.ID+')');
 	                		content_result.find('.card-body').attr('onclick', 'show_contact_sales('+JSON.stringify(v)+')');
-	                		if (v.IMAGE=='') {
+	                		if (v.IMAGE=='' || v.IMAGE===null) {
 	                			content_result.find('img').attr('src', base_url+'images/150.png');
 	                		}else{
 	                			content_result.find('img').attr('src', base_url+v.IMAGE);

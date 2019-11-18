@@ -422,7 +422,7 @@ class Sales_model extends CI_Model
 	public function initial_admin() {
 
 		// create admin
-		$data['ID_EMPLOYEE'] = 1018601;
+		$data['ID_EMPLOYEE'] = 101;
 		$data['PREFIX'] = 1;
 		// $data['IMAGE'] = '';
 		$data['FIRST_NAME_TH'] = 'ผู้ดูแล';
@@ -431,7 +431,7 @@ class Sales_model extends CI_Model
 		$data['LAST_NAME_ENG'] = 'Administrator';
 		$data['NICKNAME_TH'] = 'ผู้ดูแลระบบ';
 		$data['NICKNAME_ENG'] = 'Admin';
-		$data['EMAIL'] = 'sarant@bjc.co.th';
+		$data['EMAIL'] = 'admin@bjc.co.th';
 		$data['TELEPHONE'] = '0999999999';
 		$data['BIRTHDAY'] = date('Y-m-d');
 		$data['POSITION_ID'] = 1;
@@ -442,7 +442,7 @@ class Sales_model extends CI_Model
 		$data['ROLE'] = 1;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = 1018601;
-		$data['PASSWORD'] = md5('saran'.KEY_PASSWORD);
+		$data['PASSWORD'] = md5('admin'.KEY_PASSWORD);
 
 		$this->db->from($this->table);
 		$this->db->where('ID_EMPLOYEE',$data['ID_EMPLOYEE']);

@@ -11,7 +11,7 @@ class Admins extends MY_Controller {
 
 	public function lists_admins()
 	{
-		$msg = $this->sales_model->lists();
+		$msg = $this->sales_model->lists(1);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
