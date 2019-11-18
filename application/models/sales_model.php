@@ -81,6 +81,45 @@ class Sales_model extends CI_Model
 		return $msg;
 	}
 
+	public function lists_id_sale() {
+
+		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
+		$where = "STATUS_DELETE = 0 "; // status_delete 0 => no delete / 1 => delete
+		$where .= "AND ROLE != 1";  // role 1 => admin / 2 => sale
+
+		$this->db->select('ID,ID_EMPLOYEE');
+		$this->db->from($this->table);
+		$this->db->where($where, NULL, FALSE);
+		$this->db->order_by('ID', $sort);
+		$query = $this->db->get();
+
+		$msg['status']=1;
+		$msg['data'] = $query->result_array();
+		if (sizeof($msg['data'])<1) {
+			$msg['status']=0;
+			$msg['message']='ไม่มีข้อมูล';
+			unset($msg['data']);
+			goto error;
+		}else{
+			$data = $msg['data'];
+			$arr_vendername = array();
+			foreach ($data as $key => $value) {
+				$arr_vendername[$value['ID']] = $value['ID_EMPLOYEE'];
+			}
+			$msg['data'] = $arr_vendername;
+		}
+
+		$this->db->select('ID_EMPLOYEE');
+		$this->db->from($this->table);
+		$this->db->where($where, NULL, FALSE);
+		$query_total = $this->db->get();
+
+		$msg['total'] = $query_total->num_rows();
+
+		error:
+		return $msg;
+	}
+
 	public function gets($id=null) {
 
 		if (!$id) {
@@ -200,8 +239,6 @@ class Sales_model extends CI_Model
 	        	return $msg_img;
 	        }
 			$data['IMAGE'] = $new_path_image['message'];
-		}else{
-			$data['IMAGE'] = '';
 		}
 
 		$this->db->insert($this->table, $data);
@@ -290,6 +327,12 @@ class Sales_model extends CI_Model
 		$res_update = $this->db->affected_rows();
 		if ($res_update > 0) {
 
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='แก้ไขข้อมูลเรียบร้อย';
+			}
+
 			if ($status_upload_new) {
 				// delete old image
 		        if (isset($ip_post['old_image']) && !empty($ip_post['old_image'])) {
@@ -298,16 +341,9 @@ class Sales_model extends CI_Model
 		        	if (!$res_delete_image) {
 		        		$msg['status']=0;
 						$msg['message']='ไม่สามารถลบไฟล์รูปได้ กรุณาลองใหม่อีกครั้ง';
-		        		goto error;
 		        	}
 		        }
 	    	}
-
-			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
-			if ($res_insert_log) {
-				$msg['status']=1;
-				$msg['message']='แก้ไขข้อมูลเรียบร้อย';
-			}
 		}
 
 		error:
@@ -388,7 +424,7 @@ class Sales_model extends CI_Model
 		// create admin
 		$data['ID_EMPLOYEE'] = 1018601;
 		$data['PREFIX'] = 1;
-		$data['IMAGE'] = '';
+		// $data['IMAGE'] = '';
 		$data['FIRST_NAME_TH'] = 'ผู้ดูแล';
 		$data['LAST_NAME_TH'] = 'ระบบ';
 		$data['FIRST_NAME_ENG'] = 'System';

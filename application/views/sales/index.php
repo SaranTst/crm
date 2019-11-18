@@ -3,11 +3,11 @@
     <div class="container-fluid">
 		<div class="row mb-3" id="header-table">
 			<div class="col-md-4 pt-2">
-			  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp; Sales Contact</a>
+			  <a href="javascript:void(0)" class="btn crm-btn-dark-gray btn-lg btn-block no-hover"><i class="fa fa-user fa-fw"></i>&nbsp;Sales Contact</a>
 			</div>
 			<div class="col-md-5"></div>
 			<div class="col-md-3 pt-2">
-				<a href="<?php echo base_url(); ?>sales/create_sale" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-plus fa-fw"></i><p>&nbsp; CreateSale</p></a>
+				<a href="<?php echo base_url(); ?>sales/create_sale" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-plus fa-fw"></i><p>&nbsp;CreateSale</p></a>
 			</div>
 		</div> <!-- #header-table -->
 

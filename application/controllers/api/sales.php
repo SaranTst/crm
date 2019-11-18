@@ -58,4 +58,12 @@ class Sales extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	public function lists_id_sale() 
+	{
+		$msg = $this->sales_model->lists_id_sale();
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
 }

@@ -1,8 +1,10 @@
         <form id="sales-detail">
-          <div class="jumbotron jumbotron-fluid p-3">
+          <div class="jumbotron jumbotron-fluid p-3" id="dom-sales-1">
             <div class="container-fluid">
 
               <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="$('#dom-sales-1').remove();"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-sales">1.</h3>
                 </div>
@@ -10,39 +12,20 @@
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">ID</label>
                     <div class="col">
-                      <select class="custom-select" name="sales_detail[0][id]">
-                        <option value="" selected>Choose ID</option>
-                        <option value="1">100</option>
-                        <option value="2">200</option>
-                        <option value="3">300</option>
-                        <option value="4">400</option>
-                        <option value="5">500</option>
+                      <select class="custom-select" name="sales_detail[0][id]" onchange="select_sales(1,this)">
+                        <option value="" selected readonly hidden>Choose ID</option>
+                        <?php foreach ($sales as $key => $value) { ?>
+                        <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                        <?php } ?>
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-6 mb-6">
                   <div class="z-depth-1-half text-center">
                     <img src="<?php echo base_url(); ?>images/180.png" id="preview-sales-1" class="img-thumbnail" style="height: 180px;">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Upload Image" id="show-file-name-sales-1" disabled>
-                        <ul class="mb-4">
-                          <li><small class="text-muted">*Maximum Size 1 MB</small></li>
-                          <li><small class="text-muted">*Please select the picture first</small></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <input id="input-file-sales-1" type="file" name="sales_detail[0][img_sales]" class="form-control" accept="image/*" style="visibility: hidden; position: absolute;">
-                      <button type="button" class="btn crm-btn-gray btn-lg btn-block" style="border-radius: 0;" id="btn-upload-file-sales-1" onclick="upload_and_preview('input-file-sales-1' ,'show-file-name-sales-1' ,'preview-sales-1')"><i class="fa fa-upload" style="padding-right: 10px;"></i>Upload Image</button>
-                    </div>
                   </div>
                 </div>
                 <div class="col-md-6 mt-3">
@@ -50,13 +33,13 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Name - Surname (Thai)</label>
-                        <input type="text" class="form-control" placeholder="Name - Surname (Thai)" name="sales_detail[0][name_surname_th]">
+                        <input type="text" class="form-control" placeholder="Name - Surname (Thai)" id="name-sales-th-1" value="" readonly>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Name - Surname (Eng)</label>
-                        <input type="text" class="form-control" placeholder="Name - Surname (Eng)" name="sales_detail[0][name_surname_eng]">
+                        <input type="text" class="form-control" placeholder="Name - Surname (Eng)" id="name-sales-eng-1" value="" readonly>
                       </div>
                     </div>
                   </div>
@@ -66,13 +49,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Thai)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Thai)" name="sales_detail[0][nickname_th]">
+                    <input type="text" class="form-control" placeholder="Nickname (Thai)" id="nickname-sales-th-1" value="" readonly>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Nickname (Eng)</label>
-                    <input type="text" class="form-control" placeholder="Nickname (Eng)" name="sales_detail[0][nickname_eng]">
+                    <input type="text" class="form-control" placeholder="Nickname (Eng)" id="nickname-sales-eng-1" value="" readonly>
                   </div>
                 </div>
               </div>
@@ -80,17 +63,9 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Department</label>
-                    <select class="custom-select" name="sales_detail[0][department]">
-                      <option value="" selected>Choose Department</option>
-                      <option value="1">Department 1</option>
-                      <option value="2">Department 2</option>
-                      <option value="3">Department 3</option>
-                      <option value="4">Department 4</option>
-                      <option value="5">Department 5</option>
-                    </select>
+                    <input type="text" class="form-control" placeholder="Department" id="department-sales-1" value="" readonly>
                   </div>
                 </div>
-                <div class="col-md-6"></div>
               </div>
 
             </div>
@@ -112,36 +87,118 @@
 
   <script type="text/javascript">
 
+    var ARR_SALES = <?php echo json_encode($sales); ?>;
+    var ARR_DEPARTMENT_TH = <?php echo json_encode(ARR_DEPARTMENT_TH); ?>;
+
     /* Add Dom SALES DETAIL */
     $('#add_content_sale_detail').click(function(){
 
       // Clone Dom
-      var clone_dom_sales = $("form#sales-detail").children().last().clone();
-      var length_dom_sales = $("form#sales-detail").children().length;
+      var clone_dom_sales = $("form#sales-detail").last().clone();
 
       // Edit Dom
-      var id_dom = (length_dom_sales+1);
-      var id_input_new = (id_dom-1);
-      var id_input = (length_dom_sales-1);
+      var id_dom = clone_dom_sales.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(10);
+      var new_id_dom = parseInt(id_dom) + 1;
+      var key_arr_dom = parseInt(id_dom) - 1;
+      var new_key_arr_dom = key_arr_dom + 1;
 
-      clone_dom_sales.find('#id-jumbotron-sales').text(id_dom+'.');
-      clone_dom_sales.find('#preview-sales-'+length_dom_sales).attr('id', 'preview-sales-'+id_dom);
-      clone_dom_sales.find('#show-file-name-sales-'+length_dom_sales).attr('id', 'show-file-name-sales-'+id_dom);
-      clone_dom_sales.find('#input-file-sales-'+length_dom_sales).attr('name', 'sales_detail['+id_input_new+'][img_sales]');
-      clone_dom_sales.find('#input-file-sales-'+length_dom_sales).attr('id', 'input-file-sales-'+id_dom);
-      
-      clone_dom_sales.find('#btn-upload-file-sales-'+length_dom_sales).attr('onclick', "upload_and_preview('input-file-sales-"+id_dom+"' ,'show-file-name-sales-"+id_dom+"' ,'preview-sales-"+id_dom+"')");
-      clone_dom_sales.find('#btn-upload-file-sales-'+length_dom_sales).attr('id', 'btn-upload-file-sales-'+id_dom);
-
-      clone_dom_sales.find('input[name="sales_detail['+id_input+'][nickname_th]"]').attr('name', 'sales_detail['+id_input_new+'][nickname_th]');
-      clone_dom_sales.find('select[name="sales_detail['+id_input+'][department]"]').attr('name', 'sales_detail['+id_input_new+'][department]');
-      clone_dom_sales.find('select[name="sales_detail['+id_input+'][id]"]').attr('name', 'sales_detail['+id_input_new+'][id]');
-      clone_dom_sales.find('input[name="sales_detail['+id_input+'][name_surname_th]"]').attr('name', 'sales_detail['+id_input_new+'][name_surname_th]');
-      clone_dom_sales.find('input[name="sales_detail['+id_input+'][name_surname_eng]"]').attr('name', 'sales_detail['+id_input_new+'][name_surname_eng]');
-      clone_dom_sales.find('input[name="sales_detail['+id_input+'][nickname_eng]"]').attr('name', 'sales_detail['+id_input_new+'][nickname_eng]');
+      clone_dom_sales.find('#dom-sales-'+id_dom).attr('id', 'dom-sales-'+new_id_dom);
+      clone_dom_sales.find('#id-jumbotron-sales').text(new_id_dom+'.');
+      clone_dom_sales.find('#preview-sales-'+id_dom).attr('id', 'preview-sales-'+new_id_dom).attr('src', base_url+'images/180.png');
+      clone_dom_sales.find('#name-sales-th-'+id_dom).attr('id', 'name-sales-th-'+new_id_dom).attr('value', '');
+      clone_dom_sales.find('#name-sales-eng-'+id_dom).attr('id', 'name-sales-eng-'+new_id_dom).attr('value', '');
+      clone_dom_sales.find('#nickname-sales-th-'+id_dom).attr('id', 'nickname-sales-th-'+new_id_dom).attr('value', '');
+      clone_dom_sales.find('#nickname-sales-eng-'+id_dom).attr('id', 'nickname-sales-eng-'+new_id_dom).attr('value', '');
+      clone_dom_sales.find('#department-sales-'+id_dom).attr('id', 'department-sales-'+new_id_dom).attr('value', '');
+      clone_dom_sales.find('select[name="sales_detail['+key_arr_dom+'][id]"]').attr('name', 'sales_detail['+new_key_arr_dom+'][id]');
+      clone_dom_sales.find('.fa.fa-times').attr('onclick', "$('#dom-sales-"+new_id_dom+"').remove();");
+      clone_dom_sales.find('.custom-select').attr('onchange', "select_sales("+new_id_dom+",this)");
 
       // Appent Dom
-      clone_dom_sales.appendTo("form#sales-detail");
-   });
+      clone_dom_sales.children().last().appendTo("form#sales-detail");
+    });
+
+    function select_sales(id_dom, e) {
+
+      var id = parseInt(e.value);
+      var url = base_url+'api/sales/gets_sales/'+id;
+
+      var previous;
+      $('select[name="sales_detail['+id_dom+'][id]"]').on('focus', function () {
+          // Store the current value on focus and on change
+          previous = this.value;
+      }).change(function() {
+          // Do something with the previous value after the change
+          console.log(previous);
+
+          // Make sure the previous value is updated
+          previous = this.value;
+      });
+
+      var formDataArr = $("form#sales-detail").serializeArray();
+      var cout_duplicate = 0;
+      for (var i = 0; i < formDataArr.length; i++){
+        var value = parseInt(formDataArr[i]['value']);
+        if (value==id) {
+          cout_duplicate++;
+        }
+      }
+
+      if (cout_duplicate>=2) {
+          Swal.fire({
+            title: 'Warning!',
+            text: 'เลือกเซลคนนี้ไปแล้ว !!',
+            type: 'warning'
+          }).then((result) => {
+            console.log(cout_duplicate)
+          })
+      }else{
+
+        $.ajax({
+          url: url,
+          type:"GET",
+          dataType:"json",
+          success: function( resp ){
+
+            if (resp.status==1) {
+            //   Swal.fire({
+            //     title: 'Success!',
+            //     text: resp.message,
+            //     type: 'success'
+            //   }).then((result) => {
+            //     window.location.href = base_url+'sales';
+            //   })
+              change_value_dom(id_dom, resp.data[0])
+            }else{
+              Swal.fire({
+                title: 'Warning!',
+                text: resp.message,
+                type: 'warning'
+              })
+            }
+          },
+          error: function( jqXhr, textStatus, errorThrown ){
+            Swal.fire({
+              title: jqXhr.status,
+              text: errorThrown,
+              type: 'error'
+            })
+          }
+        });
+      }
+
+    }
+
+    function change_value_dom(id_dom, data) {
+
+      $('#preview-sales-'+id_dom).attr('src', base_url+data.IMAGE);
+      $('#name-sales-th-'+id_dom).attr('value', data.FIRST_NAME_TH+' '+data.LAST_NAME_TH);
+      $('#name-sales-eng-'+id_dom).attr('value', data.FIRST_NAME_ENG+' '+data.LAST_NAME_ENG);
+      $('#nickname-sales-th-'+id_dom).attr('value', data.NICKNAME_TH);
+      $('#nickname-sales-eng-'+id_dom).attr('value', data.NICKNAME_ENG);
+      $('#department-sales-'+id_dom).attr('value', ARR_DEPARTMENT_TH[data.DEPARTMENT_ID]);
+    }
+
+
 
   </script>

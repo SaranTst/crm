@@ -183,8 +183,6 @@ class Brands_model extends CI_Model
 	        	return $msg_img;
 	        }
 			$data['LOGO'] = $new_path_image['message'];
-		}else{
-			$data['LOGO'] = '';
 		}
 
 		$this->db->insert($this->table, $data);
@@ -241,6 +239,12 @@ class Brands_model extends CI_Model
 		$res_update = $this->db->affected_rows();
 		if ($res_update > 0) {
 
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='แก้ไขข้อมูลเรียบร้อย';
+			}
+
 			if ($status_upload_new) {
 				// delete old image
 		        if (isset($ip_post['old_image']) && !empty($ip_post['old_image'])) {
@@ -249,16 +253,9 @@ class Brands_model extends CI_Model
 		        	if (!$res_delete_image) {
 		        		$msg['status']=0;
 						$msg['message']='ไม่สามารถลบไฟล์รูปได้ กรุณาลองใหม่อีกครั้ง';
-		        		goto error;
 		        	}
 		        }
 	    	}
-
-			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
-			if ($res_insert_log) {
-				$msg['status']=1;
-				$msg['message']='แก้ไขข้อมูลเรียบร้อย';
-			}
 		}
 
 		error:

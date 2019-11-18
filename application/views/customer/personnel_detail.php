@@ -243,13 +243,13 @@
   <script type="text/javascript">
 
     $('#date-birthday').datepicker({
-      format: "dd-mm-yyyy",
+      format: "yyyy-mm-dd",
       language: "th",
       autoclose: true
     })
 
     $('#date-stamp').datepicker({
-      format: "dd-mm-yyyy",
+      format: "yyyy-mm-dd",
       language: "th",
       autoclose: true
     })

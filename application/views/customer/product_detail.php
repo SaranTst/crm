@@ -188,7 +188,7 @@
   <script type="text/javascript">
 
     $('#warranty-bjc-product-1').datepicker({
-      format: "dd-mm-yyyy",
+      format: "yyyy-mm-dd",
       language: "th",
       autoclose: true
     })
@@ -221,7 +221,7 @@
 
       // Datepicker New Dom
       $('#warranty-bjc-product-'+id_dom).datepicker({
-        format: "dd-mm-yyyy",
+        format: "yyyy-mm-dd",
         language: "th",
         autoclose: true
       })

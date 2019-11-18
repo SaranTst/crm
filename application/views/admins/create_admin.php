@@ -261,7 +261,7 @@
     }
 
     $('#date-birthday').datepicker({
-      format: "dd-mm-yyyy",
+      format: "yyyy-mm-dd",
       language: "th",
       autoclose: true
     })

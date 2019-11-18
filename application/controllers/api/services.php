@@ -49,4 +49,12 @@ class Services extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	public function lists_id_service() 
+	{
+		$msg = $this->services_model->lists_id_service();
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
 }
