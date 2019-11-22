@@ -4,7 +4,7 @@
               
               <div class="row">
                 <div class="col-md-7">
-                  <h3 id="id-jumbotron-personnel">1.</h3>
+                  <!-- <h3 id="id-jumbotron-personnel">1.</h3> -->
                 </div>
                 <div class="col-md-5">
                   <div class="form-group row">
@@ -31,7 +31,8 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Upload Image" id="show-file-name-personnel-1" disabled>
+                        <input type="hidden" class="form-control" name="personnel_detail[0][old_img_personnel]" value="" readonly>
+                        <input type="text" class="form-control" placeholder="Upload Image" name="personnel_detail[0][img_personnel]" id="show-file-name-personnel-1" value="" readonly>
                         <ul class="mb-4">
                           <li><small class="text-muted">*Maximum Size 1 MB</small></li>
                           <li><small class="text-muted">*Please select the picture first</small></li>
@@ -39,8 +40,8 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <input id="input-file-personnel-1" type="file" name="personnel_detail[0][img_personnel]" class="form-control" accept="image/*" style="visibility: hidden; position: absolute;">
-                      <button type="button" class="btn crm-btn-gray btn-lg btn-block" style="border-radius: 0;" id="btn-upload-file-personnel-1" onclick="upload_and_preview('input-file-personnel-1' ,'show-file-name-personnel-1' ,'preview-personnel-1')"><i class="fa fa-upload" style="padding-right: 10px;"></i>Upload Image</button>
+                      <input id="input-file-personnel-1" type="file" class="form-control" accept="image/*" style="visibility: hidden; position: absolute;">
+                      <button type="button" class="btn crm-btn-gray btn-lg btn-block" style="border-radius: 0;" id="btn-upload-file-personnel-1" onclick="upload_and_preview_ajax('input-file-personnel-1' ,'show-file-name-personnel-1' ,'preview-personnel-1')"><i class="fa fa-upload" style="padding-right: 10px;"></i>Upload Image</button>
                     </div>
                   </div>
                 </div>
@@ -60,7 +61,20 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Position</label>
-                        <input type="text" class="form-control" placeholder="Position" name="personnel_detail[0][position]">
+                        <select class="custom-select" name="personnel_detail[0][position]">
+                        <option value="" selected readonly hidden>Select a Position</option>
+                        <?php foreach (ARR_POSITION as $key => $value) { 
+
+                          $selected="";
+                          sizeof($data)>0 && $data['POSITION_ID']==$key ? $selected="selected" : $selected="";
+                          if (!empty(ARR_POSITION_OPTGROUP[$key])) {
+                            echo '<optgroup label="'.ARR_POSITION_OPTGROUP[$key].'">';
+                            echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                          }else{
+                            echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                          }
+                        } ?>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -126,7 +140,12 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Salesperson</label>
-                    <input type="text" class="form-control" placeholder="Salesperson" name="personnel_detail[0][salesperson]">
+                    <select class="custom-select" name="personnel_detail[0][salesperson]">
+                      <option value="" selected readonly hidden>Choose Salesperson</option>
+                      <?php foreach ($sales as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                      <?php } ?>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -167,26 +186,17 @@
                   <div class="form-group">
                     <label>Brands</label>
                     <select class="custom-select" name="personnel_detail[0][brands]">
-                      <option value="" selected>Choose Brands</option>
-                      <option value="1">Brands 1</option>
-                      <option value="2">Brands 2</option>
-                      <option value="3">Brands 3</option>
-                      <option value="4">Brands 4</option>
-                      <option value="5">Brands 5</option>
+                      <option value="" selected readonly hidden>Choose Brands</option>
+                      <?php foreach ($brands as $key => $value) { ?>
+                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Model</label>
-                    <select class="custom-select" name="personnel_detail[0][model]">
-                      <option value="" selected>Choose Model</option>
-                      <option value="1">Model 1</option>
-                      <option value="2">Model 2</option>
-                      <option value="3">Model 3</option>
-                      <option value="4">Model 4</option>
-                      <option value="5">Model 5</option>
-                    </select>
+                    <input type="text" class="form-control" placeholder="Model" name="personnel_detail[0][model]">
                   </div>
                 </div>
               </div>
@@ -206,8 +216,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Confident (%)</label>
-                    <select class="custom-select" name="relationship-purchase">
-                      <option value="" selected disabled hidden>Choose Relationship</option>
+                    <select class="custom-select" name="personnel_detail[0][confident]">
+                      <option value="" selected disabled hidden>Choose Confident</option>
                       <?php foreach (ARR_CONFIDENT as $key => $value) { ?>
                       <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                       <?php } ?>
@@ -226,14 +236,19 @@
               </div>
 
               <div class="row">
-                <div class="col-md-3"></div>
+                <!-- <div class="col-md-3"></div>
                 <div class="col-md-3 mb-2 text-right">
                   <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><p>Add Name</p></a>
                 </div>
                 <div class="col-md-3 mb-2">
                   <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><p>SAVE</p></a>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-3"></div> -->
+                <div class="col-md-4"></div> 
+                <div class="col-md-4 mb-3 text-center">
+                  <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" id="save-customer"><p>SAVE</p></a>
+                </div>
+                <div class="col-md-4"></div> 
               </div>
 
             </div>

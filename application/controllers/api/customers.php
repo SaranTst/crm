@@ -49,4 +49,13 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	public function test($id=null)
+	{
+		$id = 1150;
+		$msg = $this->customers_model->updates_more_customer($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
 }

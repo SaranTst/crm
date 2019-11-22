@@ -28,7 +28,7 @@
                     <img src="<?php echo base_url(); ?>images/180.png" id="preview-sales-1" class="img-thumbnail" style="height: 180px;">
                   </div>
                 </div>
-                <div class="col-md-6 mt-3">
+                <div class="col-md-6 mt-6">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -87,7 +87,6 @@
 
   <script type="text/javascript">
 
-    var ARR_SALES = <?php echo json_encode($sales); ?>;
     var ARR_DEPARTMENT_TH = <?php echo json_encode(ARR_DEPARTMENT_TH); ?>;
 
     /* Add Dom SALES DETAIL */
@@ -123,18 +122,6 @@
       var id = parseInt(e.value);
       var url = base_url+'api/sales/gets_sales/'+id;
 
-      var previous;
-      $('select[name="sales_detail['+id_dom+'][id]"]').on('focus', function () {
-          // Store the current value on focus and on change
-          previous = this.value;
-      }).change(function() {
-          // Do something with the previous value after the change
-          console.log(previous);
-
-          // Make sure the previous value is updated
-          previous = this.value;
-      });
-
       var formDataArr = $("form#sales-detail").serializeArray();
       var cout_duplicate = 0;
       for (var i = 0; i < formDataArr.length; i++){
@@ -161,13 +148,6 @@
           success: function( resp ){
 
             if (resp.status==1) {
-            //   Swal.fire({
-            //     title: 'Success!',
-            //     text: resp.message,
-            //     type: 'success'
-            //   }).then((result) => {
-            //     window.location.href = base_url+'sales';
-            //   })
               change_value_dom(id_dom, resp.data[0])
             }else{
               Swal.fire({
