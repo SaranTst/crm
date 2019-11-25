@@ -159,6 +159,28 @@ define('ARR_DEPARTMENT_ENG', array(
 	7 => 'Others'
 ));
 
+define('ARR_DEPARTMENT_ADMIN_SALE', array(
+	1 => 'MIT 1',
+	2 => 'MIT 2',
+	3 => 'MIT 3',
+	4 => 'MIT 4',
+	5 => 'SR 1',
+	6 => 'SR2',
+	7 => 'LCS 1',
+	8 => 'LCS 2',
+	9 => 'LCS 3',
+	10 => 'Marketing',
+	11 => 'BU',
+	12 => 'President',
+	13 => 'Medical Division'
+));
+
+define('ARR_DEPARTMENT_SERVICE', array(
+	1 => 'Service 1',
+	2 => 'Service 2',
+	3 => 'Admin Service '
+));
+
 define('ARR_ZONE', array(
 	1 => 'ภาคเหนือ',
 	2 => 'ภาคเหนือ-บน',
@@ -168,7 +190,8 @@ define('ARR_ZONE', array(
 	6 => 'ภาคตะวันตก',
 	7 => 'ภาคตะวันออก',
 	8 => 'ภาคใต้-บน',
-	9 => 'ภาคใต้-ล่าง'
+	9 => 'ภาคใต้-ล่าง',
+	10 => 'None'
 ));
 
 define('ARR_PREFIX_TH', array(
@@ -295,62 +318,66 @@ define('ARR_POSITION_2', array(
 ));
 
 define('ARR_POSITION', array(
-	1 => 'Application Specialist Supervisor',
-	2 => 'Application Specialist',
-	3 => 'Assistant Product Manager',
-	4 => 'Assistant R&D Manager',
-	5 => 'Assistant Sales Manager',
-	6 => 'Group Product Manager',
-	7 => 'Product Manager',
-	8 => 'Product Specialist',
-	9 => 'Programmer',
-	10 => 'Project Coordinator',
-	11 => 'Research & Development Manager',
-	12 => 'Sales Manager',
-	13 => 'Sales Supervisor',
-	14 => 'Senior Application Specialist',
-	15 => 'Senior Laboratory Solution Manager',
-	16 => 'Senior Product Specialist',
-	17 => 'Senior Project Coordinator',
-	18 => 'Senior Sales Manager',
-	19 => 'Senior Technical Sales Representative',
-	20 => 'Senior Business Development Manager',
-	21 => 'Senior Product Specialist',
-	22 => 'Senior Programmer',
-	23 => 'Senior Project Coordinator',
-	24 => 'Technical Sales Representative',
-	25 => "Admin Officer",
-	26 => "Assistant Service Engineer",
-	27 => "Assistant Service Manager",
-	28 => "Senior Service Engineer",
-	29 => "Service Department Manager",
-	30 => "Service Engineer",
-	31 => "Service Int'l Support",
-	32 => "Service Manager",
-	33 => "Service Supervisor",
-	34 => "Service Support",
-	35 => "Service Support Engineer",
-	36 => "Service Support Officer",
-	37 => "Senior IT Specialist",
-	38 => "Senior Sales Engineer",
-	39 => "Senior Service Engineer",
-	40 => "Senior Service Support Officer",
-	41 => "Senior System Engineer",
-	42 => "Senior Service Department Manager",
+	1 => 'President of Healthcare and Technical Business',
+	2 => 'Executive vice president',
+	3 => 'Vice president',
+	4 => 'Assistant Vice president',
+	5 => 'Application Specialist Supervisor',
+	6 => 'Application Specialist',
+	7 => 'Assistant Product Manager',
+	8 => 'Assistant R&D Manager',
+	9 => 'Assistant Sales Manager',
+	10 => 'Group Product Manager',
+	11 => 'Product Manager',
+	12 => 'Product Specialist',
+	13 => 'Programmer',
+	14 => 'Project Coordinator',
+	15 => 'Research & Development Manager',
+	16 => 'Sales Manager',
+	17 => 'Sales Supervisor',
+	18 => 'Senior Application Specialist',
+	19 => 'Senior Laboratory Solution Manager',
+	20 => 'Senior Product Specialist',
+	21 => 'Senior Project Coordinator',
+	22 => 'Senior Sales Manager',
+	23 => 'Senior Technical Sales Representative',
+	24 => 'Senior Business Development Manager',
+	25 => 'Senior Product Specialist',
+	26 => 'Senior Programmer',
+	27 => 'Senior Project Coordinator',
+	28 => 'Technical Sales Representative',
+	29 => "Admin Officer",
+	30 => "Assistant Service Engineer",
+	31 => "Assistant Service Manager",
+	32 => "Senior Service Engineer",
+	33 => "Service Department Manager",
+	34 => "Service Engineer",
+	35 => "Service Int'l Support",
+	36 => "Service Manager",
+	37 => "Service Supervisor",
+	38 => "Service Support",
+	39 => "Service Support Engineer",
+	40 => "Service Support Officer",
+	41 => "Senior IT Specialist",
+	42 => "Senior Sales Engineer",
 	43 => "Senior Service Engineer",
-	44 => "System Engineer",
-	45 => "System Engineer Supervisor",
-	46 => 'Graphic Designer',
-	47 => 'Marketing Executive',
-	48 => 'Marketing Officer',
-	49 => 'Marketing Supervisor',
-	50 => 'Senior Marketing Executive',
-	51 => 'Senior Marketing Manager'
+	44 => "Senior Service Support Officer",
+	45 => "Senior System Engineer",
+	46 => "Senior Service Department Manager",
+	47 => "Senior Service Engineer",
+	48 => "System Engineer",
+	49 => "System Engineer Supervisor",
+	50 => 'Graphic Designer',
+	51 => 'Marketing Executive',
+	52 => 'Marketing Officer',
+	53 => 'Marketing Supervisor',
+	54 => 'Senior Marketing Executive',
+	55 => 'Senior Marketing Manager'
 ));
 
 define('ARR_POSITION_OPTGROUP', array(
-	'1' => 'SALE',
-	'25' => 'SERVICE',
-	'46' => 'MARKETING'
+	'1' => 'ADMINISTRATION',
+	'5' => 'SALE',
+	'29' => 'SERVICE',
+	'50' => 'MARKETING'
 ));
-
