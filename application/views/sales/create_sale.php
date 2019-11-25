@@ -181,7 +181,7 @@
                     <label>Department</label>
                     <select class="custom-select" name="department_id">
                       <option value="" selected readonly hidden>Choose Department</option>
-                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+                      <?php foreach (ARR_DEPARTMENT_ADMIN_SALE as $key => $value) { ?>
                       <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
@@ -201,12 +201,6 @@
               </div>
 
               <div class="row">
-              	<div class="col-md-6">
-                  <div class="form-group">
-                    <label>County</label>
-                    <input type="text" class="form-control" placeholder="County" name="county" value="<?php echo sizeof($data)>0 ? $data['COUNTY'] : ''; ?>">
-                  </div>
-                </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Brand</label>
