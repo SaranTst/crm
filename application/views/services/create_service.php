@@ -38,14 +38,7 @@
           }
         }else{
           $data = array();
-        }
-
-        // Check Brand
-        if ($brands['status']==1) {
-          $data_brand = $brands['data'];
-        }else {
-          $data_brand = array();
-        } ?>
+        }?>
         <form id="add-services">
           <div class="jumbotron jumbotron-fluid p-3">
             <div class="container-fluid">
@@ -181,7 +174,7 @@
                     <label>Department</label>
                     <select class="custom-select" name="department_id">
                       <option value="" selected readonly hidden>Choose Department</option>
-                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+                      <?php foreach (ARR_DEPARTMENT_SERVICE as $key => $value) { ?>
                       <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['DEPARTMENT_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
@@ -194,26 +187,6 @@
                       <option value="" selected readonly hidden>Choose Zone</option>
                       <?php foreach (ARR_ZONE as $key => $value) { ?>
                       <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['ZONE_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>County</label>
-                    <input type="text" class="form-control" placeholder="County" name="county" value="<?php echo sizeof($data)>0 ? $data['COUNTY'] : ''; ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Brand</label>
-                    <select class="custom-select" name="brand_id">
-                      <option value="" selected readonly hidden>Select a Brand</option>
-                      <?php foreach ($data_brand as $key => $value) { ?>
-                      <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['BRAND_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                       <?php } ?>
                     </select>
                   </div>

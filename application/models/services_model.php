@@ -221,8 +221,8 @@ class Services_model extends CI_Model
 		$data['POSITION_ID'] = (int)$ip_post['position_id'];
 		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
 		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
-		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
+		$data['COUNTY'] = isset($ip_post['county'])&&!empty($ip_post['county']) ? $this->general_model->clearbadstr($ip_post['county']) : '';
+		$data['BRAND_ID'] = isset($ip_post['brand_id'])&&!empty($ip_post['brand_id']) ? (int)$ip_post['brand_id'] : 0;
 		$data['STATUS_DELETE'] = 0;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = (int)$ip_post['user_create'];
@@ -300,8 +300,8 @@ class Services_model extends CI_Model
 		$data['POSITION_ID'] = (int)$ip_post['position_id'];
 		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
 		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
-		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
+		$data['COUNTY'] = isset($ip_post['county'])&&!empty($ip_post['county']) ? $this->general_model->clearbadstr($ip_post['county']) : '';
+		$data['BRAND_ID'] = isset($ip_post['brand_id'])&&!empty($ip_post['brand_id']) ? (int)$ip_post['brand_id'] : 0;
 		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
 

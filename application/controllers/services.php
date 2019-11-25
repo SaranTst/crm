@@ -29,10 +29,8 @@ class Services extends MY_Controller {
 
 	public function create_service()
 	{
-		$data['brands'] = $this->brands_model->lists_vendorname();
-
 		$this->load->view('header');
-		$this->load->view('services/create_service', $data);
+		$this->load->view('services/create_service');
 		$this->load->view('footer');
 	}
 
@@ -40,7 +38,6 @@ class Services extends MY_Controller {
 	{
 		$id = (int)$id; 
 		$data['datas'] = $this->services_model->gets($id);
-		$data['brands'] = $this->brands_model->lists_vendorname();
 		$data['id'] = $id;
 
 		if ($this->input->get('json')) {
