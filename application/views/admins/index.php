@@ -42,13 +42,13 @@
 		                    <label>Department</label>
 		                    <select class="custom-select" name="department_id">
 		                      <option value="" selected readonly hidden>Choose Department</option>
-		                      <?php foreach (ARR_DEPARTMENT_TH as $key => $value) { ?>
+		                      <?php foreach (ARR_DEPARTMENT_ADMIN_SALE as $key => $value) { ?>
 		                      <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
 		                      <?php } ?>
 		                    </select>
 	                  	</div>
 				  		</div>
-				  		<div class="col-md-6">
+<!-- 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>Zone</label>
 		                    <select class="custom-select" name="zone_id">
@@ -69,7 +69,7 @@
 		                      <?php } ?>
 		                    </select>
 	                  	</div>
-				  		</div>
+				  		</div> -->
 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>Position</label>
@@ -86,12 +86,12 @@
 							</select>
 	                  	</div>
 				  		</div>
-				  		<div class="col-md-6">
+<!-- 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>County</label>
 		                    <input type="text" class="form-control" placeholder="Enter a County" name="county">
 	                  	</div>
-				  		</div>
+				  		</div> -->
 				  		<div class="col-md-6">
 				  		<div class="form-group">
 		                    <label>Keyword</label>
@@ -141,7 +141,7 @@
 						  			<img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-fluid rounded-circle">
 						  		</div>
 						  		<div class="col-md-8">
-					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue" id="txt-department"><b><?php echo ARR_DEPARTMENT_TH[$value['DEPARTMENT_ID']]; ?></b></p>
+					  				<p class="crm-card-sale-text crm-card-sale-text-2dark-blue" id="txt-department"><b><?php echo ARR_DEPARTMENT_ADMIN_SALE[$value['DEPARTMENT_ID']]; ?></b></p>
 					  				<p class="crm-card-sale-text" id="txt-name-nickname"><b><?php echo $value['FIRST_NAME_ENG'].' '.$value['LAST_NAME_ENG'].' ('.$value['NICKNAME_ENG'].')'; ?></b></p>
 						  		</div>
 						  	</div>
@@ -254,7 +254,7 @@
 							</div>
 							
 						
-							<div class="form-group row mb-0">
+<!-- 							<div class="form-group row mb-0">
 								<label class="col-md-4">
 									<p class="crm-modal-sale-text"><b>Zone : </b></p>
 								</label>
@@ -281,7 +281,7 @@
 								<label class="col-md-8">
 									<p class="crm-modal-sale-text" id="modal-brand">Hitachi, Ziehm, Shimadzu, Hologic</p>
 								</label>
-							</div>
+							</div> -->
 					
 							<hr class="mb-3 mt-3" style="width: 100%; color: #CCCCCC; height: 2px; background-color: #CCCCCC; margin-top: 5px; margin-bottom: 5px;" />
 					
@@ -314,7 +314,7 @@
 
   <script type="text/javascript">
 
-  	var ARR_DEPARTMENT_TH = <?php echo json_encode(ARR_DEPARTMENT_TH); ?>;
+  	var ARR_DEPARTMENT_ADMIN_SALE = <?php echo json_encode(ARR_DEPARTMENT_ADMIN_SALE); ?>;
   	var ARR_POSITION = <?php echo json_encode(ARR_POSITION); ?>;
   	var ARR_ZONE = <?php echo json_encode(ARR_ZONE); ?>;
   	var ARR_BRAND = <?php echo json_encode($data_brand); ?>;
@@ -351,11 +351,11 @@
 			$('#sale_contact_modal').find('#modal-name-th').text(values.FIRST_NAME_TH+' '+values.LAST_NAME_TH);
 			$('#sale_contact_modal').find('#modal-nickname').text(values.NICKNAME_ENG);
 			$('#sale_contact_modal').find('#modal-id').text(values.ID_EMPLOYEE);
-			$('#sale_contact_modal').find('#modal-department').text(ARR_DEPARTMENT_TH[values.DEPARTMENT_ID]);
+			$('#sale_contact_modal').find('#modal-department').text(ARR_DEPARTMENT_ADMIN_SALE[values.DEPARTMENT_ID]);
 			$('#sale_contact_modal').find('#modal-position').text(ARR_POSITION[values.POSITION_ID]);
-			$('#sale_contact_modal').find('#modal-zone').text(ARR_ZONE[values.ZONE_ID]);
-			$('#sale_contact_modal').find('#modal-county').text(values.COUNTY);
-			$('#sale_contact_modal').find('#modal-brand').text(ARR_BRAND[values.BRAND_ID]);
+			// $('#sale_contact_modal').find('#modal-zone').text(ARR_ZONE[values.ZONE_ID]);
+			// $('#sale_contact_modal').find('#modal-county').text(values.COUNTY);
+			// $('#sale_contact_modal').find('#modal-brand').text(ARR_BRAND[values.BRAND_ID]);
 			$('#sale_contact_modal').find('#modal-telephone').text(values.TELEPHONE);
 			$('#sale_contact_modal').find('#modal-email').text(values.EMAIL);
 
@@ -395,7 +395,7 @@
 	                		}else{
 	                			content_result.find('img').attr('src', base_url+v.IMAGE);
 	                		}
-	                		content_result.find('#txt-department').html('<b>'+ARR_DEPARTMENT_TH[v.DEPARTMENT_ID]+'</b>');
+	                		content_result.find('#txt-department').html('<b>'+ARR_DEPARTMENT_ADMIN_SALE[v.DEPARTMENT_ID]+'</b>');
 	                		content_result.find('#txt-name-nickname').html('<b>'+v.FIRST_NAME_ENG+' '+v.LAST_NAME_ENG+' ('+v.NICKNAME_ENG+') </b>');
 	                		content_result.find('#txt-position').text(ARR_POSITION[v.POSITION_ID]);
 	                		content_result.find('#txt-email').text('Email : '+v.EMAIL);

@@ -29,10 +29,8 @@ class Admins extends MY_Controller {
 
 	public function create_admin()
 	{
-		$data['brands'] = $this->brands_model->lists_vendorname();
-
 		$this->load->view('header');
-		$this->load->view('admins/create_admin', $data);
+		$this->load->view('admins/create_admin');
 		$this->load->view('footer');
 	}
 
@@ -40,7 +38,6 @@ class Admins extends MY_Controller {
 	{
 		$id = (int)$id; 
 		$data['datas'] = $this->sales_model->gets($id);
-		$data['brands'] = $this->brands_model->lists_vendorname();
 		$data['id'] = $id;
 
 		if ($this->input->get('json')) {

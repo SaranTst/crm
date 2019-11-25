@@ -222,9 +222,9 @@ class Sales_model extends CI_Model
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
 		$data['POSITION_ID'] = (int)$ip_post['position_id'];
 		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
-		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
-		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
+		$data['ZONE_ID'] = isset($ip_post['zone_id'])&&!empty($ip_post['zone_id']) ? (int)$ip_post['zone_id'] : 0;
+		$data['COUNTY'] = isset($ip_post['county'])&&!empty($ip_post['county']) ? $this->general_model->clearbadstr($ip_post['county']) : '';
+		$data['BRAND_ID'] = isset($ip_post['brand_id'])&&!empty($ip_post['brand_id']) ? (int)$ip_post['brand_id'] : 0;
 		$data['ROLE'] = isset($ip_post['ROLE'])&&!empty($ip_post['ROLE']) ? (int)$ip_post['ROLE'] : 2;
 		$data['STATUS_DELETE'] = 0;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
@@ -302,9 +302,9 @@ class Sales_model extends CI_Model
 		$data['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday'])));
 		$data['POSITION_ID'] = (int)$ip_post['position_id'];
 		$data['DEPARTMENT_ID'] = (int)$ip_post['department_id'];
-		$data['ZONE_ID'] = (int)$ip_post['zone_id'];
-		$data['COUNTY'] = $this->general_model->clearbadstr($ip_post['county']);
-		$data['BRAND_ID'] = (int)$ip_post['brand_id'];
+		$data['ZONE_ID'] = isset($ip_post['zone_id'])&&!empty($ip_post['zone_id']) ? (int)$ip_post['zone_id'] : 0;
+		$data['COUNTY'] = isset($ip_post['county'])&&!empty($ip_post['county']) ? $this->general_model->clearbadstr($ip_post['county']) : '';
+		$data['BRAND_ID'] = isset($ip_post['brand_id'])&&!empty($ip_post['brand_id']) ? (int)$ip_post['brand_id'] : 0;
 		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
 
@@ -434,11 +434,11 @@ class Sales_model extends CI_Model
 		$data['EMAIL'] = 'admin@bjc.co.th';
 		$data['TELEPHONE'] = '0999999999';
 		$data['BIRTHDAY'] = date('Y-m-d');
-		$data['POSITION_ID'] = 1;
-		$data['DEPARTMENT_ID'] = 1;
-		$data['ZONE_ID'] = 1;
-		$data['COUNTY'] = 1;
-		$data['BRAND_ID'] = 1;
+		$data['POSITION_ID'] = 0;
+		$data['DEPARTMENT_ID'] = 0;
+		$data['ZONE_ID'] = 0;
+		$data['COUNTY'] = '';
+		$data['BRAND_ID'] = 0;
 		$data['ROLE'] = 1;
 		$data['CREATE_DATE'] = date('Y-m-d H:i:s');
 		$data['USER_CREATE'] = 1018601;
