@@ -257,66 +257,6 @@ define('ARR_EXPERTISE', array(
 	17 => 'OB-GYNE'
 ));
 
-define('ARR_POSITION_2', array(
-	'sale' => array(
-		'Application Specialist Supervisor',
-		'Application Specialist',
-		'Assistant Product Manager',
-		'Assistant R&D Manager',
-		'Assistant Sales Manager',
-		'Group Product Manager',
-		'Product Manager',
-		'Product Specialist',
-		'Programmer',
-		'Project Coordinator',
-		'Research & Development Manager',
-		'Sales Manager',
-		'Sales Supervisor',
-		'Senior Application Specialist',
-		'Senior Laboratory Solution Manager',
-		'Senior Product Specialist',
-		'Senior Project Coordinator',
-		'Senior Sales Manager',
-		'Senior Technical Sales Representative',
-		'Senior Business Development Manager',
-		'Senior Product Specialist',
-		'Senior Programmer',
-		'Senior Project Coordinator',
-		'Technical Sales Representative'
-	),
-	'service' => array(
-		"Admin Officer",
-		"Assistant Service Engineer",
-		"Assistant Service Manager",
-		"Senior Service Engineer",
-		"Service Department Manager",
-		"Service Engineer",
-		"Service Int'l Support",
-		"Service Manager",
-		"Service Supervisor",
-		"Service Support",
-		"Service Support Engineer",
-		"Service Support Officer",
-		"Senior IT Specialist",
-		"Senior Sales Engineer",
-		"Senior Service Engineer",
-		"Senior Service Support Officer",
-		"Senior System Engineer",
-		"Senior Service Department Manager",
-		"Senior Service Engineer",
-		"System Engineer",
-		"System Engineer Supervisor"
-	),
-	'marketing' => array(
-		'Graphic Designer',
-		'Marketing Executive',
-		'Marketing Officer',
-		'Marketing Supervisor',
-		'Senior Marketing Executive',
-		'Senior Marketing Manager'
-	)
-));
-
 define('ARR_POSITION', array(
 	1 => 'President of Healthcare and Technical Business',
 	2 => 'Executive vice president',
