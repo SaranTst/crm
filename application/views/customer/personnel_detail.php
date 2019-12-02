@@ -13,7 +13,7 @@
                       <select class="custom-select" name="personnel_detail[0][relationship]">
                         <option value="" selected disabled hidden>Choose Relationship</option>
                         <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                        <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                        <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                         <?php } ?>
                       </select>
                     </div>

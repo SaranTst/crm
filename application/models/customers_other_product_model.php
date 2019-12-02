@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Customers_sales_model extends CI_Model
+class Customers_other_product_model extends CI_Model
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->table = 'CUSTOMERS_SALE';
+		$this->table = 'CUSTOMERS_PRODUCT_OTHER';
 		$this->load->model('general_model');
 		$this->load->model('logs_model');
 	}
@@ -87,29 +87,12 @@ class Customers_sales_model extends CI_Model
 
 	public function gets_where($wheres=array()) {
 
-		/* SELECT COLUME SHOWS */
-		$arr_col_show[$this->table] = ['ID','CUSTOMERS_ID','SALES_ID'];
-		$arr_col_show['SALES'] = ['IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
-
-		$str_select = '';
-		foreach ($arr_col_show as $key => $value) {
-			if (sizeof($value)>0) {
-				foreach ($value as $k => $val) {
-					$str_select .= $key.'.'.$val.' AS '.$val.',';
-				}
-			}
-		}
-		$str_select = substr($str_select, 0, -1);
-		/* END SELECT COLUME SHOWS */
-
-		$this->db->select($str_select);
 		$this->db->from($this->table);
-		$this->db->join('SALES', 'SALES.ID='.$this->table.'.SALES_ID AND '.$this->table.'.STATUS_DELETE=0 AND SALES.STATUS_DELETE=0', 'left outer');
 		foreach ($wheres as $key => $value) {
-			$this->db->where($this->table.'.'.$key, $value);
+			$this->db->where($key, $value);
 		}
-		$this->db->where($this->table.'.STATUS_DELETE', 0);
-		$this->db->order_by($this->table.'.ID', 'DESC');
+		$this->db->where('STATUS_DELETE', 0);
+		$this->db->order_by('ID', 'DESC');
 		$query = $this->db->get();
 
 		$msg['status']=1;
@@ -125,7 +108,7 @@ class Customers_sales_model extends CI_Model
 	public function inserts($arr=array()) {
 
 		$msg['status']=0;
-		$msg['message']='ไม่สามารถเพิ่มช้อมูล SALES DETAIL ได้กรุณาลองใหม่อีกครั้ง';
+		$msg['message']='ไม่สามารถเพิ่มช้อมูล OTHER PRODUCT DETAIL ได้กรุณาลองใหม่อีกครั้ง';
 
 		if (sizeof($arr)<0) {
 			$msg['message']='ไม่มีข้อมูล';
@@ -319,8 +302,8 @@ class Customers_sales_model extends CI_Model
 		return $msg;
 	}
 
-	/* Check Data Sales Detail */
-	public function chk_sale_detail($arr=array(), $user_create='', $id='') {
+	/* Check Data Other Product Detail */
+	public function chk_other_product($arr=array(), $user_create='', $id='') {
 
 		$msg['status']=0;
 		$msg['message']='ไม่มีข้อมูล';
@@ -333,25 +316,37 @@ class Customers_sales_model extends CI_Model
 			goto error;
 		}
 
-		$is=0;
-		foreach ($arr as $k_sales => $val_sales) {
-			if ($val_sales['id']!='') {
-				$data['sales_detail'][$is]['CUSTOMERS_ID'] = (int)$id;
-				$data['sales_detail'][$is]['SALES_ID'] = (int)$val_sales['id'];
-				$data['sales_detail'][$is]['STATUS_DELETE'] = 0;
-				$data['sales_detail'][$is]['CREATE_DATE'] =  date('Y-m-d H:i:s');
-				$data['sales_detail'][$is]['USER_CREATE'] = (int)$user_create;
-				$is++;
+		$other=0;
+		foreach ($arr as $k_other_product => $val_other_product) {
+
+			if (!isset($val_other_product['brands']) && empty($val_other_product['brands'])) {
+				$msg['message']='กรุณาระบุ Brands [Other Product]';
+				goto error;
+			}else if (!isset($val_other_product['model']) && empty($val_other_product['model'])) {
+				$msg['message']='กรุณาระบุ Model [Other Product]';
+				goto error;
+			}else if (!isset($val_other_product['unit']) && empty($val_other_product['unit'])) {
+				$msg['message']='กรุณาระบุ Unit [Other Product]';
+				goto error;
+			}else{
+				$data['other_product_detail'][$other]['CUSTOMERS_ID'] = (int)$id;
+				$data['other_product_detail'][$other]['BRANDS_ID'] = (int)$val_other_product['brands'];
+				$data['other_product_detail'][$other]['MODEL'] = $this->general_model->clearbadstr($val_other_product['model']);
+				$data['other_product_detail'][$other]['UNIT'] = (int)$val_other_product['unit'];
+				$data['other_product_detail'][$other]['STATUS_DELETE'] = 0;
+				$data['other_product_detail'][$other]['CREATE_DATE'] =  date('Y-m-d H:i:s');
+				$data['other_product_detail'][$other]['USER_CREATE'] = (int)$user_create;
+				$other++;
 			}
 		}
 
-		if (sizeof($data['sales_detail'])>0) {
+		if (sizeof($data['other_product_detail'])>0) {
 			$msg['status']=1;
 			$msg['message']=$data;
 		}
 
 		error:
-		return $msg;
+		return $msg;;
 	}
 
 }

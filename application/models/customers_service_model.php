@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Customers_sales_model extends CI_Model
+class Customers_service_model extends CI_Model
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->table = 'CUSTOMERS_SALE';
+		$this->table = 'CUSTOMERS_SERVICE';
 		$this->load->model('general_model');
 		$this->load->model('logs_model');
 	}
@@ -88,8 +88,8 @@ class Customers_sales_model extends CI_Model
 	public function gets_where($wheres=array()) {
 
 		/* SELECT COLUME SHOWS */
-		$arr_col_show[$this->table] = ['ID','CUSTOMERS_ID','SALES_ID'];
-		$arr_col_show['SALES'] = ['IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
+		$arr_col_show[$this->table] = ['ID','CUSTOMERS_ID','SERVICES_ID'];
+		$arr_col_show['SERVICES'] = ['IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
 
 		$str_select = '';
 		foreach ($arr_col_show as $key => $value) {
@@ -104,7 +104,7 @@ class Customers_sales_model extends CI_Model
 
 		$this->db->select($str_select);
 		$this->db->from($this->table);
-		$this->db->join('SALES', 'SALES.ID='.$this->table.'.SALES_ID AND '.$this->table.'.STATUS_DELETE=0 AND SALES.STATUS_DELETE=0', 'left outer');
+		$this->db->join('SERVICES', 'SERVICES.ID='.$this->table.'.SERVICES_ID AND '.$this->table.'.STATUS_DELETE=0 AND SERVICES.STATUS_DELETE=0', 'left outer');
 		foreach ($wheres as $key => $value) {
 			$this->db->where($this->table.'.'.$key, $value);
 		}
@@ -125,7 +125,7 @@ class Customers_sales_model extends CI_Model
 	public function inserts($arr=array()) {
 
 		$msg['status']=0;
-		$msg['message']='ไม่สามารถเพิ่มช้อมูล SALES DETAIL ได้กรุณาลองใหม่อีกครั้ง';
+		$msg['message']='ไม่สามารถเพิ่มช้อมูล SERVICE DETAIL ได้กรุณาลองใหม่อีกครั้ง';
 
 		if (sizeof($arr)<0) {
 			$msg['message']='ไม่มีข้อมูล';
@@ -319,8 +319,8 @@ class Customers_sales_model extends CI_Model
 		return $msg;
 	}
 
-	/* Check Data Sales Detail */
-	public function chk_sale_detail($arr=array(), $user_create='', $id='') {
+	/* Check Data Service Detail */
+	public function chk_service_detail($arr=array(), $user_create='', $id='') {
 
 		$msg['status']=0;
 		$msg['message']='ไม่มีข้อมูล';
@@ -333,19 +333,19 @@ class Customers_sales_model extends CI_Model
 			goto error;
 		}
 
-		$is=0;
-		foreach ($arr as $k_sales => $val_sales) {
-			if ($val_sales['id']!='') {
-				$data['sales_detail'][$is]['CUSTOMERS_ID'] = (int)$id;
-				$data['sales_detail'][$is]['SALES_ID'] = (int)$val_sales['id'];
-				$data['sales_detail'][$is]['STATUS_DELETE'] = 0;
-				$data['sales_detail'][$is]['CREATE_DATE'] =  date('Y-m-d H:i:s');
-				$data['sales_detail'][$is]['USER_CREATE'] = (int)$user_create;
-				$is++;
+		$ise=0;
+		foreach ($arr as $k_service => $val_service) {
+			if ($val_service['id']!='') {
+				$data['service_detail'][$ise]['CUSTOMERS_ID'] = (int)$id;
+				$data['service_detail'][$ise]['SERVICES_ID'] = (int)$val_service['id'];
+				$data['service_detail'][$ise]['STATUS_DELETE'] = 0;
+				$data['service_detail'][$ise]['CREATE_DATE'] =  date('Y-m-d H:i:s');
+				$data['service_detail'][$ise]['USER_CREATE'] = (int)$user_create;
+				$ise++;
 			}
 		}
 
-		if (sizeof($data['sales_detail'])>0) {
+		if (sizeof($data['service_detail'])>0) {
 			$msg['status']=1;
 			$msg['message']=$data;
 		}

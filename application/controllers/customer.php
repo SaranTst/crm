@@ -15,7 +15,7 @@ class Customer extends MY_Controller {
 
 	public function index()
 	{
-		$data['current_page'] = $this->current_page;
+		$data['datas'] = $this->customers_model->lists();
 
 		$this->load->view('header');
 		$this->load->view('customer/index', $data);
@@ -49,10 +49,16 @@ class Customer extends MY_Controller {
 	public function more_create_customer($id='')
 	{
 		$id = (int)$id; 
-		$data['datas'] = $this->customers_model->gets($id);
-		$data['brands'] = $this->brands_model->lists_vendorname()['status']==1 ? $this->brands_model->lists_vendorname()['data'] : array();
-		$data['sales'] = $this->sales_model->lists_id_sale()['status']==1 ? $this->sales_model->lists_id_sale()['data'] : array();
-		$data['services'] = $this->services_model->lists_id_service()['status']==1 ? $this->services_model->lists_id_service()['data'] : array();
+		$lists_vendorname = $this->brands_model->lists_vendorname();
+		$data['brands'] = $lists_vendorname['status']==1 ? $lists_vendorname['data'] : array();
+
+		$lists_id_sale = $this->sales_model->lists_id_sale();
+		$data['sales'] = $lists_id_sale['status']==1 ? $lists_id_sale['data'] : array();
+
+		$lists_id_service = $this->services_model->lists_id_service();
+		$data['services'] = $lists_id_service['status']==1 ? $lists_id_service['data'] : array();
+
+		$data['datas'] = $this->customers_model->gets_more_customer($id);
 		$data['id'] = $id;
 
 		if ($this->input->get('json')) {

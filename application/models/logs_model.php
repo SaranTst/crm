@@ -20,7 +20,7 @@ class Logs_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->limit($limit,$offset);
-		$this->db->order_by('id', $sort);
+		$this->db->order_by('ID', $sort);
 		$query = $this->db->get();
 
 		$msg['data'] = $query->result_array();
@@ -37,8 +37,8 @@ class Logs_model extends CI_Model
 	public function gets($id) {
 
 		$this->db->from($this->table);
-		$this->db->where('id',$id);
-		$this->db->order_by('id', 'DESC');
+		$this->db->where('ID',$id);
+		$this->db->order_by('ID', 'DESC');
 		$query = $this->db->get();
 
 		$msg = $query->result_array();

@@ -104,11 +104,12 @@
       // }
 
       $('#save-customer').click(function(e) {
-        var url = base_url+'api/customers/test/'+id;
+        var url = base_url+'api/customers/updates_more_customer/'+id;
         var formDataAjax = {};
         formDataAjax = checkForm_customer();
         formDataAjax['user_create'] = ID_LOGIN;
         console.log(formDataAjax);
+        return false;
 
         if (formDataAjax) {
           $.ajax({
@@ -118,21 +119,21 @@
             dataType:"json",
             success: function( resp ){
               console.log(resp);
-              // if (resp.status==1) {
-              //   Swal.fire({
-              //     title: 'Success!',
-              //     text: resp.message,
-              //     type: 'success'
-              //   }).then((result) => {
-              //     window.location.href = base_url+'customer';
-              //   })
-              // }else{
-              //   Swal.fire({
-              //     title: 'Warning!',
-              //     text: resp.message,
-              //     type: 'warning'
-              //   })
-              // }
+              if (resp.status==1) {
+                Swal.fire({
+                  title: 'Success!',
+                  text: resp.message,
+                  type: 'success'
+                }).then((result) => {
+                  window.location.href = base_url+'customer';
+                })
+              }else{
+                Swal.fire({
+                  title: 'Warning!',
+                  text: resp.message,
+                  type: 'warning'
+                })
+              }
             },
             error: function( jqXhr, textStatus, errorThrown ){
               Swal.fire({

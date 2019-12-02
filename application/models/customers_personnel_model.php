@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Customers_sales_model extends CI_Model
+class Customers_personnel_model extends CI_Model
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->table = 'CUSTOMERS_SALE';
+		$this->table = 'CUSTOMERS_PERSONNEL';
 		$this->load->model('general_model');
 		$this->load->model('logs_model');
 	}
@@ -87,29 +87,12 @@ class Customers_sales_model extends CI_Model
 
 	public function gets_where($wheres=array()) {
 
-		/* SELECT COLUME SHOWS */
-		$arr_col_show[$this->table] = ['ID','CUSTOMERS_ID','SALES_ID'];
-		$arr_col_show['SALES'] = ['IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
-
-		$str_select = '';
-		foreach ($arr_col_show as $key => $value) {
-			if (sizeof($value)>0) {
-				foreach ($value as $k => $val) {
-					$str_select .= $key.'.'.$val.' AS '.$val.',';
-				}
-			}
-		}
-		$str_select = substr($str_select, 0, -1);
-		/* END SELECT COLUME SHOWS */
-
-		$this->db->select($str_select);
 		$this->db->from($this->table);
-		$this->db->join('SALES', 'SALES.ID='.$this->table.'.SALES_ID AND '.$this->table.'.STATUS_DELETE=0 AND SALES.STATUS_DELETE=0', 'left outer');
 		foreach ($wheres as $key => $value) {
-			$this->db->where($this->table.'.'.$key, $value);
+			$this->db->where($key, $value);
 		}
-		$this->db->where($this->table.'.STATUS_DELETE', 0);
-		$this->db->order_by($this->table.'.ID', 'DESC');
+		$this->db->where('STATUS_DELETE', 0);
+		$this->db->order_by('ID', 'DESC');
 		$query = $this->db->get();
 
 		$msg['status']=1;
@@ -125,12 +108,23 @@ class Customers_sales_model extends CI_Model
 	public function inserts($arr=array()) {
 
 		$msg['status']=0;
-		$msg['message']='ไม่สามารถเพิ่มช้อมูล SALES DETAIL ได้กรุณาลองใหม่อีกครั้ง';
+		$msg['message']='ไม่สามารถเพิ่มช้อมูล PERSONNEL DETAIL ได้กรุณาลองใหม่อีกครั้ง';
 
 		if (sizeof($arr)<0) {
 			$msg['message']='ไม่มีข้อมูล';
 			goto error;
 		}
+
+		// chcekc upload image
+		if (isset($arr['IMAGE']) && !empty($arr['IMAGE'])) {
+			$new_path_image = $this->general_model->move_images($arr['IMAGE'], 'personnel');
+	        if (!$new_path_image['status']) {
+				$msg_img=$new_path_image;
+	        	return $msg_img;
+	        }
+			$arr['IMAGE'] = $new_path_image['message'];
+		}
+		unset($arr['OLD_IMAGE']); // delete 1 row in array
 		
 		$this->db->insert($this->table, $arr);
 		$res_insert = $this->db->affected_rows();
@@ -319,8 +313,8 @@ class Customers_sales_model extends CI_Model
 		return $msg;
 	}
 
-	/* Check Data Sales Detail */
-	public function chk_sale_detail($arr=array(), $user_create='', $id='') {
+	/* Check Data Personnel */
+	public function chk_personnel($arr=array(), $user_create='', $id='') {
 
 		$msg['status']=0;
 		$msg['message']='ไม่มีข้อมูล';
@@ -333,25 +327,127 @@ class Customers_sales_model extends CI_Model
 			goto error;
 		}
 
-		$is=0;
-		foreach ($arr as $k_sales => $val_sales) {
-			if ($val_sales['id']!='') {
-				$data['sales_detail'][$is]['CUSTOMERS_ID'] = (int)$id;
-				$data['sales_detail'][$is]['SALES_ID'] = (int)$val_sales['id'];
-				$data['sales_detail'][$is]['STATUS_DELETE'] = 0;
-				$data['sales_detail'][$is]['CREATE_DATE'] =  date('Y-m-d H:i:s');
-				$data['sales_detail'][$is]['USER_CREATE'] = (int)$user_create;
-				$is++;
+		$iper=0;
+		foreach ($arr as $k_personnel => $val_personnel) {
+
+			if (!isset($val_personnel['relationship']) && empty($val_personnel['relationship'])) {
+				$msg['message']='กรุณาระบุ Relationship';
+				goto error;
+			}else if (!isset($val_personnel['prefix']) && empty($val_personnel['prefix'])) {
+				$msg['message']='กรุณาระบุ Prefix';
+				goto error;
+			}else if (!isset($val_personnel['position']) && empty($val_personnel['position'])) {
+				$msg['message']='กรุณาระบุ Position';
+				goto error;
+			}else if (!isset($val_personnel['name_surname_th']) && empty($val_personnel['name_surname_th'])) {
+				$msg['message']='กรุณาระบุ Name Surname Thai';
+				goto error;
+			}else if (!isset($val_personnel['name_surname_eng']) && empty($val_personnel['name_surname_eng'])) {
+				$msg['message']='กรุณาระบุ Name Surname Eng';
+				goto error;
+			}else if (!isset($val_personnel['e_mail']) && empty($val_personnel['e_mail'])) {
+				$msg['message']='กรุณาระบุ E-mail';
+				goto error;
+			}else if (!isset($val_personnel['tel']) && empty($val_personnel['tel'])) {
+				$msg['message']='กรุณาระบุ Tel.';
+				goto error;
+			}else if (!isset($val_personnel['date_birthday']) && empty($val_personnel['date_birthday'])) {
+				$msg['message']='กรุณาระบุ Date Birthday.';
+				goto error;
+			}else if (!isset($val_personnel['gender']) && empty($val_personnel['gender'])) {
+				$msg['message']='กรุณาระบุ Gender';
+				goto error;
+			}else if (!isset($val_personnel['salesperson']) && empty($val_personnel['salesperson'])) {
+				$msg['message']='กรุณาระบุ Salesperson';
+				goto error;
+			}else if (!isset($val_personnel['contact_channal']) && empty($val_personnel['contact_channal'])) {
+				$msg['message']='กรุณาระบุ Contact Channal';
+				goto error;
+			}else if (!isset($val_personnel['event']) && empty($val_personnel['event'])) {
+				$msg['message']='กรุณาระบุ Event';
+				goto error;
+			}else if (!isset($val_personnel['date_stamp']) && empty($val_personnel['date_stamp'])) {
+				$msg['message']='กรุณาระบุ Date Stamp';
+				goto error;
+			}else if (!isset($val_personnel['brands']) && empty($val_personnel['brands'])) {
+				$msg['message']='กรุณาระบุ Brands';
+				goto error;
+			}else if (!isset($val_personnel['model']) && empty($val_personnel['model'])) {
+				$msg['message']='กรุณาระบุ Model';
+				goto error;
+			}else if (!isset($val_personnel['status']) && empty($val_personnel['status'])) {
+				$msg['message']='กรุณาระบุ Status';
+				goto error;
+			}else if (!isset($val_personnel['confident']) && empty($val_personnel['confident'])) {
+				$msg['message']='กรุณาระบุ Confident';
+				goto error;
+			}else if (!isset($val_personnel['remarks']) && empty($val_personnel['remarks'])) {
+				$msg['message']='กรุณาระบุ Remarks';
+				goto error;
+			}else{
+
+				$data['personnel_detail'][$iper]['CUSTOMERS_ID'] = (int)$id;
+				$data['personnel_detail'][$iper]['RELATIONSHIP'] = (int)$val_personnel['relationship'];
+				$data['personnel_detail'][$iper]['PREFIX'] = (int)$val_personnel['prefix'];
+				$data['personnel_detail'][$iper]['POSITION_ID'] = (int)$val_personnel['position'];
+
+				$data['personnel_detail'][$iper]['IMAGE'] = $this->general_model->clearbadstr($val_personnel['img_personnel']);
+				$data['personnel_detail'][$iper]['OLD_IMAGE'] = $this->general_model->clearbadstr($val_personnel['old_img_personnel']);
+
+				$explode_name_th = explode(' ', $this->general_model->clearbadstr($val_personnel['name_surname_th']));
+				if (empty($explode_name_th[1])) {
+					$msg['message']='กรุณากรอกนามสกุลภาษาไทยด้วยครับ';
+					goto error;
+				}
+				$data['personnel_detail'][$iper]['FIRST_NAME_TH'] = $explode_name_th[0];
+				$data['personnel_detail'][$iper]['LAST_NAME_TH'] = $explode_name_th[1];
+
+				$explode_name_eng = explode(' ', $this->general_model->clearbadstr($val_personnel['name_surname_eng']));
+				if (empty($explode_name_eng[1])) {
+					$msg['message']='กรุณากรอกนามสกุลภาษาอังกฤษด้วยครับ';
+					goto error;
+				}
+				$data['personnel_detail'][$iper]['FIRST_NAME_ENG'] = $explode_name_eng[0];
+				$data['personnel_detail'][$iper]['LAST_NAME_ENG'] = $explode_name_eng[1];
+
+				$chk_mail = $this->general_model->clearbadstr($val_personnel['e_mail']);
+				if (!$this->general_model->check_email($chk_mail)) {
+					$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
+					goto error;
+				}
+				$data['personnel_detail'][$iper]['EMAIL'] = $chk_mail;
+
+				$chk_tel = $this->general_model->clearbadstr($val_personnel['tel']);
+				if (!$this->general_model->check_telephone_number($chk_tel)) {
+					$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
+					goto error;
+				}
+				$data['personnel_detail'][$iper]['TELEPHONE'] = $chk_tel;
+				$data['personnel_detail'][$iper]['BIRTHDAY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($val_personnel['date_birthday'])));
+				$data['personnel_detail'][$iper]['GENDER'] = (int)$val_personnel['gender'];
+				$data['personnel_detail'][$iper]['SALES_ID'] = (int)$val_personnel['salesperson'];
+				$data['personnel_detail'][$iper]['CONTACT_CHANNAL'] = (int)$val_personnel['contact_channal'];
+				$data['personnel_detail'][$iper]['EVENT'] = $this->general_model->clearbadstr($val_personnel['event']);
+				$data['personnel_detail'][$iper]['DATE_STAMP'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($val_personnel['date_stamp'])));
+				$data['personnel_detail'][$iper]['BRANDS_ID'] = (int)$val_personnel['brands'];
+				$data['personnel_detail'][$iper]['MODEL'] = $this->general_model->clearbadstr($val_personnel['model']);
+				$data['personnel_detail'][$iper]['STATUS'] = (int)$val_personnel['status'];
+				$data['personnel_detail'][$iper]['CONFIDENT'] = (int)$val_personnel['confident'];
+				$data['personnel_detail'][$iper]['REMARKS'] = $this->general_model->clearbadstr($val_personnel['remarks']);
+				$data['personnel_detail'][$iper]['STATUS_DELETE'] = 0;
+				$data['personnel_detail'][$iper]['CREATE_DATE'] =  date('Y-m-d H:i:s');
+				$data['personnel_detail'][$iper]['USER_CREATE'] = (int)$user_create;
+				$iper++;
 			}
 		}
 
-		if (sizeof($data['sales_detail'])>0) {
+		if (sizeof($data['personnel_detail'])>0) {
 			$msg['status']=1;
 			$msg['message']=$data;
 		}
 
 		error:
-		return $msg;
+		return $msg;;
 	}
 
 }

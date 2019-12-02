@@ -20,10 +20,10 @@
           
         </div>
         <div class="col-md-3 pt-2">
-          <a href="<?php echo base_url(); ?>customer/more_create_customer" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-arrow-right fa-fw"></i><p>&nbsp; More info</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block" onclick="summit_customer('moreinfo')"><i class="fa fa-arrow-right fa-fw"></i><p>&nbsp; More info</p></a>
         </div>
         <div class="col-md-3 pt-2">
-          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" id="summit-customer"><i class="fa fa-check fa-fw"></i><p>&nbsp; SUMMIT</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block" onclick="summit_customer('')"><i class="fa fa-check fa-fw"></i><p>&nbsp; SUMMIT</p></a>
         </div>
       </div>
 
@@ -137,7 +137,7 @@
                       <select class="custom-select" name="relationship_doctor">
                         <option value="" selected readonly hidden>Choose Relationship</option>
                         <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                        <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['RELATIONSHIP_DOCTOR']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                        <option value="<?php echo $value; ?>" <?php echo sizeof($data)>0 && $data['RELATIONSHIP_DOCTOR']==$value ? 'selected' : ''; ?>><?php echo $value; ?></option>
                         <?php } ?>
                       </select>
                     </div>
@@ -221,7 +221,7 @@
                       <select class="custom-select" name="relationship_purchase">
                         <option value="" selected readonly hidden>Choose Relationship</option>
                         <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                        <option value="<?php echo $key; ?>" <?php echo sizeof($data)>0 && $data['RELATIONSHIP_PURCHASE']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                        <option value="<?php echo $value; ?>" <?php echo sizeof($data)>0 && $data['RELATIONSHIP_PURCHASE']==$value ? 'selected' : ''; ?>><?php echo $value; ?></option>
                         <?php } ?>
                       </select>
                     </div>
@@ -308,8 +308,6 @@
     
   $(document).ready(function(){
 
-    console.log(j_status);
-
     // if data null show modal alert
     if (j_status==0) {
       Swal.fire({
@@ -333,46 +331,6 @@
       autoclose: true
     })
 
-    $('#summit-customer').click(function(e) {
-      var url = base_url+'api/customers/update_customers/'+id;
-      var formDataBrand = checkForm('add-customers');
-
-      if (formDataBrand) {
-        $.ajax({
-          url: url,
-          type:"POST",
-          data: formDataBrand,
-          dataType:"json",
-          success: function( resp ){
-            
-            if (resp.status==1) {
-              Swal.fire({
-                title: 'Success!',
-                text: resp.message,
-                type: 'success'
-              }).then((result) => {
-                window.location.href = base_url+'customer';
-              })
-            }else{
-              Swal.fire({
-                title: 'Warning!',
-                text: resp.message,
-                type: 'warning'
-              })
-            }
-          },
-          error: function( jqXhr, textStatus, errorThrown ){
-            Swal.fire({
-              title: jqXhr.status,
-              text: errorThrown,
-              type: 'error'
-            })
-          }
-        });
-      }
-    });
-
-
     $("input", $("form#add-customers")).on("keyup", function(){
       $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
     })
@@ -380,11 +338,57 @@
       $(this).removeClass("border border-danger").siblings("small.text-danger").css("display","none");
     })
 
-    function checkForm(idform) {
-     $("form#"+idform).removeClass("border border-danger").siblings("small.text-danger").remove();
-      var formDataArr = $("form#"+idform).serializeArray();
-      var formData = {};
-      for (var i = 0; i < formDataArr.length; i++){
+  });
+
+  function summit_customer(action=''){
+    var url = base_url+'api/customers/update_customers/'+id;
+    var formDataBrand = checkForm('add-customers', action);
+
+    if (formDataBrand) {
+      $.ajax({
+        url: url,
+        type:"POST",
+        data: formDataBrand,
+        dataType:"json",
+        success: function( resp ){
+          
+          if (resp.status==1) {
+
+            if (action=='moreinfo') {
+              window.location.href = base_url+'customer/more_create_customer/'+resp.message;
+            }else{
+              Swal.fire({
+                title: 'Success!',
+                text: resp.message,
+                type: 'success'
+              }).then((result) => {
+                window.location.href = base_url+'customer';
+              })
+            }
+          }else{
+            Swal.fire({
+              title: 'Warning!',
+              text: resp.message,
+              type: 'warning'
+            })
+          }
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+          Swal.fire({
+            title: jqXhr.status,
+            text: errorThrown,
+            type: 'error'
+          })
+        }
+      });
+    }
+  }
+
+  function checkForm(idform,action='') {
+    $("form#"+idform).removeClass("border border-danger").siblings("small.text-danger").remove();
+    var formDataArr = $("form#"+idform).serializeArray();
+    var formData = {};
+    for (var i = 0; i < formDataArr.length; i++){
 
         if (formDataArr[i]['value'] || formDataArr[i]['name']=='image_hospital' || formDataArr[i]['name']=='old_image_hospital' || formDataArr[i]['name']=='image_doctor' || formDataArr[i]['name']=='old_image_doctor' || formDataArr[i]['name']=='image_purchase' || formDataArr[i]['name']=='old_image_purchase') {
           formData[formDataArr[i]['name']] = formDataArr[i]['value'];
@@ -395,8 +399,11 @@
           return false
         }
       }
+
+      if (action=='moreinfo') {
+        formData['moreinfo'] = 1;
+      }
       return formData;
     }
 
-  });
   </script>

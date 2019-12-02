@@ -49,10 +49,37 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function test($id=null)
+	public function updates_more_customer($id=null)
 	{
-		$id = 1150;
+		$id = (int)$id;
 		$msg = $this->customers_model->updates_more_customer($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function gets_more_customer($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->gets_more_customer($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function delete_sales_detail($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->delete_sales_detail($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function delete_service_detail($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->delete_service_detail($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
