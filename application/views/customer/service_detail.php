@@ -15,7 +15,7 @@
 
               <div class="row">
                 <div class="col-md-10"></div>
-                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete(<?php echo $val_service['ID'].','.($k_service+1); ?>)"></i></div>
+                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_serivce(<?php echo $val_service['ID'].','.($k_service+1); ?>)"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-service"><?php echo ($k_service+1); ?>. Service <?php echo ($k_service+1); ?></h3>
                   <input type="hidden" class="form-control" name="service_detail[<?php echo ($k_service); ?>][id_colum]" value="<?php echo $val_service['ID']; ?>" readonly>
@@ -24,7 +24,7 @@
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">ID</label>
                     <div class="col">
-                      <select class="custom-select" name="service_detail[0][id]" onchange="select_service(<?php echo ($k_service+1); ?>,this,<?php echo $k_service['SERVICES_ID']; ?>)" id="select-service-<?php echo ($k_service+1); ?>">
+                      <select class="custom-select" name="service_detail[<?php echo ($k_service); ?>][id]" onchange="select_service(<?php echo ($k_service+1); ?>,this,<?php echo $k_service['SERVICES_ID']; ?>)" id="select-service-<?php echo ($k_service+1); ?>">
                         <option value="" selected readonly hidden>Choose ID</option>
                         <?php foreach ($services as $key => $value) { ?>
                         <option value="<?php echo $key; ?>" <?php echo $val_service['SERVICES_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
@@ -262,7 +262,7 @@
 
     }
 
-    function ajax_delete(id, id_dom) {
+    function ajax_delete_serivce(id, id_dom) {
 
       Swal.fire({
         title: 'Are you sure?',
@@ -276,7 +276,7 @@
 
           var url = base_url+'api/customers/delete_service_detail/'+id;
           var formData = {};
-          formData['USER_DELETE'] = ID_LOGIN;
+          formData['user_delete'] = ID_LOGIN;
 
           $.ajax({
             url: url,

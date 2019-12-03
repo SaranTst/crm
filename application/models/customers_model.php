@@ -458,7 +458,7 @@ class Customers_model extends CI_Model
 			goto error;
 		}
 		$ip_post = $this->input->post();
-		$user_delete = (int)$ip_post['USER_DELETE'];
+		$user_delete = (int)$ip_post['user_delete'];
 
 		$data['STATUS_DELETE'] = 1;
 		$this->db->where('ID', $id);
@@ -614,7 +614,7 @@ class Customers_model extends CI_Model
 			goto error;
 		}
 		$ip_post = $this->input->post();
-		$user_delete = (int)$ip_post['USER_DELETE'];
+		$user_delete = (int)$ip_post['user_delete'];
 
 		$data['STATUS_DELETE'] = 1;
 		$this->db->where('ID', $id);
@@ -632,7 +632,6 @@ class Customers_model extends CI_Model
 
 		error:
 		return $msg;
-
 	}
 
 	public function delete_service_detail($id=null) {
@@ -646,7 +645,7 @@ class Customers_model extends CI_Model
 			goto error;
 		}
 		$ip_post = $this->input->post();
-		$user_delete = (int)$ip_post['USER_DELETE'];
+		$user_delete = (int)$ip_post['user_delete'];
 
 		$data['STATUS_DELETE'] = 1;
 		$this->db->where('ID', $id);
@@ -664,7 +663,130 @@ class Customers_model extends CI_Model
 
 		error:
 		return $msg;
+	}
 
+	public function delete_bjc_product($id=null) {
+
+		$msg['status'] = 0;
+		$msg['message'] = 'ลบช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
+			goto error;
+		}
+		$ip_post = $this->input->post();
+		$user_delete = (int)$ip_post['user_delete'];
+
+		$data['STATUS_DELETE'] = 1;
+		$this->db->where('ID', $id);
+		$this->db->update($this->table_bjc_product_detail, $data);
+		$res_delete = $this->db->affected_rows();
+
+		if ($res_delete > 0) {
+
+			$res_insert_log = $this->logs_model->inserts($this->table_bjc_product_detail, $id, 'delete', $user_delete);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='ลบข้อมูลสำเร็จ';
+			}
+		}
+
+		error:
+		return $msg;
+	}
+
+	public function delete_other_product($id=null) {
+
+		$msg['status'] = 0;
+		$msg['message'] = 'ลบช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
+			goto error;
+		}
+		$ip_post = $this->input->post();
+		$user_delete = (int)$ip_post['user_delete'];
+
+		$data['STATUS_DELETE'] = 1;
+		$this->db->where('ID', $id);
+		$this->db->update($this->table_other_product_detail, $data);
+		$res_delete = $this->db->affected_rows();
+
+		if ($res_delete > 0) {
+
+			$res_insert_log = $this->logs_model->inserts($this->table_other_product_detail, $id, 'delete', $user_delete);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='ลบข้อมูลสำเร็จ';
+			}
+		}
+
+		error:
+		return $msg;
+	}
+
+	public function delete_personnel_detail($id=null) {
+
+		$msg['status'] = 0;
+		$msg['message'] = 'ลบช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
+			goto error;
+		}
+		$ip_post = $this->input->post();
+		$user_delete = (int)$ip_post['user_delete'];
+
+		$data['STATUS_DELETE'] = 1;
+		$this->db->where('ID', $id);
+		$this->db->update($this->table_personnel_detail, $data);
+		$res_delete = $this->db->affected_rows();
+
+		if ($res_delete > 0) {
+
+			$res_insert_log = $this->logs_model->inserts($this->table_personnel_detail, $id, 'delete', $user_delete);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='ลบข้อมูลสำเร็จ';
+			}
+		}
+
+		error:
+		return $msg;
+	}
+
+	public function updates_expertise_customer($id=null) {
+
+		$msg['status'] = 0;
+		$msg['message'] = 'แก้ไขช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการแก้ไขข้อมูลด้วยครับ';
+			goto error;
+		}
+		$ip_post = $this->input->post();
+		$user_create = (int)$ip_post['user_create'];
+
+		$data['EXPERTISE'] = (int)$ip_post['customer_expertise'];;
+		$this->db->where('ID', $id);
+		$this->db->update($this->table, $data);
+		$res_delete = $this->db->affected_rows();
+
+		if ($res_delete > 0) {
+
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $user_create);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='แก้ไขข้อมูลสำเร็จ';
+			}
+		}
+
+		error:
+		return $msg;
 	}
 
 }

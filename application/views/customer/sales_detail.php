@@ -15,7 +15,7 @@
 
               <div class="row">
                 <div class="col-md-10"></div>
-                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete(<?php echo $val_sale['ID'].','.($k_sale+1); ?>)"></i></div>
+                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_salse(<?php echo $val_sale['ID'].','.($k_sale+1); ?>)"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-sales"><?php echo ($k_sale+1); ?>.</h3>
                   <input type="hidden" class="form-control" name="sales_detail[<?php echo ($k_sale); ?>][id_colum]" value="<?php echo $val_sale['ID']; ?>" readonly>
@@ -262,7 +262,7 @@
 
     }
 
-    function ajax_delete(id, id_dom) {
+    function ajax_delete_salse(id, id_dom) {
 
       Swal.fire({
         title: 'Are you sure?',
@@ -276,7 +276,7 @@
 
           var url = base_url+'api/customers/delete_sales_detail/'+id;
           var formData = {};
-          formData['USER_DELETE'] = ID_LOGIN;
+          formData['user_delete'] = ID_LOGIN;
 
           $.ajax({
             url: url,

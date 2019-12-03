@@ -282,7 +282,7 @@ class Customers_bjc_product_model extends CI_Model
 			goto error;
 		}
 		$ip_post = $this->input->post();
-		$user_delete = (int)$ip_post['USER_DELETE'];
+		$user_delete = (int)$ip_post['user_delete'];
 
 		$data['STATUS_DELETE'] = 1;
 		$this->db->where('ID', $id);

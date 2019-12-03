@@ -27,10 +27,10 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Expertise</label>
             <div class="col">
-              <select class="custom-select">
+              <select class="custom-select" name="customer_expertise" id="customer_expertise">
                 <option value="" selected disabled hidden>Choose Expertise</option>
                 <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
-                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                <option value="<?php echo $key; ?>" <?php echo $data['EXPERTISE']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
                 <?php } ?>
               </select>
             </div>
@@ -103,11 +103,74 @@
       //   })
       // }
 
+      var previous = '';
+      $('#customer_expertise').on('focus', function () {
+        previous = this.value;
+      }).change(function() {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "คุณต้องการแก้ไขข้อมูลนี้ใช่หรือไม่",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+        }).then((result) => {
+          if (typeof result.dismiss === "undefined") {
+
+            var url_update_expertise = base_url+'api/customers/updates_expertise_customer/'+id;
+            var formDataAjax_update_expertise = {};
+            formDataAjax_update_expertise['user_create'] = ID_LOGIN;
+            formDataAjax_update_expertise['customer_expertise'] = this.value;
+
+            if (formDataAjax_update_expertise) {
+              $.ajax({
+                url: url_update_expertise,
+                type:"POST",
+                data: formDataAjax_update_expertise,
+                dataType:"json",
+                success: function( resp ){
+                  console.log(resp);
+                  if (resp.status==1) {
+                    Swal.fire({
+                      type: 'success',
+                      title: resp.message,
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                  }else{
+                    Swal.fire({
+                      title: 'Warning!',
+                      text: resp.message,
+                      type: 'warning'
+                    })
+                  }
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                  Swal.fire({
+                    title: jqXhr.status,
+                    text: errorThrown,
+                    type: 'error'
+                  })
+                }
+              });
+            }
+
+          }else{
+            $('#customer_expertise').val(previous);
+          }
+        })
+
+      });
+
+
       $('#save-customer').click(function(e) {
         var url = base_url+'api/customers/updates_more_customer/'+id;
         var formDataAjax = {};
         formDataAjax = checkForm_customer();
         formDataAjax['user_create'] = ID_LOGIN;
+        // formDataAjax['customer_expertise'] = $('select[name="customer_expertise"]').val();
         console.log(formDataAjax);
         return false;
 

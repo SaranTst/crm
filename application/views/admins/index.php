@@ -438,7 +438,7 @@
 
 		    var url = base_url+'api/admins/delete_admins/'+id;
 		    var formData = {};
-			formData['USER_DELETE'] = ID_LOGIN;
+			formData['user_delete'] = ID_LOGIN;
 
 	        $.ajax({
 	            url: url,

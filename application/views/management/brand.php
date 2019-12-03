@@ -167,7 +167,7 @@
 
     var url = base_url+'api/brands/delete_brands/'+id;
     var formData = {};
-    formData['USER_DELETE'] = ID_LOGIN;
+    formData['user_delete'] = ID_LOGIN;
 
     $.ajax({
         url: url,

@@ -67,6 +67,15 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	public function updates_expertise_customer($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->updates_expertise_customer($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
 	public function delete_sales_detail($id=null)
 	{
 		$id = (int)$id;
@@ -80,6 +89,33 @@ class Customers extends MY_Controller {
 	{
 		$id = (int)$id;
 		$msg = $this->customers_model->delete_service_detail($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function delete_bjc_product($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->delete_bjc_product($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function delete_other_product($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->delete_other_product($id);
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
+	public function delete_personnel_detail($id=null)
+	{
+		$id = (int)$id;
+		$msg = $this->customers_model->delete_personnel_detail($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
