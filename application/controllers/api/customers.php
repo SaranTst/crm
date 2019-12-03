@@ -7,6 +7,11 @@ class Customers extends MY_Controller {
     {
 		parent::__construct ();
 		$this->load->model('customers_model');
+		$this->load->model('customers_sales_model');
+		$this->load->model('customers_service_model');
+		$this->load->model('customers_bjc_product_model');
+		$this->load->model('customers_other_product_model');
+		$this->load->model('customers_personnel_model');
 	}
 
 	public function lists_customers()
@@ -76,10 +81,11 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	/* Delete Data In More Customer */
 	public function delete_sales_detail($id=null)
 	{
 		$id = (int)$id;
-		$msg = $this->customers_model->delete_sales_detail($id);
+		$msg = $this->customers_sales_model->delete_sales_detail($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
@@ -88,7 +94,7 @@ class Customers extends MY_Controller {
 	public function delete_service_detail($id=null)
 	{
 		$id = (int)$id;
-		$msg = $this->customers_model->delete_service_detail($id);
+		$msg = $this->customers_service_model->delete_service_detail($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
@@ -97,7 +103,7 @@ class Customers extends MY_Controller {
 	public function delete_bjc_product($id=null)
 	{
 		$id = (int)$id;
-		$msg = $this->customers_model->delete_bjc_product($id);
+		$msg = $this->customers_bjc_product_model->delete_bjc_product($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
@@ -106,7 +112,7 @@ class Customers extends MY_Controller {
 	public function delete_other_product($id=null)
 	{
 		$id = (int)$id;
-		$msg = $this->customers_model->delete_other_product($id);
+		$msg = $this->customers_other_product_model->delete_other_product($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
@@ -115,10 +121,11 @@ class Customers extends MY_Controller {
 	public function delete_personnel_detail($id=null)
 	{
 		$id = (int)$id;
-		$msg = $this->customers_model->delete_personnel_detail($id);
+		$msg = $this->customers_personnel_model->delete_personnel_detail($id);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
 	}
+	/* Delete Data In More Customer */
 
 }

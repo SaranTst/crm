@@ -349,5 +349,36 @@ class Customers_other_product_model extends CI_Model
 		return $msg;;
 	}
 
+	public function delete_other_product($id=null) {
+
+		$msg['status'] = 0;
+		$msg['message'] = 'ลบช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
+			goto error;
+		}
+		$ip_post = $this->input->post();
+		$user_delete = (int)$ip_post['user_delete'];
+
+		$data['STATUS_DELETE'] = 1;
+		$this->db->where('ID', $id);
+		$this->db->update($this->table, $data);
+		$res_delete = $this->db->affected_rows();
+
+		if ($res_delete > 0) {
+
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'delete', $user_delete);
+			if ($res_insert_log) {
+				$msg['status']=1;
+				$msg['message']='ลบข้อมูลสำเร็จ';
+			}
+		}
+
+		error:
+		return $msg;
+	}
+
 }
 ?>
