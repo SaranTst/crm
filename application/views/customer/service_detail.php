@@ -3,7 +3,7 @@
           $data_service = array();
           if (isset($datas) && !empty($datas)) {
             if ($datas['status']==1) {
-              $data_service = $datas['service_detail'];
+              $data_service = $datas['data'][0]['service_detail'];
             }
           }
 
@@ -24,7 +24,7 @@
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">ID</label>
                     <div class="col">
-                      <select class="custom-select" name="service_detail[<?php echo ($k_service); ?>][id]" onchange="select_service(<?php echo ($k_service+1); ?>,this,<?php echo $k_service['SERVICES_ID']; ?>)" id="select-service-<?php echo ($k_service+1); ?>">
+                      <select class="custom-select" name="service_detail[<?php echo ($k_service); ?>][id]" onchange="select_service(<?php echo ($k_service+1); ?>,this,<?php echo $val_service['SERVICES_ID']; ?>)" id="select-service-<?php echo ($k_service+1); ?>">
                         <option value="" selected readonly hidden>Choose ID</option>
                         <?php foreach ($services as $key => $value) { ?>
                         <option value="<?php echo $key; ?>" <?php echo $val_service['SERVICES_ID']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
@@ -175,36 +175,37 @@
 
   <script type="text/javascript">
 
-    /* Add Dom SERVICE DETAIL */
-    $('#add_content_service_detail').click(function(){
+    $(document).ready(function(){
+      /* Add Dom SERVICE DETAIL */
+      $('#add_content_service_detail').click(function(){
 
-      // Clone Dom
-      var clone_dom_service = $("form#service-detail").last().clone();
+        // Clone Dom
+        var clone_dom_service = $("form#service-detail").last().clone();
 
-      // Edit Dom
-      var id_dom_service = clone_dom_service.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(12);
-      var new_id_dom_service = parseInt(id_dom_service) + 1;
-      var key_arr_dom_service = parseInt(id_dom_service) - 1;
-      var new_key_arr_dom_service = key_arr_dom_service + 1;
+        // Edit Dom
+        var id_dom_service = clone_dom_service.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(12);
+        var new_id_dom_service = parseInt(id_dom_service) + 1;
+        var key_arr_dom_service = parseInt(id_dom_service) - 1;
+        var new_key_arr_dom_service = key_arr_dom_service + 1;
 
-      clone_dom_service.find('#select-service-'+id_dom_service+' option:selected').removeAttr('selected');
-      clone_dom_service.find('#select-service-'+id_dom_service).attr('id', 'select-service-'+new_id_dom_service);
+        clone_dom_service.find('#select-service-'+id_dom_service+' option:selected').removeAttr('selected').attr('id', 'select-service-'+new_id_dom_service);
 
-      clone_dom_service.find('#dom-service-'+id_dom_service).attr('id', 'dom-service-'+new_id_dom_service);
-      clone_dom_service.find('#id-jumbotron-service').text(new_id_dom_service+'. Service '+new_id_dom_service);
-      clone_dom_service.find('#preview-service-'+id_dom_service).attr('id', 'preview-service-'+new_id_dom_service).attr('src', base_url+'images/180.png');
-      clone_dom_service.find('#name-service-th-'+id_dom_service).attr('id', 'name-service-th-'+new_id_dom_service).attr('value', '');
-      clone_dom_service.find('#name-service-eng-'+id_dom_service).attr('id', 'name-service-eng-'+new_id_dom_service).attr('value', '');
-      clone_dom_service.find('#nickname-service-th-'+id_dom_service).attr('id', 'nickname-service-th-'+new_id_dom_service).attr('value', '');
-      clone_dom_service.find('#nickname-service-eng-'+id_dom_service).attr('id', 'nickname-service-eng-'+new_id_dom_service).attr('value', '');
-      clone_dom_service.find('#team-service-'+id_dom_service).attr('id', 'team-service-'+new_id_dom_service).attr('value', '');
-      clone_dom_service.find('select[name="service_detail['+key_arr_dom_service+'][id]"]').attr('name', 'service_detail['+new_key_arr_dom_service+'][id]');
-      clone_dom_service.find('.fa.fa-times').attr('onclick', "$('#dom-service-"+new_id_dom_service+"').remove();");
-      clone_dom_service.find('.custom-select').attr('onchange', "select_service("+new_id_dom_service+",this,0)");
+        clone_dom_service.find('#dom-service-'+id_dom_service).attr('id', 'dom-service-'+new_id_dom_service);
+        clone_dom_service.find('#id-jumbotron-service').text(new_id_dom_service+'. Service '+new_id_dom_service);
+        clone_dom_service.find('#preview-service-'+id_dom_service).attr('id', 'preview-service-'+new_id_dom_service).attr('src', base_url+'images/180.png');
+        clone_dom_service.find('#name-service-th-'+id_dom_service).attr('id', 'name-service-th-'+new_id_dom_service).attr('value', '');
+        clone_dom_service.find('#name-service-eng-'+id_dom_service).attr('id', 'name-service-eng-'+new_id_dom_service).attr('value', '');
+        clone_dom_service.find('#nickname-service-th-'+id_dom_service).attr('id', 'nickname-service-th-'+new_id_dom_service).attr('value', '');
+        clone_dom_service.find('#nickname-service-eng-'+id_dom_service).attr('id', 'nickname-service-eng-'+new_id_dom_service).attr('value', '');
+        clone_dom_service.find('#team-service-'+id_dom_service).attr('id', 'team-service-'+new_id_dom_service).attr('value', '');
+        clone_dom_service.find('select[name="service_detail['+key_arr_dom_service+'][id]"]').attr('name', 'service_detail['+new_key_arr_dom_service+'][id]');
+        clone_dom_service.find('.fa.fa-times').attr('onclick', "$('#dom-service-"+new_id_dom_service+"').remove();");
+        clone_dom_service.find('.custom-select').attr('onchange', "select_service("+new_id_dom_service+",this,0)");
 
-      // Appent Dom
-      clone_dom_service.children().last().appendTo("form#service-detail");
-   });
+        // Appent Dom
+        clone_dom_service.children().last().appendTo("form#service-detail");
+      });
+    });
 
     function select_service(id_dom, e, old_value) {
 
@@ -274,7 +275,7 @@
       }).then((result) => {
         if (typeof result.dismiss === "undefined") {
 
-          var url = base_url+'api/customers/delete_service_detail/'+id;
+          var url = base_url+'api/customers_service/delete_customers_service/'+id;
           var formData = {};
           formData['user_delete'] = ID_LOGIN;
 

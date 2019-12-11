@@ -4,7 +4,7 @@
           $data_product_bjc = array();
           if (isset($datas) && !empty($datas)) {
             if ($datas['status']==1) {
-              $data_product_bjc = $datas['product_bjc'];
+              $data_product_bjc = $datas['data'][0]['product_bjc'];
             }
           }
 
@@ -219,7 +219,7 @@
           $data_product_other = array();
           if (isset($datas) && !empty($datas)) {
             if ($datas['status']==1) {
-              $data_product_other = $datas['product_other'];
+              $data_product_other = $datas['data'][0]['product_other'];
             }
           }
 
@@ -236,6 +236,7 @@
                   <div class="form-group row">
                     <div class="col-md-7">
                       <h3 id="id-jumbotron-other-product"><?php echo ($k_product_other+1); ?>. Other Product</h3>
+                      <input type="hidden" class="form-control" name="other_product_detail[<?php echo ($k_product_other); ?>][id_colum]" value="<?php echo $val_product_other['ID']; ?>" readonly>
                     </div>
                     <div class="col-md-5">
                     </div>
@@ -333,115 +334,107 @@
 
   <script type="text/javascript">
 
-    $('#warranty-bjc-product-1').datepicker({
-      format: "yyyy-mm-dd",
-      language: "th",
-      autoclose: true
-    })
-
-    /* Add Dom BJC Product */
-    $('#add_content_bjc_product').click(function(){
-
-      // Clone Dom
-      var clone_dom_bjc_product = $("form#bjc-product-detail").last().clone();
-
-      // Edit Dom
-      var id_dom_bjc_product = clone_dom_bjc_product.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(16);
-      var new_id_dom_bjc_product = parseInt(id_dom_bjc_product) + 1;
-      var key_arr_dom_bjc_product = parseInt(id_dom_bjc_product) - 1;
-      var new_key_arr_dom_bjc_product = key_arr_dom_bjc_product + 1;
-
-      clone_dom_bjc_product.find('#dom-bjc-product-'+id_dom_bjc_product).attr('id', 'dom-bjc-product-'+new_id_dom_bjc_product);
-      clone_dom_bjc_product.find('#id-jumbotron-bjc-product').text(new_id_dom_bjc_product+'. BJC Product');
-
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][sn]"]').val("");
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][sn]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][sn]');
-
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"] option:selected').removeAttr('selected');
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][brands]');
-
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][model]"]').val("");
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][model]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][model]');
-
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][unit]"]').val("");
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][unit]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][unit]');
-
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][price]"]').val("");
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][price]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][price]');
-
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"] option:selected').removeAttr('selected');
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][saleperson]');
-
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"] option:selected').removeAttr('selected');
-      clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][serviceperson]');
-
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][warranty]"]').val("");
-      clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][warranty]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][warranty]');
-
-      clone_dom_bjc_product.find('#warranty-bjc-product-'+id_dom_bjc_product).attr('id', 'warranty-bjc-product-'+new_id_dom_bjc_product);
-      clone_dom_bjc_product.find('.fa.fa-times').attr('onclick', "$('#dom-bjc-product-"+new_id_dom_bjc_product+"').remove();");
-
-      // Appent Dom
-      clone_dom_bjc_product.children().last().appendTo("form#bjc-product-detail");
-
-      // Datepicker New Dom
-      $('#warranty-bjc-product-'+new_id_dom_bjc_product).datepicker({
+    $(document).ready(function(){
+      $('#warranty-bjc-product-1').datepicker({
         format: "yyyy-mm-dd",
         language: "th",
         autoclose: true
       })
+
+      /* Add Dom BJC Product */
+      $('#add_content_bjc_product').click(function(){
+
+        // Clone Dom
+        var clone_dom_bjc_product = $("form#bjc-product-detail").last().clone();
+
+        // Edit Dom
+        var id_dom_bjc_product = clone_dom_bjc_product.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(16);
+        var new_id_dom_bjc_product = parseInt(id_dom_bjc_product) + 1;
+        var key_arr_dom_bjc_product = parseInt(id_dom_bjc_product) - 1;
+        var new_key_arr_dom_bjc_product = key_arr_dom_bjc_product + 1;
+
+        clone_dom_bjc_product.find('#dom-bjc-product-'+id_dom_bjc_product).attr('id', 'dom-bjc-product-'+new_id_dom_bjc_product);
+        clone_dom_bjc_product.find('#id-jumbotron-bjc-product').text(new_id_dom_bjc_product+'. BJC Product');
+
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][sn]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][sn]');
+
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"] option:selected').removeAttr('selected');
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][brands]');
+
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][model]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][model]');
+
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][unit]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][unit]');
+
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][price]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][price]');
+
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"] option:selected').removeAttr('selected');
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][saleperson]');
+
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"] option:selected').removeAttr('selected');
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][serviceperson]');
+
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][warranty]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][warranty]');
+
+        clone_dom_bjc_product.find('#warranty-bjc-product-'+id_dom_bjc_product).attr('id', 'warranty-bjc-product-'+new_id_dom_bjc_product);
+        clone_dom_bjc_product.find('.fa.fa-times').attr('onclick', "$('#dom-bjc-product-"+new_id_dom_bjc_product+"').remove();");
+
+        // Appent Dom
+        clone_dom_bjc_product.children().last().appendTo("form#bjc-product-detail");
+
+        // Datepicker New Dom
+        $('#warranty-bjc-product-'+new_id_dom_bjc_product).datepicker({
+          format: "yyyy-mm-dd",
+          language: "th",
+          autoclose: true
+        })
+      });
+
+      /* Add Dom Other Product */
+      $('#add_content_other_product').click(function(){
+
+        // Clone Dom
+        var clone_dom_other_product = $("form#other-product-detail").last().clone();
+
+        // Edit Dom
+        var id_dom_other_product = clone_dom_other_product.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(18);
+        var new_id_dom_other_product = parseInt(id_dom_other_product) + 1;
+        var key_arr_dom_other_product = parseInt(id_dom_other_product) - 1;
+        var new_key_arr_dom_other_product = key_arr_dom_other_product + 1;
+
+        clone_dom_other_product.find('#dom-other-product-'+id_dom_other_product).attr('id', 'dom-other-product-'+new_id_dom_other_product);
+        clone_dom_other_product.find('#id-jumbotron-other-product').text(new_id_dom_other_product+'. Other Product');
+
+        clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"] option:selected').removeAttr('selected');
+        clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"]').attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][brands]');
+
+        clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][model]"]').val("").attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][model]');
+
+        clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][unit]"]').val("").attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][unit]');
+        clone_dom_other_product.find('.fa.fa-times').attr('onclick', "$('#dom-other-product-"+new_id_dom_other_product+"').remove();");
+
+        // Appent Dom
+        clone_dom_other_product.children().last().appendTo("form#other-product-detail");
+      });
+
+
+      $("input", $("form#bjc-product-detail")).on("keyup", function(){
+        $(this).removeClass("border border-danger");
+      })
+      $("select", $("form#bjc-product-detail")).on("change", function(){
+        $(this).removeClass("border border-danger");
+      })
     });
-
-    /* Add Dom Other Product */
-    $('#add_content_other_product').click(function(){
-
-      // Clone Dom
-      var clone_dom_other_product = $("form#other-product-detail").last().clone();
-
-      // Edit Dom
-      var id_dom_other_product = clone_dom_other_product.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(18);
-      var new_id_dom_other_product = parseInt(id_dom_other_product) + 1;
-      var key_arr_dom_other_product = parseInt(id_dom_other_product) - 1;
-      var new_key_arr_dom_other_product = key_arr_dom_other_product + 1;
-
-      clone_dom_other_product.find('#dom-other-product-'+id_dom_other_product).attr('id', 'dom-other-product-'+new_id_dom_other_product);
-      clone_dom_other_product.find('#id-jumbotron-other-product').text(new_id_dom_other_product+'. Other Product');
-
-      clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"] option:selected').removeAttr('selected');
-      clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"]').attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][brands]');
-
-      clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][model]"]').val("");
-      clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][model]"]').attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][model]');
-
-      clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][unit]"]').val("");
-      clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][unit]"]').attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][unit]');
-      clone_dom_other_product.find('.fa.fa-times').attr('onclick', "$('#dom-other-product-"+new_id_dom_other_product+"').remove();");
-
-      // Appent Dom
-      clone_dom_other_product.children().last().appendTo("form#other-product-detail");
-    });
-
-
-    $("input", $("form#bjc-product-detail")).on("keyup", function(){
-      $(this).removeClass("border border-danger");
-    })
-    $("select", $("form#bjc-product-detail")).on("change", function(){
-      $(this).removeClass("border border-danger");
-    })
-
 
     function ajax_delete_product(id, id_dom, type) {
 
       var url = '';
 
       if (type=='other') {
-        url = base_url+'api/customers/delete_other_product/'+id;
+        url = base_url+'api/customers_product/delete_customers_other_product/'+id;
       }
       if (type=='bjc') {
-        url = base_url+'api/customers/delete_bjc_product/'+id;
+        url = base_url+'api/customers_product/delete_customers_bjc_product/'+id;
       }
-      console.log(url);
-      return false;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -473,7 +466,12 @@
                   showConfirmButton: false,
                   timer: 3000
                 })
-                $('#dom-bjc-product-'+id_dom).remove();
+                if (type=='bjc') {
+                  $('#dom-bjc-product-'+id_dom).remove();
+                }
+                if (type=='other') {
+                  $('#dom-other-product-'+id_dom).remove();
+                }
               }else{
                 Swal.fire({
                   title: 'Warning!',
@@ -495,6 +493,5 @@
         }
       })
     }
-
 
   </script>

@@ -3,7 +3,7 @@
           $data_sale = array();
           if (isset($datas) && !empty($datas)) {
             if ($datas['status']==1) {
-              $data_sale = $datas['salse_detail'];
+              $data_sale = $datas['data'][0]['salse_detail'];
             }
           }
 
@@ -175,35 +175,36 @@
 
     var ARR_DEPARTMENT_ADMIN_SALE = <?php echo json_encode(ARR_DEPARTMENT_ADMIN_SALE); ?>;
 
-    /* Add Dom SALES DETAIL */
-    $('#add_content_sale_detail').click(function(){
+    $(document).ready(function(){
+      /* Add Dom SALES DETAIL */
+      $('#add_content_sale_detail').click(function(){
 
-      // Clone Dom
-      var clone_dom_sales = $("form#sales-detail").last().clone();
+        // Clone Dom
+        var clone_dom_sales = $("form#sales-detail").last().clone();
 
-      // Edit Dom
-      var id_dom = clone_dom_sales.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(10);
-      var new_id_dom = parseInt(id_dom) + 1;
-      var key_arr_dom = parseInt(id_dom) - 1;
-      var new_key_arr_dom = key_arr_dom + 1;
+        // Edit Dom
+        var id_dom = clone_dom_sales.find('.jumbotron.jumbotron-fluid.p-3').last().attr('id').substring(10);
+        var new_id_dom = parseInt(id_dom) + 1;
+        var key_arr_dom = parseInt(id_dom) - 1;
+        var new_key_arr_dom = key_arr_dom + 1;
 
-      clone_dom_sales.find('#dom-sales-'+id_dom).attr('id', 'dom-sales-'+new_id_dom);
-      clone_dom_sales.find('#id-jumbotron-sales').text(new_id_dom+'.');
+        clone_dom_sales.find('#dom-sales-'+id_dom).attr('id', 'dom-sales-'+new_id_dom);
+        clone_dom_sales.find('#id-jumbotron-sales').text(new_id_dom+'.');
 
-      clone_dom_sales.find('#select-sales-'+id_dom+' option:selected').removeAttr('selected');
-      clone_dom_sales.find('#select-sales-'+id_dom).attr('id', 'select-sales-'+new_id_dom);
-      clone_dom_sales.find('#preview-sales-'+id_dom).attr('id', 'preview-sales-'+new_id_dom).attr('src', base_url+'images/180.png');
-      clone_dom_sales.find('#name-sales-th-'+id_dom).attr('id', 'name-sales-th-'+new_id_dom).attr('value', '');
-      clone_dom_sales.find('#name-sales-eng-'+id_dom).attr('id', 'name-sales-eng-'+new_id_dom).attr('value', '');
-      clone_dom_sales.find('#nickname-sales-th-'+id_dom).attr('id', 'nickname-sales-th-'+new_id_dom).attr('value', '');
-      clone_dom_sales.find('#nickname-sales-eng-'+id_dom).attr('id', 'nickname-sales-eng-'+new_id_dom).attr('value', '');
-      clone_dom_sales.find('#department-sales-'+id_dom).attr('id', 'department-sales-'+new_id_dom).attr('value', '');
-      clone_dom_sales.find('select[name="sales_detail['+key_arr_dom+'][id]"]').attr('name', 'sales_detail['+new_key_arr_dom+'][id]');
-      clone_dom_sales.find('.fa.fa-times').attr('onclick', "$('#dom-sales-"+new_id_dom+"').remove();");
-      clone_dom_sales.find('.custom-select').attr('onchange', "select_sales("+new_id_dom+",this,0)");
+        clone_dom_sales.find('#select-sales-'+id_dom+' option:selected').removeAttr('selected').attr('id', 'select-sales-'+new_id_dom);
+        clone_dom_sales.find('#preview-sales-'+id_dom).attr('id', 'preview-sales-'+new_id_dom).attr('src', base_url+'images/180.png');
+        clone_dom_sales.find('#name-sales-th-'+id_dom).attr('id', 'name-sales-th-'+new_id_dom).attr('value', '');
+        clone_dom_sales.find('#name-sales-eng-'+id_dom).attr('id', 'name-sales-eng-'+new_id_dom).attr('value', '');
+        clone_dom_sales.find('#nickname-sales-th-'+id_dom).attr('id', 'nickname-sales-th-'+new_id_dom).attr('value', '');
+        clone_dom_sales.find('#nickname-sales-eng-'+id_dom).attr('id', 'nickname-sales-eng-'+new_id_dom).attr('value', '');
+        clone_dom_sales.find('#department-sales-'+id_dom).attr('id', 'department-sales-'+new_id_dom).attr('value', '');
+        clone_dom_sales.find('select[name="sales_detail['+key_arr_dom+'][id]"]').attr('name', 'sales_detail['+new_key_arr_dom+'][id]');
+        clone_dom_sales.find('.fa.fa-times').attr('onclick', "$('#dom-sales-"+new_id_dom+"').remove();");
+        clone_dom_sales.find('.custom-select').attr('onchange', "select_sales("+new_id_dom+",this,0)");
 
-      // Appent Dom
-      clone_dom_sales.children().last().appendTo("form#sales-detail");
+        // Appent Dom
+        clone_dom_sales.children().last().appendTo("form#sales-detail");
+      });
     });
 
     function select_sales(id_dom, e, old_value) {
@@ -274,7 +275,7 @@
       }).then((result) => {
         if (typeof result.dismiss === "undefined") {
 
-          var url = base_url+'api/customers/delete_sales_detail/'+id;
+          var url = base_url+'api/customers_sales/delete_customers_sales/'+id;
           var formData = {};
           formData['user_delete'] = ID_LOGIN;
 

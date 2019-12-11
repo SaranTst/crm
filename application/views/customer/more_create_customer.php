@@ -72,21 +72,9 @@
         
       </div> <!-- .tab-content -->
 
-      <!-- <script type="text/javascript">
-
-        $(".nav-item.m-1 a").on("shown.bs.tab", function(event) {
-            // $(event.target.href.value + " input").focus();
-            console.log(event.relatedTarget.id);
-            console.log(event);
-            var action_tab = event.relatedTarget.id.replace('-tab','').toLowerCase();
-            console.log(action_tab);
-            console.log( $("form#"+action_tab+"-detail").serializeArray() );
-        });
-      </script> -->
-
   <script type="text/javascript">
 
-    var id = '<?php echo sizeof($data)>0 ? $id : ''; ?>';
+    var id_customer = '<?php echo sizeof($data)>0 ? $id : ''; ?>';
     var j_status = <?php echo $j_status; ?>;
     var j_message = '<?php echo $j_message; ?>';
 
@@ -103,6 +91,140 @@
       //   })
       // }
 
+      var show_tab_status = false;
+
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+
+        if (show_tab_status) {
+          show_tab_status = false;
+          return false;
+        }
+
+        // Modal Process
+        Swal.fire({
+          title: 'แก้ไขข้อมูล',
+          html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            Swal.showLoading()
+          },
+        })
+
+        // console.log(e);
+        // var before_current_tab_id = e.relatedTarget.id;
+        // var before_current_tab = e.relatedTarget.innerText.replace(' ','-').toLowerCase();
+        // var current_tab = e.target.innerText.replace(' ','-').toLowerCase();
+
+        var before_current_tab_id = e.relatedTarget.id;
+        var formDataMoreCustomer = {};
+        var formDataArrMoreCustomer = [];
+        var id_content_tab = e.relatedTarget.hash.replace('#','');
+        formDataArrMoreCustomer = $("#"+id_content_tab+" form").serializeArray();
+        for (var i = 0; i < formDataArrMoreCustomer.length; i++){
+          if (formDataArrMoreCustomer[i]['value']) {
+            formDataMoreCustomer[formDataArrMoreCustomer[i]['name']] = formDataArrMoreCustomer[i]['value'];
+          }
+        }
+        formDataMoreCustomer['user_create'] = ID_LOGIN;
+        console.log(formDataMoreCustomer);
+        // Swal.close();
+        // return false;
+
+        var url_more_create_customer = '';
+        if (id_content_tab=='SALES') {
+          url_more_create_customer = base_url+'api/customers_sales/update_customers_sales/'+id_customer;
+        }
+        if (id_content_tab=='SERVICE') {
+          url_more_create_customer = base_url+'api/customers_service/update_customers_service/'+id_customer;
+        }
+        if (id_content_tab=='PRODUCT') {
+          url_more_create_customer = base_url+'api/customers_product/update_customers_product_detail/'+id_customer;
+
+          // check update bjc product and other product
+//           var url_product_detail = base_url+'api/customers_product/gets_customers_bjc_product/'+id_customer;
+//           $.ajax({
+//             url: url_product_detail,
+//             type:"GET",
+//             dataType:"json",
+//             success: function( resp ){
+
+//               if (resp.status==1) {
+//                 $.each(resp.data, function(i, v){
+//                   $.each(formDataMoreCustomer, function(iarr, varr){
+//                     console.log(iarr+'=>'+varr)
+//                     console.log(i+'=>'+v.ID)
+                   
+//                   })
+//                 })
+//               }else{
+//                 Swal.fire({
+//                   title: 'Warning!',
+//                   text: resp.message,
+//                   type: 'warning'
+//                 })
+//               }
+//             },
+//             error: function( jqXhr, textStatus, errorThrown ){
+//               Swal.fire({
+//                 title: jqXhr.status,
+//                 text: errorThrown,
+//                 type: 'error'
+//               })
+//             }
+//           });
+
+// return false;
+
+        }
+
+        setTimeout(function(){
+          if (id_content_tab!='PERSONNEL') {
+            $.ajax({
+              url: url_more_create_customer,
+              type:"POST",
+              data: formDataMoreCustomer,
+              dataType:"json",
+              success: function( resp ){
+                console.log(resp);
+                if (resp.status==1) {
+                  Swal.fire({
+                    title: 'Success!',
+                    text: resp.message,
+                    type: 'success'
+                  }).then((result) => {
+                  })
+                }else{
+                  Swal.fire({
+                    title: 'Warning!',
+                    text: resp.message,
+                    type: 'warning'
+                  }).then((result) => {
+                    show_tab_status = true;
+                    $("#"+before_current_tab_id).tab('show')
+                    // window.location.reload();
+                  })
+                }
+              },
+              error: function( jqXhr, textStatus, errorThrown ){
+                Swal.fire({
+                  title: jqXhr.status,
+                  text: errorThrown,
+                  type: 'error'
+                }).then((result) => {
+                  // window.location.reload();
+                  show_tab_status = true;
+                  $("#"+before_current_tab_id).tab('show')
+                })
+              }
+            });
+          }else{
+            console.log('last tab !!!');
+          }
+        }, 2000);
+
+      })
+
       var previous = '';
       $('#customer_expertise').on('focus', function () {
         previous = this.value;
@@ -117,7 +239,7 @@
         }).then((result) => {
           if (typeof result.dismiss === "undefined") {
 
-            var url_update_expertise = base_url+'api/customers/updates_expertise_customer/'+id;
+            var url_update_expertise = base_url+'api/customers/updates_expertise_customer/'+id_customer;
             var formDataAjax_update_expertise = {};
             formDataAjax_update_expertise['user_create'] = ID_LOGIN;
             formDataAjax_update_expertise['customer_expertise'] = this.value;
@@ -166,13 +288,12 @@
 
 
       $('#save-customer').click(function(e) {
-        var url = base_url+'api/customers/updates_more_customer/'+id;
+        var url = base_url+'api/customers/updates_more_customer/'+id_customer;
         var formDataAjax = {};
         formDataAjax = checkForm_customer();
         formDataAjax['user_create'] = ID_LOGIN;
-        // formDataAjax['customer_expertise'] = $('select[name="customer_expertise"]').val();
         console.log(formDataAjax);
-        return false;
+        // return false;
 
         if (formDataAjax) {
           $.ajax({
@@ -209,48 +330,54 @@
         }
       });
 
-      function checkForm_customer() {
-        
-        var formDataArrSales = $("form#sales-detail").serializeArray();
-        var formDataArrService = $("form#service-detail").serializeArray();
-        var formDataArrBjcProduct = $("form#bjc-product-detail").serializeArray();
-        var formDataArrOtherProduct = $("form#other-product-detail").serializeArray();
-        var formDataArrPersonnel = $("form#personnel-detail").serializeArray();
-        var formData = {};
+    });
 
-        for (var i = 0; i < formDataArrSales.length; i++){
-          if (formDataArrSales[i]['value']) {
-            formData[formDataArrSales[i]['name']] = formDataArrSales[i]['value'];
-          }
-        }
 
-        for (var i = 0; i < formDataArrService.length; i++){
-          if (formDataArrService[i]['value']) {
-            formData[formDataArrService[i]['name']] = formDataArrService[i]['value'];
-          }
-        }
+// เช็คข้อมูลก่อนส่งไปอัพเดท DB 
 
-        for (var i = 0; i < formDataArrBjcProduct.length; i++){
-          if (formDataArrBjcProduct[i]['value']) {
-            formData[formDataArrBjcProduct[i]['name']] = formDataArrBjcProduct[i]['value'];
-          }
-        }
+    function checkForm_customer() {
+      
+      var formDataArrSales = $("form#sales-detail").serializeArray();
+      var formDataArrService = $("form#service-detail").serializeArray();
+      var formDataArrBjcProduct = $("form#bjc-product-detail").serializeArray();
+      var formDataArrOtherProduct = $("form#other-product-detail").serializeArray();
+      var formDataArrPersonnel = $("form#personnel-detail").serializeArray();
+      var formData = {};
 
-        for (var i = 0; i < formDataArrOtherProduct.length; i++){
-          if (formDataArrOtherProduct[i]['value']) {
-            formData[formDataArrOtherProduct[i]['name']] = formDataArrOtherProduct[i]['value'];
-          }
+      for (var i = 0; i < formDataArrSales.length; i++){
+        if (formDataArrSales[i]['value']) {
+          formData[formDataArrSales[i]['name']] = formDataArrSales[i]['value'];
         }
-
-        for (var i = 0; i < formDataArrPersonnel.length; i++){
-          if (formDataArrPersonnel[i]['value'] || formDataArrPersonnel[i]['name']=='personnel_detail[0][img_personnel]' || formDataArrPersonnel[i]['name']=='personnel_detail[0][old_img_personnel]') {
-            formData[formDataArrPersonnel[i]['name']] = formDataArrPersonnel[i]['value'];
-          }
-        }
-        return formData;
       }
 
-    });
+      for (var i = 0; i < formDataArrService.length; i++){
+        if (formDataArrService[i]['value']) {
+          formData[formDataArrService[i]['name']] = formDataArrService[i]['value'];
+        }
+      }
+
+      for (var i = 0; i < formDataArrBjcProduct.length; i++){
+        if (formDataArrBjcProduct[i]['value']) {
+          formData[formDataArrBjcProduct[i]['name']] = formDataArrBjcProduct[i]['value'];
+        }
+      }
+
+      for (var i = 0; i < formDataArrOtherProduct.length; i++){
+        if (formDataArrOtherProduct[i]['value']) {
+          formData[formDataArrOtherProduct[i]['name']] = formDataArrOtherProduct[i]['value'];
+        }
+      }
+
+      for (var i = 0; i < formDataArrPersonnel.length; i++){
+
+        var ref_img_personnel = 'personnel_detail['+i+'][img_personnel]';
+        var ref_old_img_personnel = 'personnel_detail['+i+'][old_img_personnel]';
+        if (formDataArrPersonnel[i]['value'] || formDataArrPersonnel[i]['name']==ref_img_personnel || formDataArrPersonnel[i]['name']==ref_old_img_personnel) {
+          formData[formDataArrPersonnel[i]['name']] = formDataArrPersonnel[i]['value'];
+        }
+      }
+      return formData;
+    }
 
     </script>
 

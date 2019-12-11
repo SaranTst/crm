@@ -64,7 +64,7 @@
             }else{
               Swal.fire({
                 title: 'Warning!',
-                text: resp.message,
+                text: resp.message.error,
                 type: 'warning'
               })
             }

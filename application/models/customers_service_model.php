@@ -147,141 +147,33 @@ class Customers_service_model extends CI_Model
 		return $msg;
 	}
 
-	public function updates($id=null) {
+	public function updates($arr=array(), $id=null) {
 
 		$msg['status']=0;
-		$msg['message']='ไม่สามารถแก้ไขข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
-		$ip_post = $this->input->post();
-		$status_upload_new = FALSE;
+		$msg['message']='ไม่สามารถแก้ไขช้อมูล SERVICES DETAIL ได้กรุณาลองใหม่อีกครั้ง';
 
-		// Hospital
-		$data['RATING_HOSPITAL'] = (int)$ip_post['rating_hospital'];
-		$data['CUSTOMER_ID_HOSPITAL'] = $this->general_model->clearbadstr($ip_post['customer_id_hospital']);
-		$data['HOSPITAL_NAME_TH'] = $this->general_model->clearbadstr($ip_post['hospital_name_th']);
-		$data['HOSPITAL_NAME_ENG'] = $this->general_model->clearbadstr($ip_post['hospital_name_eng']);
-		$data['ORDER_AMOUNT_HOSPITAL'] = (int)$ip_post['order_amount_hospital'];
-
-		// Doctor
-		$data['RELATIONSHIP_DOCTOR'] = (int)$ip_post['relationship_doctor'];
-		$data['NAME_SURNAME_DOCTOR'] = $this->general_model->clearbadstr($ip_post['name_surname_doctor']);
-		$chk_mail_doctor = $this->general_model->clearbadstr($ip_post['e_mail_doctor']);
-		if (!$this->general_model->check_email($chk_mail_doctor)) {
-			$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
+		if (sizeof($arr)<0) {
+			$msg['message']='ไม่มีข้อมูล';
 			goto error;
 		}
-		$data['E_MAIL_DOCTOR'] = $chk_mail_doctor;
 
-		$chk_tel_doctor = $this->general_model->clearbadstr($ip_post['telephone_doctor']);
-		if (!$this->general_model->check_telephone_number($chk_tel_doctor)) {
-			$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
+		if (!$id) {
+			$msg['status']=0;
+			$msg['message']='กรุณาไอดีที่ต้องการแก้ไขข้อมูลด้วยครับ';
 			goto error;
-		}
-		$data['TELEPHONE_DOCTOR'] = $chk_tel_doctor;
-		$data['BIRTHDAY_DOCTOR'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday_doctor'])));
-
-		// Purchase
-		$data['RELATIONSHIP_PURCHASE'] = (int)$ip_post['relationship_purchase'];
-		$data['NAME_SURNAME_PURCHASE'] = $this->general_model->clearbadstr($ip_post['name_surname_purchase']);
-		$chk_mail_purchase = $this->general_model->clearbadstr($ip_post['e_mail_purchase']);
-		if (!$this->general_model->check_email($chk_mail_purchase)) {
-			$msg['message']='กรุณากรอกอีเมลให้ถูกต้องด้วยครับ';
-			goto error;
-		}
-		$data['E_MAIL_PURCHASE'] = $chk_mail_purchase;
-
-		$chk_tel_purchase = $this->general_model->clearbadstr($ip_post['telephone_purchase']);
-		if (!$this->general_model->check_telephone_number($chk_tel_purchase)) {
-			$msg['message']='กรุณากรอกเบอร์โทรให้ครบถ้วนด้วยครับ';
-			goto error;
-		}
-		$data['TELEPHONE_PURCHASE'] = $chk_tel_purchase;
-		$data['BIRTHDAY_PURCHASE'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($ip_post['birthday_purchase'])));
-
-		$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
-		$data['USER_UPDATE'] = (int)$ip_post['user_create'];
-
-		// move image Hospital
-		if (isset($ip_post['image_hospital']) && !empty($ip_post['image_hospital']) && $ip_post['image_hospital']!=$ip_post['old_image_hospital']) {
-			$new_path_image_hospital = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_hospital']), 'hospitals');
-	        if (!$new_path_image_hospital['status']) {
-				$msg_img=$new_path_image_hospital;
-	        	return $msg_img;
-	        }
-			$data['IMAGE_HOSPITAL'] = $new_path_image_hospital['message'];
-			$status_upload_new = TRUE;
-		}else{
-			$data['IMAGE_HOSPITAL'] = $ip_post['image_hospital'];
-		}
-
-		// move image Doctor
-		if (isset($ip_post['image_doctor']) && !empty($ip_post['image_doctor']) && $ip_post['image_doctor']!=$ip_post['old_image_doctor']) {
-			$new_path_image_doctor = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_doctor']), 'doctors');
-	        if (!$new_path_image_doctor['status']) {
-				$msg_img=$new_path_image_doctor;
-	        	return $msg_img;
-	        }
-			$data['IMAGE_DOCTOR'] = $new_path_image_doctor['message'];
-			$status_upload_new = TRUE;
-		}else{
-			$data['IMAGE_DOCTOR'] = $ip_post['image_doctor'];
-		}
-
-		// move image Purchase
-		if (isset($ip_post['image_purchase']) && !empty($ip_post['image_purchase']) && $ip_post['image_purchase']!=$ip_post['old_image_purchase']) {
-			$new_path_image_purchase = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_purchase']), 'purchases');
-	        if (!$new_path_image_purchase['status']) {
-				$msg_img=$new_path_image_purchase;
-	        	return $msg_img;
-	        }
-			$data['IMAGE_PURCHASE'] = $new_path_image_purchase['message'];
-			$status_upload_new = TRUE;
-		}else{
-			$data['IMAGE_PURCHASE'] = $ip_post['image_purchase'];
 		}
 
 		$this->db->where('ID', $id);
-		$this->db->update($this->table, $data);
+		$this->db->update($this->table, $arr);
 		$res_update = $this->db->affected_rows();
+
 		if ($res_update > 0) {
 
-			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $data['USER_UPDATE']);
+			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'update', $arr['USER_UPDATE']);
 			if ($res_insert_log) {
 				$msg['status']=1;
-				$msg['message']='แก้ไขข้อมูลเรียบร้อย';
+				$msg['message']='แก้ไขข้อมูลสำเร็จ';
 			}
-
-			if ($status_upload_new) {
-				// delete old image Hospital
-		        if (isset($ip_post['old_image_hospital']) && !empty($ip_post['old_image_hospital'])) {
-		        	$old_image_hospital = $this->general_model->clearbadstr($ip_post['old_image_hospital']);
-		        	$res_delete_image_hospital = unlink(DOCUMENT_ROOT.$old_image_hospital);
-		        	if (!$res_delete_image_hospital) {
-		        		$msg['status']=0;
-						$msg['message']='ไม่สามารถลบไฟล์รูป Hospital ได้ กรุณาลองใหม่อีกครั้ง';
-		        	}
-		        }
-
-		        // delete old image Doctor
-		        if (isset($ip_post['old_image_doctor']) && !empty($ip_post['old_image_doctor'])) {
-		        	$old_image_doctor = $this->general_model->clearbadstr($ip_post['old_image_doctor']);
-		        	$res_delete_image_doctor = unlink(DOCUMENT_ROOT.$old_image_doctor);
-		        	if (!$res_delete_image_doctor) {
-		        		$msg['status']=0;
-						$msg['message']='ไม่สามารถลบไฟล์รูป Doctor ได้ กรุณาลองใหม่อีกครั้ง';
-		        	}
-		        }
-
-		        // delete old image Purchase
-		        if (isset($ip_post['old_image_purchase']) && !empty($ip_post['old_image_purchase'])) {
-		        	$old_image_purchase = $this->general_model->clearbadstr($ip_post['old_image_purchase']);
-		        	$res_delete_image_purchase = unlink(DOCUMENT_ROOT.$old_image_purchase);
-		        	if (!$res_delete_image_purchase) {
-		        		$msg['status']=0;
-						$msg['message']='ไม่สามารถลบไฟล์รูป Purchase ได้ กรุณาลองใหม่อีกครั้ง';
-		        	}
-		        }
-	    	}
-
 		}
 
 		error:
@@ -320,10 +212,13 @@ class Customers_service_model extends CI_Model
 	}
 
 	/* Check Data Service Detail */
-	public function chk_service_detail($arr=array(), $user_create='', $id='') {
+	public function chk_service_detail($id=null) {
 
 		$msg['status']=0;
-		$msg['message']='ไม่มีข้อมูล';
+		$msg['message']='ไม่สามารถเพิ่มช้อมูลลงฐานข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
+		$ip_post = $this->input->post();
+		$user_create = isset($ip_post['user_create'])&&!empty($ip_post['user_create']) ? $ip_post['user_create'] : '';
+
 		if ($user_create=='') {
 			$msg['message']='กรุณาเข้าสู่ระบบเพื่อทำรายการด้วยครับ';
 			goto error;
@@ -333,53 +228,37 @@ class Customers_service_model extends CI_Model
 			goto error;
 		}
 
-		$ise=0;
-		foreach ($arr as $k_service => $val_service) {
+		foreach ($ip_post['service_detail'] as $k_service => $val_service) {
 			if ($val_service['id']!='') {
-				$data['service_detail'][$ise]['CUSTOMERS_ID'] = (int)$id;
-				$data['service_detail'][$ise]['SERVICES_ID'] = (int)$val_service['id'];
-				$data['service_detail'][$ise]['STATUS_DELETE'] = 0;
-				$data['service_detail'][$ise]['CREATE_DATE'] =  date('Y-m-d H:i:s');
-				$data['service_detail'][$ise]['USER_CREATE'] = (int)$user_create;
-				$ise++;
+				if (isset($val_service['id_colum']) && !empty($val_service['id_colum'])) {
+					$id_colum = (int)$val_service['id_colum'];
+					$data_update['SERVICES_ID'] = (int)$val_service['id'];
+					$data_update['UPDATE_DATE'] = date('Y-m-d H:i:s');
+					$data_update['USER_UPDATE'] = (int)$user_create;
+
+					$res_update = $this->updates($data_update, $id_colum);
+					if ($res_update['status']==0) {
+						$msg['message']=$res_update['message'];
+						goto error;
+					}
+				}else{
+					$data_insert['CUSTOMERS_ID'] = (int)$id;
+					$data_insert['SERVICES_ID'] = (int)$val_service['id'];
+					$data_insert['STATUS_DELETE'] = 0;
+					$data_insert['CREATE_DATE'] =  date('Y-m-d H:i:s');
+					$data_insert['USER_CREATE'] = (int)$user_create;
+
+					$res_insert = $this->inserts($data_insert);
+					if ($res_insert['status']==0) {
+						$msg['message']=$res_insert['message'];
+						goto error;
+					}
+				}
 			}
 		}
 
-		if (sizeof($data['service_detail'])>0) {
-			$msg['status']=1;
-			$msg['message']=$data;
-		}
-
-		error:
-		return $msg;
-	}
-
-	public function delete_service_detail($id=null) {
-
-		$msg['status'] = 0;
-		$msg['message'] = 'ลบช้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
-
-		if (!$id) {
-			$msg['status']=0;
-			$msg['message']='กรุณาไอดีที่ต้องการลบข้อมูลด้วยครับ';
-			goto error;
-		}
-		$ip_post = $this->input->post();
-		$user_delete = (int)$ip_post['user_delete'];
-
-		$data['STATUS_DELETE'] = 1;
-		$this->db->where('ID', $id);
-		$this->db->update($this->table, $data);
-		$res_delete = $this->db->affected_rows();
-
-		if ($res_delete > 0) {
-
-			$res_insert_log = $this->logs_model->inserts($this->table, $id, 'delete', $user_delete);
-			if ($res_insert_log) {
-				$msg['status']=1;
-				$msg['message']='ลบข้อมูลสำเร็จ';
-			}
-		}
+		$msg['status']=1;
+		$msg['message']='บันทึกข้อมูลสำเร็จ';
 
 		error:
 		return $msg;

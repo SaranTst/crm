@@ -70,7 +70,7 @@ class Customers_model extends CI_Model
 		return $msg;
 	}
 
-	public function gets_more_customer($id=null) {
+	public function gets_more_customer_old($id=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -80,35 +80,9 @@ class Customers_model extends CI_Model
 		$ip_post = $this->input->post();
 		$where = $this->table.".ID=".$id;
 		$where .= " AND ".$this->table.".STATUS_DELETE=0"; // status_delete 0 => no delete / 1 => delete
-
-		/* SELECT COLUME SHOWS */
-		// $arr_col_show[$this->table] = ['ID','RATING_HOSPITAL','IMAGE_HOSPITAL','CUSTOMER_ID_HOSPITAL'];
-		// $arr_col_show[$this->table_sales_detail] = ['ID','SALES_ID'];
-		// $arr_col_show[$this->table_service_detail] = ['ID','SERVICES_ID'];
-		// $arr_col_show[$this->table_bjc_product_detail] = ['ID','SN','BRANDS_ID','SALES_ID','SERVICES_ID','WARRANTY','MODEL','UNIT','PRICE'];
-		// $arr_col_show[$this->table_other_product_detail] = ['ID','BRANDS_ID','MODEL','UNIT'];
-		// $arr_col_show[$this->table_personnel_detail] = ['ID','RELATIONSHIP','PREFIX','POSITION_ID','IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','EMAIL','TELEPHONE','BIRTHDAY','GENDER','SALES_ID','CONTACT_CHANNAL','EVENT','DATE_STAMP','BRANDS_ID','MODEL','STATUS','CONFIDENT','REMARKS'];
-
-		// $str_select = '';
-		// foreach ($arr_col_show as $key => $value) {
-		// 	if (sizeof($value)>0) {
-		// 		foreach ($value as $k => $val) {
-		// 			$str_select .= $key.'.'.$val.' AS '.$key.'_'.$val.',';
-		// 		}
-		// 	}
-		// }
-		// $str_select = substr($str_select, 0, -1);
-		/* END SELECT COLUME SHOWS */
-
-		// $this->db->select($str_select);
+		
 		$this->db->select('*');
 		$this->db->from($this->table);
-		// $this->db->join($this->table_sales_detail, $this->table.'.ID='.$this->table_sales_detail.'.CUSTOMERS_ID AND '.$this->table_sales_detail.'.STATUS_DELETE=0', 'left outer');
-		// $this->db->join($this->table_service_detail, $this->table.'.ID='.$this->table_service_detail.'.CUSTOMERS_ID AND '.$this->table_service_detail.'.STATUS_DELETE=0', 'left outer');
-		// $this->db->join($this->table_bjc_product_detail, $this->table.'.ID='.$this->table_bjc_product_detail.'.CUSTOMERS_ID AND '.$this->table_bjc_product_detail.'.STATUS_DELETE=0', 'left outer');
-		// $this->db->join($this->table_other_product_detail, $this->table.'.ID='.$this->table_other_product_detail.'.CUSTOMERS_ID AND '.$this->table_other_product_detail.'.STATUS_DELETE=0', 'left outer');
-		// $this->db->join($this->table_personnel_detail, $this->table.'.ID='.$this->table_personnel_detail.'.CUSTOMERS_ID AND '.$this->table_personnel_detail.'.STATUS_DELETE=0', 'left outer');
-
 		$this->db->where($where, NULL, FALSE);
 		$this->db->limit($limit,$offset);
 		$this->db->order_by('ID', $sort);
@@ -138,6 +112,176 @@ class Customers_model extends CI_Model
 			$msg['product_bjc']=$product_bjc['status']==1 ? $product_bjc['data'] : array();
 			$msg['product_other']=$product_other['status']==1 ? $product_other['data'] : array();
 			$msg['personnel_detail']=$personnel_detail['status']==1 ? $personnel_detail['data'] : array();
+		}
+
+		$this->db->select('*');
+		$this->db->from($this->table);
+		$this->db->where($where, NULL, FALSE);
+		$query_total = $this->db->get();
+
+		$msg['total'] = $query_total->num_rows();
+		$msg['limit'] = (int)$limit;
+		$msg['page'] = (int)$page;
+
+		error:
+		return $msg;
+	}
+
+	public function gets_more_customer($id=null) {
+
+		$limit = $this->input->get('limit') ? $this->input->get('limit') : 500;
+		$page = $this->input->get('page') ? $this->input->get('page') : 1;
+		$offset = ($page - 1) * $limit;
+		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
+
+		$ip_post = $this->input->post();
+		$where = $this->table.".ID=".$id;
+		$where .= " AND ".$this->table.".STATUS_DELETE=0"; // status_delete 0 => no delete / 1 => delete
+
+		/* SELECT COLUME SHOWS */
+		$arr_col_show[$this->table] = ['ID'];
+		$arr_col_show[$this->table_sales_detail] = ['ID','SALES_ID'];
+		$arr_col_show['SALES'] = ['ID','IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
+
+		$arr_col_show[$this->table_service_detail] = ['ID','SERVICES_ID'];
+		$arr_col_show['SERVICES'] = ['IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
+
+		$arr_col_show[$this->table_bjc_product_detail] = ['ID','SN','BRANDS_ID','SALES_ID','SERVICES_ID','WARRANTY','MODEL','UNIT','PRICE'];
+		$arr_col_show[$this->table_other_product_detail] = ['ID','BRANDS_ID','MODEL','UNIT'];
+		$arr_col_show[$this->table_personnel_detail] = ['ID','RELATIONSHIP','PREFIX','POSITION_ID','IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','EMAIL','TELEPHONE','BIRTHDAY','GENDER','SALES_ID','CONTACT_CHANNAL','EVENT','DATE_STAMP','BRANDS_ID','MODEL','STATUS','CONFIDENT','REMARKS'];
+
+		$str_select = '';
+		foreach ($arr_col_show as $key => $value) {
+			if (sizeof($value)>0) {
+				foreach ($value as $k => $val) {
+					$str_select .= $key.'.'.$val.' AS '.$key.'_'.$val.',';
+				}
+			}
+		}
+		$str_select = substr($str_select, 0, -1);
+		/* END SELECT COLUME SHOWS */
+
+		$this->db->distinct();
+		$this->db->select($str_select);
+		$this->db->from($this->table);
+		$this->db->join($this->table_sales_detail, $this->table_sales_detail.'.CUSTOMERS_ID='.$this->table.'.ID AND '.$this->table_sales_detail.'.STATUS_DELETE=0', 'left outer');
+		$this->db->join('SALES', 'SALES.ID='.$this->table_sales_detail.'.SALES_ID AND '.$this->table_sales_detail.'.STATUS_DELETE=0 AND SALES.STATUS_DELETE=0', 'left outer');
+
+		$this->db->join($this->table_service_detail, $this->table_service_detail.'.CUSTOMERS_ID='.$this->table.'.ID AND '.$this->table_service_detail.'.STATUS_DELETE=0', 'left outer');
+		$this->db->join('SERVICES', 'SERVICES.ID='.$this->table_service_detail.'.SERVICES_ID AND '.$this->table_service_detail.'.STATUS_DELETE=0 AND SERVICES.STATUS_DELETE=0', 'left outer');
+
+		$this->db->join($this->table_bjc_product_detail, $this->table_bjc_product_detail.'.CUSTOMERS_ID='.$this->table.'.ID AND '.$this->table_bjc_product_detail.'.STATUS_DELETE=0', 'left outer');
+		$this->db->join($this->table_other_product_detail, $this->table_other_product_detail.'.CUSTOMERS_ID='.$this->table.'.ID AND '.$this->table_other_product_detail.'.STATUS_DELETE=0', 'left outer');
+		$this->db->join($this->table_personnel_detail, $this->table_personnel_detail.'.CUSTOMERS_ID='.$this->table.'.ID AND '.$this->table_personnel_detail.'.STATUS_DELETE=0', 'left outer');
+
+
+		$this->db->where($where, NULL, FALSE);
+		// $this->db->limit($limit,$offset);
+		$this->db->order_by($this->table.'.ID', $sort);
+		$query = $this->db->get();
+
+		$msg['status']=1;
+		$msg['data'] = $query->result_array();
+
+		if (sizeof($msg['data'])<1) {
+			$msg['status']=0;
+			$msg['message']='ไม่มีข้อมูล';
+			unset($msg['data']);
+			goto error;
+		}else{
+
+			$new_arr = array();
+			foreach ($msg['data'] as $key => $value) {
+				$new_arr['CUSTOMERS_ID'] = (int)$value['CUSTOMERS_ID'];
+
+				// SALES DETAIL
+				$c_salse = isset($new_arr['salse_detail']) ? count($new_arr['salse_detail']) : 0;
+				$in_array_salse = isset($new_arr['salse_detail']) ? array_column($new_arr['salse_detail'], 'ID') : array();
+				if (!in_array((int)$value['CUSTOMERS_SALE_ID'] ,$in_array_salse)) {
+					$new_arr['salse_detail'][$c_salse]['ID'] = (int)$value['CUSTOMERS_SALE_ID'];
+					$new_arr['salse_detail'][$c_salse]['SALES_ID'] = (int)$value['CUSTOMERS_SALE_SALES_ID'];
+					$new_arr['salse_detail'][$c_salse]['IMAGE'] = $value['SALES_IMAGE'];
+					$new_arr['salse_detail'][$c_salse]['FIRST_NAME_TH'] = $value['SALES_FIRST_NAME_TH'];
+					$new_arr['salse_detail'][$c_salse]['LAST_NAME_TH'] = $value['SALES_LAST_NAME_TH'];
+					$new_arr['salse_detail'][$c_salse]['FIRST_NAME_ENG'] = $value['SALES_FIRST_NAME_ENG'];
+					$new_arr['salse_detail'][$c_salse]['LAST_NAME_ENG'] = $value['SALES_LAST_NAME_ENG'];
+					$new_arr['salse_detail'][$c_salse]['NICKNAME_TH'] = $value['SALES_NICKNAME_TH'];
+					$new_arr['salse_detail'][$c_salse]['NICKNAME_ENG'] = $value['SALES_NICKNAME_ENG'];
+					$new_arr['salse_detail'][$c_salse]['DEPARTMENT_ID'] = $value['SALES_DEPARTMENT_ID'];
+				}
+
+				// SERVICE DETAIL
+				$c_service = isset($new_arr['service_detail']) ? count($new_arr['service_detail']) : 0;
+				$in_array_service = isset($new_arr['service_detail']) ? array_column($new_arr['service_detail'], 'ID') : array();
+			 	if (!in_array((int)$value['CUSTOMERS_SERVICE_ID'] ,$in_array_service)) {
+					$new_arr['service_detail'][$c_service]['ID'] = (int)$value['CUSTOMERS_SERVICE_ID'];
+					$new_arr['service_detail'][$c_service]['SERVICES_ID'] = (int)$value['CUSTOMERS_SERVICE_SERVICES_ID'];
+					$new_arr['service_detail'][$c_service]['IMAGE'] = $value['SERVICES_IMAGE'];
+					$new_arr['service_detail'][$c_service]['FIRST_NAME_TH'] = $value['SERVICES_FIRST_NAME_TH'];
+					$new_arr['service_detail'][$c_service]['LAST_NAME_TH'] = $value['SERVICES_LAST_NAME_TH'];
+					$new_arr['service_detail'][$c_service]['FIRST_NAME_ENG'] = $value['SERVICES_FIRST_NAME_ENG'];
+					$new_arr['service_detail'][$c_service]['LAST_NAME_ENG'] = $value['SERVICES_LAST_NAME_ENG'];
+					$new_arr['service_detail'][$c_service]['NICKNAME_TH'] = $value['SERVICES_NICKNAME_TH'];
+					$new_arr['service_detail'][$c_service]['NICKNAME_ENG'] = $value['SERVICES_NICKNAME_ENG'];
+					$new_arr['service_detail'][$c_service]['DEPARTMENT_ID'] = $value['SERVICES_DEPARTMENT_ID'];
+				}
+
+				// BJC PRODUCTS
+				$c_bjc_p = isset($new_arr['product_bjc']) ? count($new_arr['product_bjc']) : 0;
+				$in_array_bjc_p = isset($new_arr['product_bjc']) ? array_column($new_arr['product_bjc'], 'ID') : array();
+			 	if (!in_array((int)$value['CUSTOMERS_PRODUCT_BJC_ID'] ,$in_array_bjc_p)) {
+					$new_arr['product_bjc'][$c_bjc_p]['ID'] = (int)$value['CUSTOMERS_PRODUCT_BJC_ID'];
+					$new_arr['product_bjc'][$c_bjc_p]['SN'] = $value['CUSTOMERS_PRODUCT_BJC_SN'];
+					$new_arr['product_bjc'][$c_bjc_p]['BRANDS_ID'] = (int)$value['CUSTOMERS_PRODUCT_BJC_BRANDS_ID'];
+					$new_arr['product_bjc'][$c_bjc_p]['SALES_ID'] = (int)$value['CUSTOMERS_PRODUCT_BJC_SALES_ID'];
+					$new_arr['product_bjc'][$c_bjc_p]['SERVICES_ID'] = (int)$value['CUSTOMERS_PRODUCT_BJC_SERVICES_ID'];
+					$new_arr['product_bjc'][$c_bjc_p]['WARRANTY'] = $value['CUSTOMERS_PRODUCT_BJC_WARRANTY'];
+					$new_arr['product_bjc'][$c_bjc_p]['MODEL'] = $value['CUSTOMERS_PRODUCT_BJC_MODEL'];
+					$new_arr['product_bjc'][$c_bjc_p]['UNIT'] = (int)$value['CUSTOMERS_PRODUCT_BJC_UNIT'];
+					$new_arr['product_bjc'][$c_bjc_p]['PRICE'] = (int)$value['CUSTOMERS_PRODUCT_BJC_PRICE'];
+				}
+
+				// OTHER PRODUCTS
+				$c_other_p = isset($new_arr['product_other']) ? count($new_arr['product_other']) : 0;
+				$in_array_other_p = isset($new_arr['product_other']) ? array_column($new_arr['product_other'], 'ID') : array();
+			 	if (!in_array((int)$value['CUSTOMERS_PRODUCT_OTHER_ID'] ,$in_array_other_p)) {
+					$new_arr['product_other'][$c_other_p]['ID'] = (int)$value['CUSTOMERS_PRODUCT_OTHER_ID'];
+					$new_arr['product_other'][$c_other_p]['BRANDS_ID'] = (int)$value['CUSTOMERS_PRODUCT_OTHER_BRANDS_ID'];
+					$new_arr['product_other'][$c_other_p]['MODEL'] = $value['CUSTOMERS_PRODUCT_OTHER_MODEL'];
+					$new_arr['product_other'][$c_other_p]['UNIT'] = (int)$value['CUSTOMERS_PRODUCT_OTHER_UNIT'];
+				}
+
+				// PERSONNEL DETAIL
+				$c_personnel = isset($new_arr['personnel_detail']) ? count($new_arr['personnel_detail']) : 0;
+				$in_array_personnel = isset($new_arr['personnel_detail']) ? array_column($new_arr['personnel_detail'], 'ID') : array();
+			 	if (!in_array((int)$value['CUSTOMERS_PERSONNEL_ID'] ,$in_array_personnel)) {
+					$new_arr['personnel_detail'][$c_personnel]['ID'] = (int)$value['CUSTOMERS_PERSONNEL_ID'];
+					$new_arr['personnel_detail'][$c_personnel]['RELATIONSHIP'] = (int)$value['CUSTOMERS_PERSONNEL_RELATIONSHIP'];
+					$new_arr['personnel_detail'][$c_personnel]['PREFIX'] = (int)$value['CUSTOMERS_PERSONNEL_PREFIX'];
+					$new_arr['personnel_detail'][$c_personnel]['POSITION_ID'] = (int)$value['CUSTOMERS_PERSONNEL_POSITION_ID'];
+					$new_arr['personnel_detail'][$c_personnel]['IMAGE'] = $value['CUSTOMERS_PERSONNEL_IMAGE'];
+					$new_arr['personnel_detail'][$c_personnel]['FIRST_NAME_TH'] = $value['CUSTOMERS_PERSONNEL_FIRST_NAME_TH'];
+					$new_arr['personnel_detail'][$c_personnel]['LAST_NAME_TH'] = $value['CUSTOMERS_PERSONNEL_LAST_NAME_TH'];
+					$new_arr['personnel_detail'][$c_personnel]['FIRST_NAME_ENG'] = $value['CUSTOMERS_PERSONNEL_FIRST_NAME_ENG'];
+					$new_arr['personnel_detail'][$c_personnel]['LAST_NAME_ENG'] = $value['CUSTOMERS_PERSONNEL_LAST_NAME_ENG'];
+					$new_arr['personnel_detail'][$c_personnel]['EMAIL'] = $value['CUSTOMERS_PERSONNEL_EMAIL'];
+					$new_arr['personnel_detail'][$c_personnel]['TELEPHONE'] = $value['CUSTOMERS_PERSONNEL_TELEPHONE'];
+					$new_arr['personnel_detail'][$c_personnel]['BIRTHDAY'] = $value['CUSTOMERS_PERSONNEL_BIRTHDAY'];
+					$new_arr['personnel_detail'][$c_personnel]['GENDER'] = (int)$value['CUSTOMERS_PERSONNEL_GENDER'];
+					$new_arr['personnel_detail'][$c_personnel]['SALES_ID'] = (int)$value['CUSTOMERS_PERSONNEL_SALES_ID'];
+					$new_arr['personnel_detail'][$c_personnel]['CONTACT_CHANNAL'] = (int)$value['CUSTOMERS_PERSONNEL_CONTACT_CHANNAL'];
+					$new_arr['personnel_detail'][$c_personnel]['EVENT'] = $value['CUSTOMERS_PERSONNEL_EVENT'];
+					$new_arr['personnel_detail'][$c_personnel]['DATE_STAMP'] = $value['CUSTOMERS_PERSONNEL_DATE_STAMP'];
+					$new_arr['personnel_detail'][$c_personnel]['BRANDS_ID'] = (int)$value['CUSTOMERS_PERSONNEL_BRANDS_ID'];
+					$new_arr['personnel_detail'][$c_personnel]['MODEL'] = $value['CUSTOMERS_PERSONNEL_MODEL'];
+					$new_arr['personnel_detail'][$c_personnel]['STATUS'] = (int)$value['CUSTOMERS_PERSONNEL_STATUS'];
+					$new_arr['personnel_detail'][$c_personnel]['CONFIDENT'] = (int)$value['CUSTOMERS_PERSONNEL_CONFIDENT'];
+					$new_arr['personnel_detail'][$c_personnel]['REMARKS'] = $value['CUSTOMERS_PERSONNEL_REMARKS'];
+				}
+			}
+
+			unset($msg['data']);
+			$msg['data'][0] = $new_arr;
 		}
 
 		$this->db->select('*');
@@ -545,11 +689,27 @@ class Customers_model extends CI_Model
 			}
 		}
 
+		$show_data['data_sales']=$data_sales;
+		$show_data['data_service']=$data_service;
+		$show_data['data_bjc_product']=$data_bjc_product;
+		$show_data['data_other_product']=$data_other_product;
+		$show_data['data_personnel']=$data_personnel;
+		$msg['show_data']=$show_data;
+
 
 		//Action Insert Data Sales Detail
 		foreach ($data_sales['message']['sales_detail'] as $key => $value) {
 
-			$res_sales_model = $this->customers_sales_model->inserts($value);
+			if (isset($value['ID_COLUM']) && !empty($value['ID_COLUM'])) {
+				$id_sale_update = $value['ID_COLUM'];
+				$arr_val['SALES_ID'] = $value['SALES_ID'];
+				$arr_val['UPDATE_DATE'] = $value['CREATE_DATE'];
+				$arr_val['USER_UPDATE'] = $value['USER_CREATE'];
+				$res_sales_model = $this->customers_sales_model->updates($arr_val, $id_sale_update);
+			}else{
+				$res_sales_model = $this->customers_sales_model->inserts($value);
+			}
+
 			if ($res_sales_model['status']==0) {
 				$msg['message']=$res_sales_model['message'];
 				goto error;
@@ -559,12 +719,22 @@ class Customers_model extends CI_Model
 		//Action Insert Data Service Detail
 		foreach ($data_service['message']['service_detail'] as $key => $value) {
 
-			$res_service_model = $this->customers_service_model->inserts($value);
+			if (isset($value['ID_COLUM']) && !empty($value['ID_COLUM'])) {
+				$id_service_update = $value['ID_COLUM'];
+				$arr_val['SERVICES_ID'] = $value['SERVICES_ID'];
+				$arr_val['UPDATE_DATE'] = $value['CREATE_DATE'];
+				$arr_val['USER_UPDATE'] = $value['USER_CREATE'];
+				$res_service_model = $this->customers_service_model->updates($arr_val, $id_service_update);
+			}else{
+				$res_service_model = $this->customers_service_model->inserts($value);
+			}
+
 			if ($res_service_model['status']==0) {
 				$msg['message']=$res_service_model['message'];
 				goto error;
 			}
 		}
+		goto error;
 
 		//Action Insert Data Bjc Product
 		foreach ($data_bjc_product['message']['bjc_product_detail'] as $key => $value) {
