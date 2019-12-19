@@ -86,7 +86,8 @@ class Customers_product extends MY_Controller {
 		}
 
 		$msg['status']=1;
-		$msg['message']='บันทึกข้อมูลสำเร็จ';
+		$msg['message']['bjc_product']=$res_bjc['message'];
+		$msg['message']['other_product']=$res_other['message'];
 
 		error:
 		header("Content-Type: application/json");

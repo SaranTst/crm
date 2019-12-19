@@ -120,12 +120,13 @@ class Customers_bjc_product_model extends CI_Model
 		
 		$this->db->insert($this->table, $arr);
 		$res_insert = $this->db->affected_rows();
+		$id_insert = $this->db->insert_id();
 
 		if ($res_insert > 0) {
-			$res_insert_log = $this->logs_model->inserts($this->table, $this->db->insert_id(), 'insert', $arr['USER_CREATE']);
+			$res_insert_log = $this->logs_model->inserts($this->table, $id_insert, 'insert', $arr['USER_CREATE']);
 			if ($res_insert_log) {
 				$msg['status']=1;
-				$msg['message']='เพิ่มข้อมูลลงฐานข้อมูลเรียบร้อย';
+				$msg['message']=$id_insert;
 			}
 		}
 
@@ -214,6 +215,8 @@ class Customers_bjc_product_model extends CI_Model
 			goto error;
 		}
 
+		$arr_id_insert=array();
+		$ii=0;
 		if (isset($ip_post['bjc_product_detail']) && !empty($ip_post['bjc_product_detail'])) {
 			foreach ($ip_post['bjc_product_detail'] as $k_bjc_product => $val_bjc_product) {
 
@@ -273,6 +276,10 @@ class Customers_bjc_product_model extends CI_Model
 						if ($res_insert['status']==0) {
 							$msg['message']=$res_insert['message'];
 							goto error;
+						}else{
+							$arr_id_insert[$ii]['k_id_colum'] = $k_bjc_product;
+							$arr_id_insert[$ii]['id_colum'] = $res_insert['message'];
+							$ii++;
 						}
 					}
 					unset($data);
@@ -284,7 +291,7 @@ class Customers_bjc_product_model extends CI_Model
 		}
 
 		$msg['status']=1;
-		$msg['message']='บันทึกข้อมูลสำเร็จ';
+		$msg['message']=$arr_id_insert;
 
 		error:
 		return $msg;

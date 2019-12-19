@@ -182,7 +182,6 @@ class Customers_model extends CI_Model
 
 		$msg['status']=1;
 		$msg['data'] = $query->result_array();
-		$msg['data2'] = $msg['data'];
 
 		if (sizeof($msg['data'])<1) {
 			$msg['status']=0;

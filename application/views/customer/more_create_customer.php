@@ -127,10 +127,33 @@
                 }).then((result) => {
 
                   // each insert value in input[id_colum] when insert new data
-                  $.each( resp.message, function( key, value ) {
-                    console.log( value );
-                    $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                  });
+                  if (id_content_tab=='PRODUCT') {
+
+                    // BJC Product
+                    if (resp.message.bjc_product.length>0) {
+                      $.each( resp.message.bjc_product, function( key, value ) {
+                        $('input[name="bjc_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                        $('#dom-bjc-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'bjc')");
+                      });
+                    }
+
+                    // Other Product
+                    if (resp.message.other_product.length>0) {
+                      $.each( resp.message.other_product, function( key, value ) {
+                        $('input[name="other_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                        $('#dom-other-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'other')");
+                      });
+                    }
+
+                  }else{
+                    if (resp.message.length>0) {
+                      $.each( resp.message, function( key, value ) {
+                        $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                        $('#dom-'+loweridtab+'-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+")");
+                      });
+                    }
+                  }
+                  
                 })
               }else{
                 Swal.fire({

@@ -260,6 +260,7 @@
                 <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="$('#dom-personnel-1').remove();"></i></div>
                 <div class="col-md-7">
                   <h3 id="id-jumbotron-personnel">1.</h3>
+                  <input type="hidden" class="form-control" name="personnel_detail[0][id_colum]" value="" readonly>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group row">
@@ -599,6 +600,7 @@
         clone_dom_personnel.find('#date-stamp-'+id_dom_personnel).val("").attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][date_stamp]').attr('id', 'date-stamp-'+new_id_dom_personnel);
 
         clone_dom_personnel.find('.fa.fa-times').attr('onclick', "$('#dom-personnel-"+new_id_dom_personnel+"').remove();");
+        clone_dom_personnel.find('input[name="personnel_detail['+key_arr_dom_personnel+'][id_colum]"]').val("").attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][id_colum]');
 
         // Edit Box Upload Image
         clone_dom_personnel.find('#input-file-personnel-'+id_dom_personnel).attr('id', 'input-file-personnel-'+new_id_dom_personnel);

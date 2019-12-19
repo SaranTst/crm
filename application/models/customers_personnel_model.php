@@ -131,12 +131,13 @@ class Customers_personnel_model extends CI_Model
 		
 		$this->db->insert($this->table, $arr);
 		$res_insert = $this->db->affected_rows();
+		$id_insert = $this->db->insert_id();
 
 		if ($res_insert > 0) {
-			$res_insert_log = $this->logs_model->inserts($this->table, $this->db->insert_id(), 'insert', $arr['USER_CREATE']);
+			$res_insert_log = $this->logs_model->inserts($this->table, $id_insert, 'insert', $arr['USER_CREATE']);
 			if ($res_insert_log) {
 				$msg['status']=1;
-				$msg['message']='เพิ่มข้อมูลลงฐานข้อมูลเรียบร้อย';
+				$msg['message']=$id_insert;
 			}
 		}
 
@@ -252,6 +253,8 @@ class Customers_personnel_model extends CI_Model
 			goto error;
 		}
 
+		$arr_id_insert=array();
+		$ii=0;
 		if (isset($ip_post['personnel_detail']) && !empty($ip_post['personnel_detail'])) {
 			foreach ($ip_post['personnel_detail'] as $k_personnel => $val_personnel) {
 
@@ -389,6 +392,10 @@ class Customers_personnel_model extends CI_Model
 						if ($res_insert['status']==0) {
 							$msg['message']=$res_insert['message'];
 							goto error;
+						}else{
+							$arr_id_insert[$ii]['k_id_colum'] = $k_personnel;
+							$arr_id_insert[$ii]['id_colum'] = $res_insert['message'];
+							$ii++;
 						}
 					}
 					unset($data);
@@ -400,7 +407,7 @@ class Customers_personnel_model extends CI_Model
 		}
 
 		$msg['status']=1;
-		$msg['message']='บันทึกข้อมูลสำเร็จ';
+		$msg['message']=$arr_id_insert;
 
 		error:
 		return $msg;

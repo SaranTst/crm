@@ -15,7 +15,7 @@
 
               <div class="row">
                 <div class="col-md-10"></div>
-                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_serivce(<?php echo $val_service['ID'].','.($k_service+1); ?>)"></i></div>
+                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_service(<?php echo $val_service['ID'].','.($k_service+1); ?>)"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-service"><?php echo ($k_service+1); ?>. Service <?php echo ($k_service+1); ?></h3>
                   <input type="hidden" class="form-control" name="service_detail[<?php echo ($k_service); ?>][id_colum]" value="<?php echo $val_service['ID']; ?>" readonly>
@@ -93,6 +93,7 @@
                 <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="$('#dom-service-1').remove();"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-service">1. Service 1</h3>
+                  <input type="hidden" class="form-control" name="service_detail[0][id_colum]" value="" readonly>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group row">
@@ -188,7 +189,8 @@
         var key_arr_dom_service = parseInt(id_dom_service) - 1;
         var new_key_arr_dom_service = key_arr_dom_service + 1;
 
-        clone_dom_service.find('#select-service-'+id_dom_service+' option:selected').removeAttr('selected').attr('id', 'select-service-'+new_id_dom_service);
+        clone_dom_service.find('select option:selected').removeAttr('selected');// remove all selected in select
+        clone_dom_service.find('#select-service-'+id_dom_service).attr('id', 'select-service-'+new_id_dom_service);
 
         clone_dom_service.find('#dom-service-'+id_dom_service).attr('id', 'dom-service-'+new_id_dom_service);
         clone_dom_service.find('#id-jumbotron-service').text(new_id_dom_service+'. Service '+new_id_dom_service);
@@ -264,7 +266,7 @@
 
     }
 
-    function ajax_delete_serivce(id, id_dom) {
+    function ajax_delete_service(id, id_dom) {
 
       Swal.fire({
         title: 'Are you sure?',

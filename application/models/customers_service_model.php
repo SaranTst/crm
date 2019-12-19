@@ -137,12 +137,13 @@ class Customers_service_model extends CI_Model
 		
 		$this->db->insert($this->table, $arr);
 		$res_insert = $this->db->affected_rows();
+		$id_insert = $this->db->insert_id();
 
 		if ($res_insert > 0) {
-			$res_insert_log = $this->logs_model->inserts($this->table, $this->db->insert_id(), 'insert', $arr['USER_CREATE']);
+			$res_insert_log = $this->logs_model->inserts($this->table, $id_insert, 'insert', $arr['USER_CREATE']);
 			if ($res_insert_log) {
 				$msg['status']=1;
-				$msg['message']='เพิ่มข้อมูลลงฐานข้อมูลเรียบร้อย';
+				$msg['message']=$id_insert;
 			}
 		}
 

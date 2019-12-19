@@ -115,6 +115,7 @@
                   <div class="form-group row">
                     <div class="col-md-7">
                       <h3 id="id-jumbotron-bjc-product">1. BJC Product</h3>
+                      <input type="hidden" class="form-control" name="bjc_product_detail[0][id_colum]" value="" readonly>
                     </div>
                     <label class="col-md-1 col-form-label">SN</label>
                     <div class="col-md-4">
@@ -282,6 +283,7 @@
                   <div class="form-group row">
                     <div class="col-md-7">
                       <h3 id="id-jumbotron-other-product">1. Other Product</h3>
+                      <input type="hidden" class="form-control" name="other_product_detail[0][id_colum]" value="" readonly>
                     </div>
                     <div class="col-md-5">
                     </div>
@@ -375,6 +377,7 @@
 
         clone_dom_bjc_product.find('#warranty-bjc-product-'+id_dom_bjc_product).attr('id', 'warranty-bjc-product-'+new_id_dom_bjc_product);
         clone_dom_bjc_product.find('.fa.fa-times').attr('onclick', "$('#dom-bjc-product-"+new_id_dom_bjc_product+"').remove();");
+        clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][id_colum]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][id_colum]');
 
         // Appent Dom
         clone_dom_bjc_product.children().last().appendTo("form#bjc-product-detail");
@@ -409,6 +412,7 @@
 
         clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][unit]"]').val("").attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][unit]');
         clone_dom_other_product.find('.fa.fa-times').attr('onclick', "$('#dom-other-product-"+new_id_dom_other_product+"').remove();");
+        clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][id_colum]"]').val("").attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][id_colum]');
 
         // Appent Dom
         clone_dom_other_product.children().last().appendTo("form#other-product-detail");

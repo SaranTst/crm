@@ -15,7 +15,7 @@
 
               <div class="row">
                 <div class="col-md-10"></div>
-                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_salse(<?php echo $val_sale['ID'].','.($k_sale+1); ?>)"></i></div>
+                <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="ajax_delete_sales(<?php echo $val_sale['ID'].','.($k_sale+1); ?>)"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-sales"><?php echo ($k_sale+1); ?>.</h3>
                   <input type="hidden" class="form-control" name="sales_detail[<?php echo ($k_sale); ?>][id_colum]" value="<?php echo $val_sale['ID']; ?>" readonly>
@@ -192,7 +192,8 @@
         clone_dom_sales.find('#dom-sales-'+id_dom).attr('id', 'dom-sales-'+new_id_dom);
         clone_dom_sales.find('#id-jumbotron-sales').text(new_id_dom+'.');
 
-        clone_dom_sales.find('#select-sales-'+id_dom+' option:selected').removeAttr('selected').attr('id', 'select-sales-'+new_id_dom);
+        clone_dom_sales.find('select option:selected').removeAttr('selected');// remove all selected in select
+        clone_dom_sales.find('#select-sales-'+id_dom).attr('id', 'select-sales-'+new_id_dom);
         clone_dom_sales.find('#preview-sales-'+id_dom).attr('id', 'preview-sales-'+new_id_dom).attr('src', base_url+'images/180.png');
         clone_dom_sales.find('#name-sales-th-'+id_dom).attr('id', 'name-sales-th-'+new_id_dom).attr('value', '');
         clone_dom_sales.find('#name-sales-eng-'+id_dom).attr('id', 'name-sales-eng-'+new_id_dom).attr('value', '');
@@ -265,7 +266,7 @@
 
     }
 
-    function ajax_delete_salse(id, id_dom) {
+    function ajax_delete_sales(id, id_dom) {
 
       Swal.fire({
         title: 'Are you sure?',
