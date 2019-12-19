@@ -12,7 +12,7 @@ class Customers_service_model extends CI_Model
 		$this->load->model('logs_model');
 	}
 
-	public function lists() {
+	public function lists($id_customers=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -27,6 +27,9 @@ class Customers_service_model extends CI_Model
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
 				$where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
 			}
+		}
+		if ($id_customers) {
+			$where .= "CUSTOMERS_ID = ".(int)$id_customers." AND ";
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
 
@@ -228,37 +231,51 @@ class Customers_service_model extends CI_Model
 			goto error;
 		}
 
-		foreach ($ip_post['service_detail'] as $k_service => $val_service) {
-			if ($val_service['id']!='') {
-				if (isset($val_service['id_colum']) && !empty($val_service['id_colum'])) {
-					$id_colum = (int)$val_service['id_colum'];
-					$data_update['SERVICES_ID'] = (int)$val_service['id'];
-					$data_update['UPDATE_DATE'] = date('Y-m-d H:i:s');
-					$data_update['USER_UPDATE'] = (int)$user_create;
+		$arr_id_insert=array();
+		$ii=0;
+		if (isset($ip_post['service_detail']) && !empty($ip_post['service_detail'])) {
+			foreach ($ip_post['service_detail'] as $k_service => $val_service) {
 
-					$res_update = $this->updates($data_update, $id_colum);
-					if ($res_update['status']==0) {
-						$msg['message']=$res_update['message'];
-						goto error;
-					}
-				}else{
-					$data_insert['CUSTOMERS_ID'] = (int)$id;
-					$data_insert['SERVICES_ID'] = (int)$val_service['id'];
-					$data_insert['STATUS_DELETE'] = 0;
-					$data_insert['CREATE_DATE'] =  date('Y-m-d H:i:s');
-					$data_insert['USER_CREATE'] = (int)$user_create;
+				if ($val_service['id']!='') {
+					// set data
+					$data['SERVICES_ID'] = (int)$val_service['id'];
 
-					$res_insert = $this->inserts($data_insert);
-					if ($res_insert['status']==0) {
-						$msg['message']=$res_insert['message'];
-						goto error;
+					if (isset($val_service['id_colum']) && !empty($val_service['id_colum'])) {
+						$id_colum = (int)$val_service['id_colum'];
+						$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
+						$data['USER_UPDATE'] = (int)$user_create;
+
+						$res_update = $this->updates($data, $id_colum);
+						if ($res_update['status']==0) {
+							$msg['message']=$res_update['message'];
+							goto error;
+						}
+					}else{
+						$data['CUSTOMERS_ID'] = (int)$id;
+						$data['STATUS_DELETE'] = 0;
+						$data['CREATE_DATE'] =  date('Y-m-d H:i:s');
+						$data['USER_CREATE'] = (int)$user_create;
+
+						$res_insert = $this->inserts($data);
+						if ($res_insert['status']==0) {
+							$msg['message']=$res_insert['message'];
+							goto error;
+						}else{
+							$arr_id_insert[$ii]['k_id_colum'] = $k_service;
+							$arr_id_insert[$ii]['id_colum'] = $res_insert['message'];
+							$ii++;
+						}
 					}
+					unset($data);
 				}
 			}
+		}else{
+			$msg['message']='กรุณาระบุเซอร์วิสอย่างน้อย 1 คน';
+			goto error;
 		}
 
 		$msg['status']=1;
-		$msg['message']='บันทึกข้อมูลสำเร็จ';
+		$msg['message']=$arr_id_insert;
 
 		error:
 		return $msg;

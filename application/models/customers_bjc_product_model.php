@@ -12,7 +12,7 @@ class Customers_bjc_product_model extends CI_Model
 		$this->load->model('logs_model');
 	}
 
-	public function lists() {
+	public function lists($id_customers=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -27,6 +27,9 @@ class Customers_bjc_product_model extends CI_Model
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
 				$where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
 			}
+		}
+		if ($id_customers) {
+			$where .= "CUSTOMERS_ID = ".(int)$id_customers." AND ";
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
 
@@ -211,74 +214,73 @@ class Customers_bjc_product_model extends CI_Model
 			goto error;
 		}
 
-		foreach ($ip_post['bjc_product_detail'] as $k_bjc_product => $val_bjc_product) {
+		if (isset($ip_post['bjc_product_detail']) && !empty($ip_post['bjc_product_detail'])) {
+			foreach ($ip_post['bjc_product_detail'] as $k_bjc_product => $val_bjc_product) {
 
-			if (!isset($val_bjc_product['sn']) && empty($val_bjc_product['sn'])) {
-				$msg['message']='กรุณาระบุ SN [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['brands']) && empty($val_bjc_product['brands'])) {
-				$msg['message']='กรุณาระบุ Brands [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['saleperson']) && empty($val_bjc_product['saleperson'])) {
-				$msg['message']='กรุณาระบุ Saleperson [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['serviceperson']) && empty($val_bjc_product['serviceperson'])) {
-				$msg['message']='กรุณาระบุ Serviceperson [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['warranty']) && empty($val_bjc_product['warranty'])) {
-				$msg['message']='กรุณาระบุ Warranty [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['model']) && empty($val_bjc_product['model'])) {
-				$msg['message']='กรุณาระบุ Model [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['unit']) && empty($val_bjc_product['unit'])) {
-				$msg['message']='กรุณาระบุ Unit [Bjc Product]';
-				goto error;
-			}else if (!isset($val_bjc_product['price']) && empty($val_bjc_product['price'])) {
-				$msg['message']='กรุณาระบุ Price [Bjc Product]';
-				goto error;
-			}else{
-				if (isset($val_bjc_product['id_colum']) && !empty($val_bjc_product['id_colum'])) {
-					$id_colum = (int)$val_bjc_product['id_colum'];
-					$data_update['SN'] = $this->general_model->clearbadstr($val_bjc_product['sn']);
-					$data_update['BRANDS_ID'] = (int)$val_bjc_product['brands'];
-					$data_update['SALES_ID'] = (int)$val_bjc_product['saleperson'];
-					$data_update['SERVICES_ID'] = (int)$val_bjc_product['serviceperson'];
-					$data_update['WARRANTY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($val_bjc_product['warranty'])));
-					$data_update['MODEL'] = $this->general_model->clearbadstr($val_bjc_product['model']);
-					$data_update['UNIT'] = (int)$val_bjc_product['unit'];
-					$data_update['PRICE'] = (int)$val_bjc_product['price'];
-					$data_update['UPDATE_DATE'] = date('Y-m-d H:i:s');
-					$data_update['USER_UPDATE'] = (int)$user_create;
-
-					$res_update = $this->updates($data_update, $id_colum);
-					if ($res_update['status']==0) {
-						$msg['message']=$res_update['message'];
-						goto error;
-					}
+				if (!isset($val_bjc_product['sn']) && empty($val_bjc_product['sn'])) {
+					$msg['message']='กรุณาระบุ SN [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['brands']) && empty($val_bjc_product['brands'])) {
+					$msg['message']='กรุณาระบุ Brands [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['saleperson']) && empty($val_bjc_product['saleperson'])) {
+					$msg['message']='กรุณาระบุ Saleperson [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['serviceperson']) && empty($val_bjc_product['serviceperson'])) {
+					$msg['message']='กรุณาระบุ Serviceperson [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['warranty']) && empty($val_bjc_product['warranty'])) {
+					$msg['message']='กรุณาระบุ Warranty [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['model']) && empty($val_bjc_product['model'])) {
+					$msg['message']='กรุณาระบุ Model [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['unit']) && empty($val_bjc_product['unit'])) {
+					$msg['message']='กรุณาระบุ Unit [Bjc Product]';
+					goto error;
+				}else if (!isset($val_bjc_product['price']) && empty($val_bjc_product['price'])) {
+					$msg['message']='กรุณาระบุ Price [Bjc Product]';
+					goto error;
 				}else{
-					$data_insert['CUSTOMERS_ID'] = (int)$id;
-					$data_insert['SN'] = $this->general_model->clearbadstr($val_bjc_product['sn']);
-					$data_insert['BRANDS_ID'] = (int)$val_bjc_product['brands'];
-					$data_insert['SALES_ID'] = (int)$val_bjc_product['saleperson'];
-					$data_insert['SERVICES_ID'] = (int)$val_bjc_product['serviceperson'];
-					$data_insert['WARRANTY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($val_bjc_product['warranty'])));
-					$data_insert['MODEL'] = $this->general_model->clearbadstr($val_bjc_product['model']);
-					$data_insert['UNIT'] = (int)$val_bjc_product['unit'];
-					$data_insert['PRICE'] = (int)$val_bjc_product['price'];
-					$data_insert['UPDATE_DATE'] = date('Y-m-d H:i:s');
-					$data_insert['USER_UPDATE'] = (int)$user_create;
-					$data_insert['STATUS_DELETE'] = 0;
-					$data_insert['CREATE_DATE'] =  date('Y-m-d H:i:s');
-					$data_insert['USER_CREATE'] = (int)$user_create;
 
-					$res_insert = $this->inserts($data_insert);
-					if ($res_insert['status']==0) {
-						$msg['message']=$res_insert['message'];
-						goto error;
+					// set data
+					$data['SN'] = $this->general_model->clearbadstr($val_bjc_product['sn']);
+					$data['BRANDS_ID'] = (int)$val_bjc_product['brands'];
+					$data['SALES_ID'] = (int)$val_bjc_product['saleperson'];
+					$data['SERVICES_ID'] = (int)$val_bjc_product['serviceperson'];
+					$data['WARRANTY'] = date('Y-m-d', strtotime($this->general_model->clearbadstr($val_bjc_product['warranty'])));
+					$data['MODEL'] = $this->general_model->clearbadstr($val_bjc_product['model']);
+					$data['UNIT'] = (int)$val_bjc_product['unit'];
+					$data['PRICE'] = (int)$val_bjc_product['price'];
+
+					if (isset($val_bjc_product['id_colum']) && !empty($val_bjc_product['id_colum'])) {
+						$id_colum = (int)$val_bjc_product['id_colum'];
+						$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
+						$data['USER_UPDATE'] = (int)$user_create;
+
+						$res_update = $this->updates($data, $id_colum);
+						if ($res_update['status']==0) {
+							$msg['message']=$res_update['message'];
+							goto error;
+						}
+					}else{
+						$data['CUSTOMERS_ID'] = (int)$id;
+						$data['STATUS_DELETE'] = 0;
+						$data['CREATE_DATE'] =  date('Y-m-d H:i:s');
+						$data['USER_CREATE'] = (int)$user_create;
+
+						$res_insert = $this->inserts($data);
+						if ($res_insert['status']==0) {
+							$msg['message']=$res_insert['message'];
+							goto error;
+						}
 					}
+					unset($data);
 				}
 			}
+		}else{
+			$msg['message']='กรุณาระบุผลิตภัณฑ์ Bjc อย่างน้อย 1 ผลิตภัณฑ์';
+			goto error;
 		}
 
 		$msg['status']=1;

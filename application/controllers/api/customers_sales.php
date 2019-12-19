@@ -9,9 +9,9 @@ class Customers_sales extends MY_Controller {
 		$this->load->model('customers_sales_model');
 	}
 
-	public function lists_customers_sales()
+	public function lists_customers_sales($id_customers=null)
 	{
-		$msg = $this->customers_sales_model->lists();
+		$msg = $this->customers_sales_model->lists($id_customers);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);

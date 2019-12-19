@@ -139,7 +139,7 @@ class Customers_model extends CI_Model
 		$where .= " AND ".$this->table.".STATUS_DELETE=0"; // status_delete 0 => no delete / 1 => delete
 
 		/* SELECT COLUME SHOWS */
-		$arr_col_show[$this->table] = ['ID'];
+		$arr_col_show[$this->table] = ['ID','EXPERTISE'];
 		$arr_col_show[$this->table_sales_detail] = ['ID','SALES_ID'];
 		$arr_col_show['SALES'] = ['ID','IMAGE','FIRST_NAME_TH','LAST_NAME_TH','FIRST_NAME_ENG','LAST_NAME_ENG','NICKNAME_TH','NICKNAME_ENG','DEPARTMENT_ID'];
 
@@ -182,6 +182,7 @@ class Customers_model extends CI_Model
 
 		$msg['status']=1;
 		$msg['data'] = $query->result_array();
+		$msg['data2'] = $msg['data'];
 
 		if (sizeof($msg['data'])<1) {
 			$msg['status']=0;
@@ -193,6 +194,7 @@ class Customers_model extends CI_Model
 			$new_arr = array();
 			foreach ($msg['data'] as $key => $value) {
 				$new_arr['CUSTOMERS_ID'] = (int)$value['CUSTOMERS_ID'];
+				$new_arr['CUSTOMERS_EXPERTISE'] = (int)$value['CUSTOMERS_EXPERTISE'];
 
 				// SALES DETAIL
 				$c_salse = isset($new_arr['salse_detail']) ? count($new_arr['salse_detail']) : 0;
@@ -208,6 +210,9 @@ class Customers_model extends CI_Model
 					$new_arr['salse_detail'][$c_salse]['NICKNAME_TH'] = $value['SALES_NICKNAME_TH'];
 					$new_arr['salse_detail'][$c_salse]['NICKNAME_ENG'] = $value['SALES_NICKNAME_ENG'];
 					$new_arr['salse_detail'][$c_salse]['DEPARTMENT_ID'] = $value['SALES_DEPARTMENT_ID'];
+				}
+				if (isset($new_arr['salse_detail']) && $new_arr['salse_detail'][0]['ID']==0) {
+					$new_arr['salse_detail']=array();
 				}
 
 				// SERVICE DETAIL
@@ -225,6 +230,9 @@ class Customers_model extends CI_Model
 					$new_arr['service_detail'][$c_service]['NICKNAME_ENG'] = $value['SERVICES_NICKNAME_ENG'];
 					$new_arr['service_detail'][$c_service]['DEPARTMENT_ID'] = $value['SERVICES_DEPARTMENT_ID'];
 				}
+				if (isset($new_arr['service_detail']) && $new_arr['service_detail'][0]['ID']==0) {
+					$new_arr['service_detail']=array();
+				}
 
 				// BJC PRODUCTS
 				$c_bjc_p = isset($new_arr['product_bjc']) ? count($new_arr['product_bjc']) : 0;
@@ -240,6 +248,9 @@ class Customers_model extends CI_Model
 					$new_arr['product_bjc'][$c_bjc_p]['UNIT'] = (int)$value['CUSTOMERS_PRODUCT_BJC_UNIT'];
 					$new_arr['product_bjc'][$c_bjc_p]['PRICE'] = (int)$value['CUSTOMERS_PRODUCT_BJC_PRICE'];
 				}
+				if (isset($new_arr['product_bjc']) && $new_arr['product_bjc'][0]['ID']==0) {
+					$new_arr['product_bjc']=array();
+				}
 
 				// OTHER PRODUCTS
 				$c_other_p = isset($new_arr['product_other']) ? count($new_arr['product_other']) : 0;
@@ -249,6 +260,9 @@ class Customers_model extends CI_Model
 					$new_arr['product_other'][$c_other_p]['BRANDS_ID'] = (int)$value['CUSTOMERS_PRODUCT_OTHER_BRANDS_ID'];
 					$new_arr['product_other'][$c_other_p]['MODEL'] = $value['CUSTOMERS_PRODUCT_OTHER_MODEL'];
 					$new_arr['product_other'][$c_other_p]['UNIT'] = (int)$value['CUSTOMERS_PRODUCT_OTHER_UNIT'];
+				}
+				if (isset($new_arr['product_other']) && $new_arr['product_other'][0]['ID']==0) {
+					$new_arr['product_other']=array();
 				}
 
 				// PERSONNEL DETAIL
@@ -277,6 +291,9 @@ class Customers_model extends CI_Model
 					$new_arr['personnel_detail'][$c_personnel]['STATUS'] = (int)$value['CUSTOMERS_PERSONNEL_STATUS'];
 					$new_arr['personnel_detail'][$c_personnel]['CONFIDENT'] = (int)$value['CUSTOMERS_PERSONNEL_CONFIDENT'];
 					$new_arr['personnel_detail'][$c_personnel]['REMARKS'] = $value['CUSTOMERS_PERSONNEL_REMARKS'];
+				}
+				if (isset($new_arr['personnel_detail']) && $new_arr['personnel_detail'][0]['ID']==0) {
+					$new_arr['personnel_detail']=array();
 				}
 			}
 
@@ -399,7 +416,7 @@ class Customers_model extends CI_Model
 		// move image Hospital
 		if (isset($ip_post['image_hospital']) && !empty($ip_post['image_hospital'])) {
 			$new_path_image_hospital = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_hospital']), 'hospitals');
-	        if (!$new_path_image_hospital['status']) {
+	        if ($new_path_image_hospital['status']==0) {
 				$msg_img=$new_path_image_hospital;
 	        	return $msg_img;
 	        }
@@ -409,7 +426,7 @@ class Customers_model extends CI_Model
 		// move image Doctor
 		if (isset($ip_post['image_doctor']) && !empty($ip_post['image_doctor'])) {
 			$new_path_image_doctor = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_doctor']), 'doctors');
-	        if (!$new_path_image_doctor['status']) {
+	        if ($new_path_image_doctor['status']==0) {
 				$msg_img=$new_path_image_doctor;
 	        	return $msg_img;
 	        }
@@ -419,7 +436,7 @@ class Customers_model extends CI_Model
 		// move image Purchase
 		if (isset($ip_post['image_purchase']) && !empty($ip_post['image_purchase'])) {
 			$new_path_image_purchase = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_purchase']), 'purchases');
-	        if (!$new_path_image_purchase['status']) {
+	        if ($new_path_image_purchase['status']==0) {
 				$msg_img=$new_path_image_purchase;
 	        	return $msg_img;
 	        }
@@ -502,7 +519,7 @@ class Customers_model extends CI_Model
 		// move image Hospital
 		if (isset($ip_post['image_hospital']) && !empty($ip_post['image_hospital']) && $ip_post['image_hospital']!=$ip_post['old_image_hospital']) {
 			$new_path_image_hospital = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_hospital']), 'hospitals');
-	        if (!$new_path_image_hospital['status']) {
+	        if ($new_path_image_hospital['status']==0) {
 				$msg_img=$new_path_image_hospital;
 	        	return $msg_img;
 	        }
@@ -515,7 +532,7 @@ class Customers_model extends CI_Model
 		// move image Doctor
 		if (isset($ip_post['image_doctor']) && !empty($ip_post['image_doctor']) && $ip_post['image_doctor']!=$ip_post['old_image_doctor']) {
 			$new_path_image_doctor = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_doctor']), 'doctors');
-	        if (!$new_path_image_doctor['status']) {
+	        if ($new_path_image_doctor['status']==0) {
 				$msg_img=$new_path_image_doctor;
 	        	return $msg_img;
 	        }
@@ -528,7 +545,7 @@ class Customers_model extends CI_Model
 		// move image Purchase
 		if (isset($ip_post['image_purchase']) && !empty($ip_post['image_purchase']) && $ip_post['image_purchase']!=$ip_post['old_image_purchase']) {
 			$new_path_image_purchase = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image_purchase']), 'purchases');
-	        if (!$new_path_image_purchase['status']) {
+	        if ($new_path_image_purchase['status']==0) {
 				$msg_img=$new_path_image_purchase;
 	        	return $msg_img;
 	        }

@@ -70,7 +70,7 @@ class Customers_product extends MY_Controller {
 
 
 	/* Update Product Detail [Bjc Product + Other Product]*/
-	public function update_customers_product_detail($id=null)
+	public function update_customers_product($id=null)
 	{
 		$id = (int)$id;
 		$res_bjc = $this->customers_bjc_product_model->chk_bjc_product($id);
@@ -93,5 +93,24 @@ class Customers_product extends MY_Controller {
 		echo json_encode($msg);
 	}
 	/* End Update Product Detail [Bjc Product + Other Product]*/
+
+	/* Lists Product Detail [Bjc Product + Other Product]*/
+	public function lists_customers_product($id_customers=null)
+	{
+		$msg['status'] = 1;
+		$bjc_product = $this->customers_bjc_product_model->lists($id_customers);
+		$other_product = $this->customers_other_product_model->lists($id_customers);
+
+		if ($bjc_product['status']==0 && $other_product['status']==0) {
+			$msg['status'] = 0;
+		}
+
+		$msg['bjc_product'] = $bjc_product;
+		$msg['other_product'] = $other_product;
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+	/* End Lists Product Detail [Bjc Product + Other Product]*/
 
 }

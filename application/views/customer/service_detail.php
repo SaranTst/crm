@@ -199,6 +199,7 @@
         clone_dom_service.find('#nickname-service-eng-'+id_dom_service).attr('id', 'nickname-service-eng-'+new_id_dom_service).attr('value', '');
         clone_dom_service.find('#team-service-'+id_dom_service).attr('id', 'team-service-'+new_id_dom_service).attr('value', '');
         clone_dom_service.find('select[name="service_detail['+key_arr_dom_service+'][id]"]').attr('name', 'service_detail['+new_key_arr_dom_service+'][id]');
+        clone_dom_service.find('input[name="service_detail['+key_arr_dom_service+'][id_colum]"]').val("").attr('name', 'service_detail['+new_key_arr_dom_service+'][id_colum]');
         clone_dom_service.find('.fa.fa-times').attr('onclick', "$('#dom-service-"+new_id_dom_service+"').remove();");
         clone_dom_service.find('.custom-select').attr('onchange', "select_service("+new_id_dom_service+",this,0)");
 

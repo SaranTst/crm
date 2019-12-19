@@ -27,7 +27,7 @@
                       <select class="custom-select" name="personnel_detail[<?php echo ($k_personnel); ?>][relationship]">
                         <option value="" selected readonly hidden>Choose Relationship</option>
                         <?php foreach (ARR_RELATIONSHIP as $key => $value) { ?>
-                        <option value="<?php echo $value; ?>" <?php echo $val_personnel['RELATIONSHIP']==$key ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                        <option value="<?php echo $value; ?>" <?php echo $val_personnel['RELATIONSHIP']==$value ? 'selected' : ''; ?>><?php echo $value; ?></option>
                         <?php } ?>
                       </select>
                     </div>
@@ -572,23 +572,25 @@
 
 
         // Remove Value Select Box
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][relationship]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][relationship]');
+        clone_dom_personnel.find('select option:selected').removeAttr('selected'); // remove all selected in select
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][prefix]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][prefix]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][relationship]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][relationship]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][position]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][position]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][prefix]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][prefix]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][gender]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][gender]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][position]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][position]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][salesperson]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][salesperson]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][gender]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][gender]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][contact_channal]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][contact_channal]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][salesperson]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][salesperson]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][brands]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][brands]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][contact_channal]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][contact_channal]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][status]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][status]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][brands]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][brands]');
 
-        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][confident]"] option:selected').removeAttr('selected').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][confident]');
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][status]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][status]');
+
+        clone_dom_personnel.find('select[name="personnel_detail['+key_arr_dom_personnel+'][confident]"]').attr('name', 'personnel_detail['+new_key_arr_dom_personnel+'][confident]');
 
 
 
@@ -622,6 +624,58 @@
         })
 
       });
+
+
+      $('#save-customer').click(function(e) {
+        var url = base_url+'api/customers/updates_more_customer/'+id_customer;
+        var formDataAjax = {};
+        formDataArrPersonnel = $("form#personnel-detail").serializeArray();
+        for (var i = 0; i < formDataArrPersonnel.length; i++){
+          var ref_img_personnel = 'personnel_detail['+i+'][img_personnel]';
+          var ref_old_img_personnel = 'personnel_detail['+i+'][old_img_personnel]';
+          if (formDataArrPersonnel[i]['value'] || formDataArrPersonnel[i]['name']==ref_img_personnel || formDataArrPersonnel[i]['name']==ref_old_img_personnel) {
+            formDataAjax[formDataArrPersonnel[i]['name']] = formDataArrPersonnel[i]['value'];
+          }
+        }
+        formDataAjax['user_create'] = ID_LOGIN;
+        console.log(formDataAjax);
+        return false;
+
+        if (formDataAjax) {
+          $.ajax({
+            url: url,
+            type:"POST",
+            data: formDataAjax,
+            dataType:"json",
+            success: function( resp ){
+              console.log(resp);
+              if (resp.status==1) {
+                Swal.fire({
+                  title: 'Success!',
+                  text: resp.message,
+                  type: 'success'
+                }).then((result) => {
+                  window.location.href = base_url+'customer';
+                })
+              }else{
+                Swal.fire({
+                  title: 'Warning!',
+                  text: resp.message,
+                  type: 'warning'
+                })
+              }
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+              Swal.fire({
+                title: jqXhr.status,
+                text: errorThrown,
+                type: 'error'
+              })
+            }
+          });
+        }
+      });
+
     });
 
     function ajax_delete_personnel(id, id_dom) {

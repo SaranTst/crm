@@ -234,7 +234,7 @@ class Sales_model extends CI_Model
 		// move image
 		if (isset($ip_post['image']) && !empty($ip_post['image'])) {
 			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
-	        if (!$new_path_image['status']) {
+	        if ($new_path_image['status']==0) {
 				$msg_img=$new_path_image;
 	        	return $msg_img;
 	        }
@@ -311,7 +311,7 @@ class Sales_model extends CI_Model
 		// move image
 		if (isset($ip_post['image']) && !empty($ip_post['image']) && $ip_post['image']!=$ip_post['old_image']) {
 			$new_path_image = $this->general_model->move_images($this->general_model->clearbadstr($ip_post['image']), 'sales');
-	        if (!$new_path_image['status']) {
+	        if ($new_path_image['status']==0) {
 				$msg_img=$new_path_image;
 	        	return $msg_img;
 	        }

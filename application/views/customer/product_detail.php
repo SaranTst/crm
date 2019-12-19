@@ -358,20 +358,18 @@
 
         clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][sn]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][sn]');
 
-        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"] option:selected').removeAttr('selected');
+        clone_dom_bjc_product.find('select option:selected').removeAttr('selected');// remove all selected in select
         clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][brands]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][brands]');
+
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][saleperson]');
+
+        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][serviceperson]');
 
         clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][model]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][model]');
 
         clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][unit]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][unit]');
 
         clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][price]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][price]');
-
-        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"] option:selected').removeAttr('selected');
-        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][saleperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][saleperson]');
-
-        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"] option:selected').removeAttr('selected');
-        clone_dom_bjc_product.find('select[name="bjc_product_detail['+key_arr_dom_bjc_product+'][serviceperson]"]').attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][serviceperson]');
 
         clone_dom_bjc_product.find('input[name="bjc_product_detail['+key_arr_dom_bjc_product+'][warranty]"]').val("").attr('name', 'bjc_product_detail['+new_key_arr_dom_bjc_product+'][warranty]');
 
@@ -404,7 +402,7 @@
         clone_dom_other_product.find('#dom-other-product-'+id_dom_other_product).attr('id', 'dom-other-product-'+new_id_dom_other_product);
         clone_dom_other_product.find('#id-jumbotron-other-product').text(new_id_dom_other_product+'. Other Product');
 
-        clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"] option:selected').removeAttr('selected');
+        clone_dom_other_product.find('select option:selected').removeAttr('selected'); // remove all selected in select
         clone_dom_other_product.find('select[name="other_product_detail['+key_arr_dom_other_product+'][brands]"]').attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][brands]');
 
         clone_dom_other_product.find('input[name="other_product_detail['+key_arr_dom_other_product+'][model]"]').val("").attr('name', 'other_product_detail['+new_key_arr_dom_other_product+'][model]');

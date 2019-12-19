@@ -12,7 +12,7 @@ class Customers_other_product_model extends CI_Model
 		$this->load->model('logs_model');
 	}
 
-	public function lists() {
+	public function lists($id_customers=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -27,6 +27,9 @@ class Customers_other_product_model extends CI_Model
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
 				$where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
 			}
+		}
+		if ($id_customers) {
+			$where .= "CUSTOMERS_ID = ".(int)$id_customers." AND ";
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
 
@@ -211,47 +214,53 @@ class Customers_other_product_model extends CI_Model
 			goto error;
 		}
 
-		foreach ($ip_post['other_product_detail'] as $k_other_product => $val_other_product) {
+		if (isset($ip_post['other_product_detail']) && !empty($ip_post['other_product_detail'])) {
+			foreach ($ip_post['other_product_detail'] as $k_other_product => $val_other_product) {
 
-			if (!isset($val_other_product['brands']) && empty($val_other_product['brands'])) {
-				$msg['message']='กรุณาระบุ Brands [Other Product]';
-				goto error;
-			}else if (!isset($val_other_product['model']) && empty($val_other_product['model'])) {
-				$msg['message']='กรุณาระบุ Model [Other Product]';
-				goto error;
-			}else if (!isset($val_other_product['unit']) && empty($val_other_product['unit'])) {
-				$msg['message']='กรุณาระบุ Unit [Other Product]';
-				goto error;
-			}else{
-				if (isset($val_other_product['id_colum']) && !empty($val_other_product['id_colum'])) {
-					$id_colum = (int)$val_other_product['id_colum'];
-					$data_update['BRANDS_ID'] = (int)$val_other_product['brands'];
-					$data_update['MODEL'] = $this->general_model->clearbadstr($val_other_product['model']);
-					$data_update['UNIT'] = (int)$val_other_product['unit'];
-					$data_update['UPDATE_DATE'] = date('Y-m-d H:i:s');
-					$data_update['USER_UPDATE'] = (int)$user_create;
-
-					$res_update = $this->updates($data_update, $id_colum);
-					if ($res_update['status']==0) {
-						$msg['message']=$res_update['message'];
-						goto error;
-					}
+				if (!isset($val_other_product['brands']) && empty($val_other_product['brands'])) {
+					$msg['message']='กรุณาระบุ Brands [Other Product]';
+					goto error;
+				}else if (!isset($val_other_product['model']) && empty($val_other_product['model'])) {
+					$msg['message']='กรุณาระบุ Model [Other Product]';
+					goto error;
+				}else if (!isset($val_other_product['unit']) && empty($val_other_product['unit'])) {
+					$msg['message']='กรุณาระบุ Unit [Other Product]';
+					goto error;
 				}else{
-					$data_insert['CUSTOMERS_ID'] = (int)$id;
-					$data_insert['BRANDS_ID'] = (int)$val_other_product['brands'];
-					$data_insert['MODEL'] = $this->general_model->clearbadstr($val_other_product['model']);
-					$data_insert['UNIT'] = (int)$val_other_product['unit'];
-					$data_insert['STATUS_DELETE'] = 0;
-					$data_insert['CREATE_DATE'] =  date('Y-m-d H:i:s');
-					$data_insert['USER_CREATE'] = (int)$user_create;
 
-					$res_insert = $this->inserts($data_insert);
-					if ($res_insert['status']==0) {
-						$msg['message']=$res_insert['message'];
-						goto error;
+					// set data
+					$data['BRANDS_ID'] = (int)$val_other_product['brands'];
+					$data['MODEL'] = $this->general_model->clearbadstr($val_other_product['model']);
+					$data['UNIT'] = (int)$val_other_product['unit'];
+
+					if (isset($val_other_product['id_colum']) && !empty($val_other_product['id_colum'])) {
+						$id_colum = (int)$val_other_product['id_colum'];
+						$data['UPDATE_DATE'] = date('Y-m-d H:i:s');
+						$data['USER_UPDATE'] = (int)$user_create;
+
+						$res_update = $this->updates($data, $id_colum);
+						if ($res_update['status']==0) {
+							$msg['message']=$res_update['message'];
+							goto error;
+						}
+					}else{
+						$data['CUSTOMERS_ID'] = (int)$id;
+						$data['STATUS_DELETE'] = 0;
+						$data['CREATE_DATE'] =  date('Y-m-d H:i:s');
+						$data['USER_CREATE'] = (int)$user_create;
+
+						$res_insert = $this->inserts($data);
+						if ($res_insert['status']==0) {
+							$msg['message']=$res_insert['message'];
+							goto error;
+						}
 					}
+					unset($data);
 				}
 			}
+		}else{
+			$msg['message']='กรุณาระบุผลิตภัณฑ์ที่ไม่ใช้ของ Bjc อย่างน้อย 1 ผลิตภัณฑ์';
+			goto error;
 		}
 
 		$msg['status']=1;

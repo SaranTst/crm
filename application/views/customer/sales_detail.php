@@ -92,6 +92,7 @@
                 <div class="col-md-2"><i class="fa fa-times fa-2x float-right mb-3" data-toggle="tooltip" data-placement="top" title="Delete" onclick="$('#dom-sales-1').remove();"></i></div>
                 <div class="col-md-9">
                   <h3 id="id-jumbotron-sales">1.</h3>
+                  <input type="hidden" class="form-control" name="sales_detail[0][id_colum]" value="" readonly>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group row">
@@ -199,6 +200,7 @@
         clone_dom_sales.find('#nickname-sales-eng-'+id_dom).attr('id', 'nickname-sales-eng-'+new_id_dom).attr('value', '');
         clone_dom_sales.find('#department-sales-'+id_dom).attr('id', 'department-sales-'+new_id_dom).attr('value', '');
         clone_dom_sales.find('select[name="sales_detail['+key_arr_dom+'][id]"]').attr('name', 'sales_detail['+new_key_arr_dom+'][id]');
+        clone_dom_sales.find('input[name="sales_detail['+key_arr_dom+'][id_colum]"]').val("").attr('name', 'sales_detail['+new_key_arr_dom+'][id_colum]');
         clone_dom_sales.find('.fa.fa-times').attr('onclick', "$('#dom-sales-"+new_id_dom+"').remove();");
         clone_dom_sales.find('.custom-select').attr('onchange', "select_sales("+new_id_dom+",this,0)");
 
