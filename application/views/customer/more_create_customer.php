@@ -129,24 +129,25 @@
                   // each insert value in input[id_colum] when insert new data
                   if (id_content_tab=='PRODUCT') {
 
-                    // BJC Product
-                    if (resp.message.bjc_product.length>0) {
-                      $.each( resp.message.bjc_product, function( key, value ) {
-                        $('input[name="bjc_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                        $('#dom-bjc-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'bjc')");
-                      });
-                    }
+                    // // BJC Product
+                    // if (resp.message.bjc_product.status==1 && resp.message.bjc_product.message.length>0) {
+                    //   $.each( resp.message.bjc_product.message, function( key, value ) {
+                    //     $('input[name="bjc_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                    //     $('#dom-bjc-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'bjc')");
+                    //   });
+                    // }
 
-                    // Other Product
-                    if (resp.message.other_product.length>0) {
-                      $.each( resp.message.other_product, function( key, value ) {
-                        $('input[name="other_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                        $('#dom-other-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'other')");
-                      });
-                    }
+                    // // Other Product
+                    // if (resp.message.other_product.status==1 && resp.message.other_product.message.length>0) {
+                    //   $.each( resp.message.other_product.message, function( key, value ) {
+                    //     $('input[name="other_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                    //     $('#dom-other-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'other')");
+                    //   });
+                    // }
+                    set_delete_product(resp.message, loweridtab);
 
                   }else{
-                    if (resp.message.length>0) {
+                    if (Array.isArray(resp.message) && resp.message.length>0) {
                       $.each( resp.message, function( key, value ) {
                         $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
                         $('#dom-'+loweridtab+'-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+")");
@@ -156,15 +157,42 @@
                   
                 })
               }else{
-                Swal.fire({
-                  title: 'Warning!',
-                  text: resp.message,
-                  type: 'warning'
-                }).then((result) => {
-                  show_tab_status = true;
-                  $("#"+before_current_tab_id).tab('show')
-                  // window.location.reload();
-                })
+
+                if (id_content_tab=='PRODUCT') {
+
+                  var msg_error_pro = '';
+                  
+                  if (!Array.isArray(resp.message.bjc_product)) {
+                    msg_error_pro = resp.message.bjc_product;
+                  }
+
+                  if (!Array.isArray(resp.message.other_product)) {
+                    msg_error_pro = resp.message.other_product;
+                  }
+
+                  set_delete_product(resp.message, loweridtab);
+                  Swal.fire({
+                    title: 'Warning!',
+                    text: msg_error_pro,
+                    type: 'warning'
+                  }).then((result) => {
+                    show_tab_status = true;
+                    $("#"+before_current_tab_id).tab('show');
+                  })
+                  return false;
+
+                }else{
+
+                  Swal.fire({
+                    title: 'Warning!',
+                    text: resp.message,
+                    type: 'warning'
+                  }).then((result) => {
+                    show_tab_status = true;
+                    $("#"+before_current_tab_id).tab('show')
+                    // window.location.reload();
+                  })
+                }
               }
             },
             error: function( jqXhr, textStatus, errorThrown ){
@@ -245,6 +273,25 @@
       });
 
     });
+
+    function set_delete_product(arr, loweridtab) {
+
+      // BJC Product
+      if (Array.isArray(arr.bjc_product) && arr.bjc_product.length>0) {
+        $.each( arr.bjc_product, function( key, value ) {
+          $('input[name="bjc_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+          $('#dom-bjc-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'bjc')");
+        });
+      }
+
+      // Other Product
+      if (Array.isArray(arr.other_product) && arr.other_product.length>0) {
+        $.each( arr.other_product, function( key, value ) {
+          $('input[name="other_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+          $('#dom-other-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'other')");
+        });
+      }
+    }
 
     </script>
 

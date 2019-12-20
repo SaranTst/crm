@@ -73,23 +73,17 @@ class Customers_product extends MY_Controller {
 	public function update_customers_product($id=null)
 	{
 		$id = (int)$id;
-		$res_bjc = $this->customers_bjc_product_model->chk_bjc_product($id);
-		if ($res_bjc['status']==0) {
-			$msg=$res_bjc;
-			goto error;
-		}
-
-		$res_other = $this->customers_other_product_model->chk_other_product($id);
-		if ($res_other['status']==0) {
-			$msg=$res_other;
-			goto error;
-		}
-
 		$msg['status']=1;
+
+		$res_bjc = $this->customers_bjc_product_model->chk_bjc_product($id);
+		$res_other = $this->customers_other_product_model->chk_other_product($id);
+
+		if ($res_bjc['status']==0 || $res_other['status']==0) {
+			$msg['status']=0;
+		}
+
 		$msg['message']['bjc_product']=$res_bjc['message'];
 		$msg['message']['other_product']=$res_other['message'];
-
-		error:
 		header("Content-Type: application/json");
 		echo json_encode($msg);
 	}
