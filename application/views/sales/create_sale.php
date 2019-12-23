@@ -147,7 +147,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="birthday" id="date-birthday" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY'] : ''; ?>">
+                      <input type="text" class="form-control" name="birthday" id="date-birthday" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY'] : ''; ?>" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>

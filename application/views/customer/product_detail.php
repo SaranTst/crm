@@ -8,7 +8,8 @@
             }
           }
 
-          if (sizeof($data_product_bjc)>0) {
+          $size_product_bjc = sizeof($data_product_bjc);
+          if ($size_product_bjc>0) {
             foreach ($data_product_bjc as $k_product_bjc => $val_product_bjc) { 
           ?>
           <div class="jumbotron jumbotron-fluid p-3" id="dom-bjc-product-<?php echo ($k_product_bjc+1); ?>">
@@ -92,7 +93,7 @@
                   <label>Warranty</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="bjc_product_detail[<?php echo ($k_product_bjc); ?>][warranty]" id="warranty-bjc-product-<?php echo ($k_product_bjc+1); ?>" value="<?php echo $val_product_bjc['WARRANTY']; ?>">
+                      <input type="text" class="form-control" name="bjc_product_detail[<?php echo ($k_product_bjc); ?>][warranty]" id="warranty-bjc-product-<?php echo ($k_product_bjc+1); ?>" value="<?php echo $val_product_bjc['WARRANTY']; ?>" autocomplete="off">
                     </div>
                     <div class="col-2 text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -186,7 +187,7 @@
                   <label>Warranty</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="bjc_product_detail[0][warranty]" id="warranty-bjc-product-1" value="">
+                      <input type="text" class="form-control" name="bjc_product_detail[0][warranty]" id="warranty-bjc-product-1" value="" autocomplete="off">
                     </div>
                     <div class="col-2 text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -336,12 +337,17 @@
 
   <script type="text/javascript">
 
+    var size_product_bjc = <?php echo $size_product_bjc; ?>;
+
     $(document).ready(function(){
-      $('#warranty-bjc-product-1').datepicker({
-        format: "yyyy-mm-dd",
-        language: "th",
-        autoclose: true
-      })
+
+      for (var i = 1; i <= size_product_bjc; i++){
+        $('#warranty-bjc-product-'+i).datepicker({
+          format: "yyyy-mm-dd",
+          language: "th",
+          autoclose: true
+        })
+      }
 
       /* Add Dom BJC Product */
       $('#add_content_bjc_product').click(function(){

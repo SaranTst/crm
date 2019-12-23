@@ -191,7 +191,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="birthday_doctor" id="date-birthday-doctor" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY_DOCTOR'] : ''; ?>">
+                      <input type="text" class="form-control" name="birthday_doctor" id="date-birthday-doctor" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY_DOCTOR'] : ''; ?>" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -274,7 +274,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="birthday_purchase" id="date-birthday-purchase" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY_PURCHASE'] : ''; ?>">
+                      <input type="text" class="form-control" name="birthday_purchase" id="date-birthday-purchase" value="<?php echo sizeof($data)>0 ? $data['BIRTHDAY_PURCHASE'] : ''; ?>" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>

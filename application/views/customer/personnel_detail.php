@@ -7,7 +7,8 @@
             }
           }
 
-          if (sizeof($data_personnel)>0) {
+          $size_personnel = sizeof($data_personnel);
+          if ($size_personnel>0) {
             foreach ($data_personnel as $k_personnel => $val_personnel) { 
           ?>
           <div class="jumbotron jumbotron-fluid p-3" id="dom-personnel-<?php echo ($k_personnel+1); ?>">
@@ -129,7 +130,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="personnel_detail[<?php echo ($k_personnel); ?>][date_birthday]" id="date-birthday-<?php echo ($k_personnel+1); ?>" value="<?php echo $val_personnel['BIRTHDAY']; ?>">
+                      <input type="text" class="form-control" name="personnel_detail[<?php echo ($k_personnel); ?>][date_birthday]" id="date-birthday-<?php echo ($k_personnel+1); ?>" value="<?php echo $val_personnel['BIRTHDAY']; ?>" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -185,7 +186,7 @@
                   <label>Date Stamp</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="personnel_detail[<?php echo ($k_personnel); ?>][date_stamp]" id="date-stamp-<?php echo ($k_personnel+1); ?>" value="<?php echo $val_personnel['DATE_STAMP']; ?>">
+                      <input type="text" class="form-control" name="personnel_detail[<?php echo ($k_personnel); ?>][date_stamp]" id="date-stamp-<?php echo ($k_personnel+1); ?>" value="<?php echo $val_personnel['DATE_STAMP']; ?>" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -369,7 +370,7 @@
                   <label>Date Birthday</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="personnel_detail[0][date_birthday]" id="date-birthday-1">
+                      <input type="text" class="form-control" name="personnel_detail[0][date_birthday]" id="date-birthday-1" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -425,7 +426,7 @@
                   <label>Date Stamp</label>
                   <div class="form-group row">
                     <div class="col-10">
-                      <input type="text" class="form-control" name="personnel_detail[0][date_stamp]" id="date-stamp-1">
+                      <input type="text" class="form-control" name="personnel_detail[0][date_stamp]" id="date-stamp-1" autocomplete="off">
                     </div>
                     <div class="col text-center">
                       <i class="fa fa-calendar fa-lg"></i>
@@ -524,18 +525,23 @@
 
   <script type="text/javascript">
 
-    $(document).ready(function(){
-      $('#date-birthday-1').datepicker({
-        format: "yyyy-mm-dd",
-        language: "th",
-        autoclose: true
-      })
+    var size_personnel = <?php echo $size_personnel; ?>;
 
-      $('#date-stamp-1').datepicker({
-        format: "yyyy-mm-dd",
-        language: "th",
-        autoclose: true
-      })
+    $(document).ready(function(){
+
+      for (var i = 1; i <= size_personnel; i++){
+        $('#date-birthday-'+i).datepicker({
+          format: "yyyy-mm-dd",
+          language: "th",
+          autoclose: true
+        })
+
+        $('#date-stamp-'+i).datepicker({
+          format: "yyyy-mm-dd",
+          language: "th",
+          autoclose: true
+        })
+      }
 
       /* Add Dom PERSONNEL DETAIL */
       $('#add_content_personnel_detail').click(function(){
@@ -618,7 +624,7 @@
           autoclose: true
         })
 
-              // Datepicker New Dom
+        // Datepicker New Dom
         $('#date-stamp-'+new_id_dom_personnel).datepicker({
           format: "yyyy-mm-dd",
           language: "th",
