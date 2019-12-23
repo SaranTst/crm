@@ -81,4 +81,12 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
+	public function lists_customers_general($name_hospital=null)
+	{
+		$msg = $this->customers_model->lists_customers_general(urldecode($name_hospital));
+
+		header("Content-Type: application/json");
+		echo json_encode($msg);
+	}
+
 }

@@ -820,5 +820,50 @@ class Customers_model extends CI_Model
 		return $msg;
 	}
 
+
+	/*Read More Customer */
+	public function lists_customers_general($name_hospital=null) {
+
+		$limit = $this->input->get('limit') ? $this->input->get('limit') : 2;
+		$page = $this->input->get('page') ? $this->input->get('page') : 1;
+		$offset = ($page - 1) * $limit;
+		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
+
+		$where = "";
+		if ($name_hospital!='') {
+			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($name_hospital));
+			$where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
+		}
+		$where .= "STATUS_DELETE = 0";
+
+		$this->db->select('*');
+		$this->db->from($this->table);
+		$this->db->where($where, NULL, FALSE);
+		$this->db->limit($limit,$offset);
+		$this->db->order_by('ID', $sort);
+		$query = $this->db->get();
+
+		$msg['status']=1;
+		$msg['data'] = $query->result_array();
+		if (sizeof($msg['data'])<1) {
+			$msg['status']=0;
+			$msg['message']='ไม่มีข้อมูล';
+			unset($msg['data']);
+			goto error;
+		}
+
+		$this->db->select('*');
+		$this->db->from($this->table);
+		$this->db->where($where, NULL, FALSE);
+		$query_total = $this->db->get();
+
+		$msg['total'] = $query_total->num_rows();
+		$msg['limit'] = (int)$limit;
+		$msg['page'] = (int)$page;
+
+		error:
+		return $msg;
+	}
+
 }
 ?>
