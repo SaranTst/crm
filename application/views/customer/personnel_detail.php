@@ -120,7 +120,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel.</label>
-                    <input type="text" class="form-control" placeholder="Tel." name="personnel_detail[<?php echo ($k_personnel); ?>][tel]" value="<?php echo $val_personnel['TELEPHONE']; ?>">
+                    <input type="text" class="form-control" placeholder="Tel." name="personnel_detail[<?php echo ($k_personnel); ?>][tel]" value="<?php echo $val_personnel['TELEPHONE']; ?>" maxlength="10">
                   </div>
                 </div>
               </div>
@@ -360,7 +360,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel.</label>
-                    <input type="text" class="form-control" placeholder="Tel." name="personnel_detail[0][tel]">
+                    <input type="text" class="form-control" placeholder="Tel." name="personnel_detail[0][tel]" maxlength="10">
                   </div>
                 </div>
               </div>

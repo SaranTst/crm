@@ -201,7 +201,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel</label>
-                    <input type="text" class="form-control" placeholder="Telephone" name="telephone_doctor" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE_DOCTOR'] : ''; ?>">
+                    <input type="text" class="form-control" placeholder="Telephone" name="telephone_doctor" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE_DOCTOR'] : ''; ?>" maxlength="10">
                   </div>
                 </div>
               </div>
@@ -284,7 +284,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel</label>
-                    <input type="text" class="form-control" placeholder="Telephone" name="telephone_purchase" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE_PURCHASE'] : ''; ?>">
+                    <input type="text" class="form-control" placeholder="Telephone" name="telephone_purchase" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE_PURCHASE'] : ''; ?>" maxlength="10">
                   </div>
                 </div>
               </div>

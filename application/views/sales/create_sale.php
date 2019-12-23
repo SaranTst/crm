@@ -137,7 +137,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tel.</label>
-                    <input type="text" class="form-control" placeholder="Tel." name="telephone" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE'] : ''; ?>">
+                    <input type="text" class="form-control" placeholder="Tel." name="telephone" value="<?php echo sizeof($data)>0 ? $data['TELEPHONE'] : ''; ?>" maxlength="10">
                   </div>
                 </div>
               </div>
