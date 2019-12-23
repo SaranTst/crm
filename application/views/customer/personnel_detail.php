@@ -525,7 +525,7 @@
 
   <script type="text/javascript">
 
-    var size_personnel = <?php echo $size_personnel; ?>;
+    var size_personnel = <?php echo ($size_personnel+1); ?>;
 
     $(document).ready(function(){
 

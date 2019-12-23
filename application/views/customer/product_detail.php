@@ -337,7 +337,7 @@
 
   <script type="text/javascript">
 
-    var size_product_bjc = <?php echo $size_product_bjc; ?>;
+    var size_product_bjc = <?php echo ($size_product_bjc+1); ?>;
 
     $(document).ready(function(){
 

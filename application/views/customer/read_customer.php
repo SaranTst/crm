@@ -207,14 +207,12 @@
 
             page++;
             var url_read_more = base_url+'api/customers/lists_customers_general/'+name_hospital+'?page='+page;
-            console.log(url_read_more);
 
             $.ajax({
               url: url_read_more,
               type:"GET",
               dataType:"json",
               success: function( resp ){
-                console.log(resp)
                 if (resp.status==1) {
 
                   var content_result = $('#GENERAL').children().last().clone();
@@ -243,7 +241,8 @@
                     content_result.find('#hospital-cus-id').val(v.CUSTOMER_ID_HOSPITAL);
                     content_result.find('#hospital-name-eng').val(v.HOSPITAL_NAME_ENG);
                     content_result.find('#hospital-name-th').val(v.HOSPITAL_NAME_TH);
-                    content_result.find('#hospital-order').val(v.ORDER_AMOUNT_HOSPITAL);
+                    content_result.find('#hospital-order').val(parseInt(v.ORDER_AMOUNT_HOSPITAL).toLocaleString());
+
                     /* End HOSPITAL */
 
 

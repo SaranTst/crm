@@ -125,14 +125,31 @@
                   type: 'success'
                 }).then((result) => {
 
+                  console.log(resp);
+
                   // each insert value in input[id_colum] when insert new data
                   if (id_content_tab=='PRODUCT') {
                     set_delete_product(resp.message, loweridtab);
                   }else{
                     if (Array.isArray(resp.message) && resp.message.length>0) {
                       $.each( resp.message, function( key, value ) {
-                        $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                        $('#dom-'+loweridtab+'-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+")");
+                        // change value of image TAB PERSONNEL
+                        if (id_content_tab=='PERSONNEL') {
+                            if (value.id_colum!=0) {
+                              $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                              $('#dom-'+loweridtab+'-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+")");
+                            }
+
+                            if (value.upload!='แก้ไขข้อมูลสำเร็จ') {
+                              $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][img_personnel]"]').val(value.upload);
+                              $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][old_img_personnel]"]').val(value.upload);
+                            }
+
+                        }else{
+                          $('input[name="'+loweridtab+'_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
+                          $('#dom-'+loweridtab+'-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+")");
+                        }
+
                       });
                     }
                   }

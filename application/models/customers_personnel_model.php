@@ -138,6 +138,7 @@ class Customers_personnel_model extends CI_Model
 			if ($res_insert_log) {
 				$msg['status']=1;
 				$msg['message']=$id_insert;
+				$msg['message_upload']=$arr['IMAGE'];
 			}
 		}
 
@@ -196,6 +197,8 @@ class Customers_personnel_model extends CI_Model
 		        	if (!$res_delete_image_personnel) {
 		        		$msg['status']=0;
 						$msg['message']='ไม่สามารถลบไฟล์รูป Personnel ได้ กรุณาลองใหม่อีกครั้ง';
+		        	}else{
+		        		$msg['message']=$arr['IMAGE'];
 		        	}
 		        }
 	    	}
@@ -381,6 +384,11 @@ class Customers_personnel_model extends CI_Model
 						if ($res_update['status']==0) {
 							$msg['message']=$res_update['message'];
 							goto error;
+						}else{
+							$arr_id_insert[$ii]['k_id_colum'] = $k_personnel;
+							$arr_id_insert[$ii]['id_colum'] = 0;
+							$arr_id_insert[$ii]['upload'] = $res_update['message'];
+							$ii++;
 						}
 					}else{
 						$data['CUSTOMERS_ID'] = (int)$id;
@@ -395,6 +403,7 @@ class Customers_personnel_model extends CI_Model
 						}else{
 							$arr_id_insert[$ii]['k_id_colum'] = $k_personnel;
 							$arr_id_insert[$ii]['id_colum'] = $res_insert['message'];
+							$arr_id_insert[$ii]['upload'] = $res_insert['message_upload'];
 							$ii++;
 						}
 					}
