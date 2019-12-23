@@ -103,7 +103,6 @@
           }
         }
         formDataMoreCustomer['user_create'] = ID_LOGIN;
-        console.log(formDataMoreCustomer);
 
         var url_more_create_customer = '';
         var url_lists_more_create_customer = '';
@@ -118,7 +117,7 @@
             data: formDataMoreCustomer,
             dataType:"json",
             success: function( resp ){
-              console.log(resp);
+
               if (resp.status==1) {
                 Swal.fire({
                   title: 'Success!',
@@ -128,24 +127,7 @@
 
                   // each insert value in input[id_colum] when insert new data
                   if (id_content_tab=='PRODUCT') {
-
-                    // // BJC Product
-                    // if (resp.message.bjc_product.status==1 && resp.message.bjc_product.message.length>0) {
-                    //   $.each( resp.message.bjc_product.message, function( key, value ) {
-                    //     $('input[name="bjc_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                    //     $('#dom-bjc-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'bjc')");
-                    //   });
-                    // }
-
-                    // // Other Product
-                    // if (resp.message.other_product.status==1 && resp.message.other_product.message.length>0) {
-                    //   $.each( resp.message.other_product.message, function( key, value ) {
-                    //     $('input[name="other_product_detail['+value.k_id_colum+'][id_colum]"]').val(value.id_colum);
-                    //     $('#dom-other-product-'+(value.k_id_colum+1)).find('.fa.fa-times').attr('onclick', "ajax_delete_"+loweridtab+"("+value.id_colum+","+(value.k_id_colum+1)+",'other')");
-                    //   });
-                    // }
                     set_delete_product(resp.message, loweridtab);
-
                   }else{
                     if (Array.isArray(resp.message) && resp.message.length>0) {
                       $.each( resp.message, function( key, value ) {
@@ -161,11 +143,10 @@
                 if (id_content_tab=='PRODUCT') {
 
                   var msg_error_pro = '';
-                  
+
                   if (!Array.isArray(resp.message.bjc_product)) {
                     msg_error_pro = resp.message.bjc_product;
                   }
-
                   if (!Array.isArray(resp.message.other_product)) {
                     msg_error_pro = resp.message.other_product;
                   }
@@ -189,8 +170,7 @@
                     type: 'warning'
                   }).then((result) => {
                     show_tab_status = true;
-                    $("#"+before_current_tab_id).tab('show')
-                    // window.location.reload();
+                    $("#"+before_current_tab_id).tab('show');
                   })
                 }
               }
@@ -203,7 +183,7 @@
               }).then((result) => {
                 // window.location.reload();
                 show_tab_status = true;
-                $("#"+before_current_tab_id).tab('show')
+                $("#"+before_current_tab_id).tab('show');
               })
             }
           });
@@ -237,7 +217,7 @@
                 data: formDataAjax_update_expertise,
                 dataType:"json",
                 success: function( resp ){
-                  console.log(resp);
+                  
                   if (resp.status==1) {
                     Swal.fire({
                       type: 'success',

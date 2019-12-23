@@ -50,8 +50,8 @@
             <?php foreach ($data as $key => $value) { ?>
             <tr>
               <th scope="row" id="txt-id"><?php echo ($key+1); ?>.</th>
-              <td><a href="<?php echo base_url(); ?>customer/read_customer" id="link-hospital-th"><?php echo $value['HOSPITAL_NAME_ENG']; ?></a></td>
-              <td><a href="<?php echo base_url(); ?>customer/read_customer" id="link-hospital-eng"><?php echo $value['HOSPITAL_NAME_TH']; ?></a></td>
+              <td><a href="<?php echo base_url().'customer/read_customer?hospital='.$value['HOSPITAL_NAME_ENG']; ?>" id="link-hospital-th"><?php echo $value['HOSPITAL_NAME_ENG']; ?></a></td>
+              <td><a href="<?php echo base_url().'customer/read_customer?hospital='.$value['HOSPITAL_NAME_TH']; ?>" id="link-hospital-eng"><?php echo $value['HOSPITAL_NAME_TH']; ?></a></td>
               <td id="txt-customer-id"><?php echo $value['CUSTOMER_ID_HOSPITAL']; ?></td>
               <td id="txt-order-amount"><?php echo $value['ORDER_AMOUNT_HOSPITAL']; ?></td>
               <!-- <td><div class="rating" data-rate-value="2"></div></td> -->
@@ -125,7 +125,6 @@
             var content_result = $('#content-result').children().last().clone();
             $('#content-result').children().remove();
             var data = resp.data;
-            console.log(data);
             $.each(data, function(i, v){
 
               content_result.find('#txt-id').text(((resp.page - 1) * resp.limit) + (i + 1));

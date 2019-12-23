@@ -629,53 +629,64 @@
 
 
       $('#save-customer').click(function(e) {
-        var url = base_url+'api/customers/updates_more_customer/'+id_customer;
+        var url = base_url+'api/customers_personnel/update_customers_personnel/'+id_customer;
         var formDataAjax = {};
         formDataArrPersonnel = $("form#personnel-detail").serializeArray();
         for (var i = 0; i < formDataArrPersonnel.length; i++){
-          var ref_img_personnel = 'personnel_detail['+i+'][img_personnel]';
-          var ref_old_img_personnel = 'personnel_detail['+i+'][old_img_personnel]';
-          if (formDataArrPersonnel[i]['value'] || formDataArrPersonnel[i]['name']==ref_img_personnel || formDataArrPersonnel[i]['name']==ref_old_img_personnel) {
+          if (formDataArrPersonnel[i]['value']) {
             formDataAjax[formDataArrPersonnel[i]['name']] = formDataArrPersonnel[i]['value'];
           }
         }
         formDataAjax['user_create'] = ID_LOGIN;
-        console.log(formDataAjax);
-        return false;
-
+        
         if (formDataAjax) {
-          $.ajax({
-            url: url,
-            type:"POST",
-            data: formDataAjax,
-            dataType:"json",
-            success: function( resp ){
-              console.log(resp);
-              if (resp.status==1) {
+          // Modal Process
+          Swal.fire({
+            title: 'แก้ไขข้อมูล',
+            html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+              Swal.showLoading()
+            },
+          })
+
+          setTimeout(function(){
+            $.ajax({
+              url: url,
+              type:"POST",
+              data: formDataAjax,
+              dataType:"json",
+              success: function( resp ){
+                
+                if (resp.status==1) {
+                  Swal.fire({
+                    title: 'Success!',
+                    text: 'บันทึก / แก้ไข ข้อมูลเรียบร้อย',
+                    type: 'success'
+                  }).then((result) => {
+                    window.location.href = base_url+'customer';
+                  })
+                }else{
+                  Swal.fire({
+                    title: 'Warning!',
+                    text: resp.message,
+                    type: 'warning'
+                  })
+                }
+              },
+              error: function( jqXhr, textStatus, errorThrown ){
                 Swal.fire({
-                  title: 'Success!',
-                  text: resp.message,
-                  type: 'success'
-                }).then((result) => {
-                  window.location.href = base_url+'customer';
-                })
-              }else{
-                Swal.fire({
-                  title: 'Warning!',
-                  text: resp.message,
-                  type: 'warning'
+                  title: jqXhr.status,
+                  text: errorThrown,
+                  type: 'error'
                 })
               }
-            },
-            error: function( jqXhr, textStatus, errorThrown ){
-              Swal.fire({
-                title: jqXhr.status,
-                text: errorThrown,
-                type: 'error'
-              })
-            }
-          });
+            });
+          }, 2000);
         }
+       
+
       });
 
     });
@@ -692,49 +703,45 @@
       }).then((result) => {
         if (typeof result.dismiss === "undefined") {
 
-          var url = base_url+'api/customers/delete_personnel_detail/'+id;
+          var url = base_url+'api/customers_personnel/delete_customers_personnel/'+id;
           var formData = {};
           formData['user_delete'] = ID_LOGIN;
 
+          $.ajax({
+            url: url,
+            type:"POST",
+            data: formData,
+            dataType:"json",
+              success: function( resp ){
 
-          console.log(id+'=>'+id_dom);
-          return false;
+              if (resp.status==1) {
 
-          // $.ajax({
-          //   url: url,
-          //   type:"POST",
-          //   data: formData,
-          //   dataType:"json",
-          //     success: function( resp ){
+                Swal.fire({
+                  type: 'success',
+                  title: resp.message,
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+                $('#dom-personnel-'+id_dom).remove();
+              }else{
+                Swal.fire({
+                  title: 'Warning!',
+                  text: resp.message,
+                  type: 'warning'
+                })
+              }
 
-          //     if (resp.status==1) {
-
-          //       Swal.fire({
-          //         type: 'success',
-          //         title: resp.message,
-          //         toast: true,
-          //         position: 'top-end',
-          //         showConfirmButton: false,
-          //         timer: 3000
-          //       })
-          //       $('#dom-service-'+id_dom).remove();
-          //     }else{
-          //       Swal.fire({
-          //         title: 'Warning!',
-          //         text: resp.message,
-          //         type: 'warning'
-          //       })
-          //     }
-
-          //   },
-          //   error: function( jqXhr, textStatus, errorThrown ){
-          //     Swal.fire({
-          //       title: jqXhr.status,
-          //       text: errorThrown,
-          //       type: 'error'
-          //     })
-          //   }
-          // });
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+              Swal.fire({
+                title: jqXhr.status,
+                text: errorThrown,
+                type: 'error'
+              })
+            }
+          });
 
         }
       })

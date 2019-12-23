@@ -17,6 +17,12 @@ class Customer extends MY_Controller {
 	{
 		$data['datas'] = $this->customers_model->lists();
 
+		if ($this->input->get('json')) {
+			header("Content-Type: application/json");
+			echo json_encode($data);
+			exit;
+		}
+
 		$this->load->view('header');
 		$this->load->view('customer/index', $data);
 		$this->load->view('footer');
@@ -74,8 +80,18 @@ class Customer extends MY_Controller {
 
 	public function read_customer()
 	{
+		$name_hospital = $this->input->get('hospital') ? $this->input->get('hospital') : '';
+		$data['datas'] = $this->customers_model->lists_customers_general($name_hospital);
+		$data['name_hospital'] = $name_hospital;
+
+		if ($this->input->get('json')) {
+			header("Content-Type: application/json");
+			echo json_encode($data);
+			exit;
+		}
+
 		$this->load->view('header');
-		$this->load->view('customer/read_customer');
+		$this->load->view('customer/read_customer', $data);
 		$this->load->view('footer');
 	}
 
