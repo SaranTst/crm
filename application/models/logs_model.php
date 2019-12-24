@@ -12,7 +12,7 @@ class Logs_model extends CI_Model
 
 	public function lists() {
 
-		$limit = $this->input->get('limit') ? $this->input->get('limit') : 30;
+		$limit = $this->input->get('limit') ? $this->input->get('limit') : 50;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
 		$offset = ($page - 1) * $limit;
 		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';

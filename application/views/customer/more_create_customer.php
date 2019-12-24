@@ -125,8 +125,6 @@
                   type: 'success'
                 }).then((result) => {
 
-                  console.log(resp);
-
                   // each insert value in input[id_colum] when insert new data
                   if (id_content_tab=='PRODUCT') {
                     set_delete_product(resp.message, loweridtab);

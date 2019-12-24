@@ -200,7 +200,7 @@
           data: formDataBrand,
           dataType:"json",
           success: function( resp ){
-            console.log(resp)
+            
             if (resp.status==1) {
               Swal.fire({
                 title: 'Success!',
