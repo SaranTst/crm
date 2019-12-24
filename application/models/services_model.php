@@ -46,7 +46,13 @@ class Services_model extends CI_Model
 
 			if (isset($ip_post['keyword']) && !empty($ip_post['keyword'])) {
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['keyword']));
-				$where .= "CONCAT(FIRST_NAME_TH, LAST_NAME_TH, FIRST_NAME_ENG, LAST_NAME_ENG, NICKNAME_TH, NICKNAME_ENG) LIKE '%".$keyword."%' AND ";
+				// $where .= "CONCAT(FIRST_NAME_TH, LAST_NAME_TH, FIRST_NAME_ENG, LAST_NAME_ENG, NICKNAME_TH, NICKNAME_ENG) LIKE '%".$keyword."%' AND ";
+				$where .= "FIRST_NAME_TH LIKE '%".$keyword."%' OR ";
+				$where .= "LAST_NAME_TH LIKE '%".$keyword."%' OR ";
+				$where .= "FIRST_NAME_ENG LIKE '%".$keyword."%' OR ";
+				$where .= "LAST_NAME_ENG LIKE '%".$keyword."%' OR ";
+				$where .= "NICKNAME_TH LIKE '%".$keyword."%' OR ";
+				$where .= "NICKNAME_ENG LIKE '%".$keyword."%' AND ";
 			}
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete

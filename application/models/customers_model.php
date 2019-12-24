@@ -36,7 +36,9 @@ class Customers_model extends CI_Model
 
 			if (isset($ip_post['search']) && !empty($ip_post['search'])) {
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
-				$where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
+				// $where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
+				$where .= "HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
+				$where .= "HOSPITAL_NAME_ENG LIKE '%".$keyword."%' AND ";
 			}
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
@@ -832,7 +834,9 @@ class Customers_model extends CI_Model
 		$where = "";
 		if ($name_hospital!='') {
 			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($name_hospital));
-			$where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
+			// $where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
+			$where .= "HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "HOSPITAL_NAME_ENG LIKE '%".$keyword."%' AND ";
 		}
 		$where .= "STATUS_DELETE = 0";
 

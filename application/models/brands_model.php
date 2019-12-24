@@ -25,7 +25,9 @@ class Brands_model extends CI_Model
 
 			if (isset($ip_post['search']) && !empty($ip_post['search'])) {
 				$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($ip_post['search']));
-				$where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
+				// $where .= "CONCAT(VENDOR_NAME, COUNTY) LIKE '%".$keyword."%' AND ";
+				$where .= "VENDOR_NAME LIKE '%".$keyword."%' OR ";
+				$where .= "COUNTY LIKE '%".$keyword."%' AND ";
 			}
 		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
