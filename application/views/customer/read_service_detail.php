@@ -13,7 +13,20 @@
                 </tr>
               </thead>
               <tbody>
+                <?php if ($datas['status']==1 && isset($datas['data'][0]['service_detail']) && sizeof($datas['data'][0]['service_detail'])>0) { 
+                  foreach ($datas['data'][0]['service_detail'] as $key => $value) { ?>
                 <tr>
+                  <th scope="row"><?php echo ($key+1).'.' ?></th>
+                  <td><img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-thumbnail" style="height: 75px;"></td>
+                  <td><?php echo $value['CUSTOMER_ID_HOSPITAL']; ?></td>
+                  <td><?php echo $value['FIRST_NAME_TH'].' '.$value['LAST_NAME_TH']; ?></td>
+                  <td><?php echo $value['NICKNAME_TH']; ?></td>
+                  <td><?php echo ARR_DEPARTMENT_ADMIN_SALE[$value['DEPARTMENT_ID']]; ?></td>
+                  <td><?php echo ARR_POSITION[$value['POSITION_ID']]; ?></td>
+                </tr>
+                <?php }
+                } ?>
+                <!-- <tr>
                   <th scope="row">1.</th>
                   <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
                   <td>000001</td>
@@ -30,7 +43,7 @@
                   <td>XXXX</td>
                   <td>Service2</td>
                   <td>Service</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div> <!-- .table-responsive -->

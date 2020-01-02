@@ -53,7 +53,7 @@
               <td><a href="<?php echo base_url().'customer/read_customer?hospital='.$value['HOSPITAL_NAME_ENG']; ?>" id="link-hospital-th"><?php echo $value['HOSPITAL_NAME_ENG']; ?></a></td>
               <td><a href="<?php echo base_url().'customer/read_customer?hospital='.$value['HOSPITAL_NAME_TH']; ?>" id="link-hospital-eng"><?php echo $value['HOSPITAL_NAME_TH']; ?></a></td>
               <td id="txt-customer-id"><?php echo $value['CUSTOMER_ID_HOSPITAL']; ?></td>
-              <td id="txt-order-amount"><?php echo $value['ORDER_AMOUNT_HOSPITAL']; ?></td>
+              <td id="txt-order-amount"><?php echo number_format($value['ORDER_AMOUNT_HOSPITAL']); ?></td>
               <!-- <td><div class="rating" data-rate-value="2"></div></td> -->
               <td id="txt-rating">
                 <?php 
@@ -133,7 +133,7 @@
               content_result.find('#link-hospital-eng').attr('href', base_url+'customer/create_customer/'+v.ID);
               content_result.find('#link-hospital-eng').text(v.HOSPITAL_NAME_ENG);
               content_result.find('#txt-customer-id').text(v.CUSTOMER_ID_HOSPITAL);
-              content_result.find('#txt-order-amount').text(v.ORDER_AMOUNT_HOSPITAL);
+              content_result.find('#txt-order-amount').text(v.ORDER_AMOUNT_HOSPITAL.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
               var ics=1;
               content_result.find('#txt-rating').children().remove();

@@ -15,49 +15,57 @@
               </div>
             </div>
 
+            <?php if ($datas['status']==1 && isset($datas['data'][0]['personnel_detail']) && sizeof($datas['data'][0]['personnel_detail'])>0) { 
+                  foreach ($datas['data'][0]['personnel_detail'] as $key => $value) { ?>
             <div class="card">
-              <div class="card-header card-header-hover" id="headingOne">
-                <div class="row text-center" data-toggle="collapse" data-target="#collapseOne">
-                  <div class="col-md-1">1.</div>
-                  <div class="col-md-2"><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></div>
-                  <div class="col-md-2">XXXX XXXXXXXXXX</div>
-                  <div class="col-md-1">Hitachi</div>
-                  <div class="col-md-1">Lisendo 880</div>
-                  <div class="col-md-2"><button type="button" class="btn crm-btn-purple">นำเสนอลูกค้า</button></div>
+              <div class="card-header card-header-hover" id="heading-<?php echo ($key+1); ?>">
+                <div class="row text-center" data-toggle="collapse" data-target="#collapse<?php echo ($key+1); ?>">
+                  <div class="col-md-1"><?php echo ($key+1).'.'; ?></div>
+                  <div class="col-md-2"><img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/150.png'; ?>" class="img-thumbnail" style="height: 75px;"></div>
+                  <div class="col-md-2"><?php echo $value['FIRST_NAME_TH'].' '.$value['LAST_NAME_TH']; ?></div>
+                  <div class="col-md-1"><?php echo $value['BRANDS_VENDOR_NAME']; ?></div>
+                  <div class="col-md-1"><?php echo $value['MODEL']; ?></div>
+                  <div class="col-md-2"><button type="button" class="<?php echo ARR_STATUS_BTN[$value['STATUS']]; ?>"><?php echo ARR_STATUS_TH[$value['STATUS']]; ?></button></div>
                   <div class="col-md-2">
-                    <i class="fa fa-star select"></i>
-                    <i class="fa fa-star select"></i>
-                    <i class="fa fa-star select"></i>
-                    <i class="fa fa-star-o select"></i>
-                    <i class="fa fa-star-o select"></i>
+                    <?php 
+                    for ($i=1; $i<=5; $i++) { 
+                      if ($value['RELATIONSHIP']>=$i) {
+                        echo '<i class="fa fa-star select"></i>'; 
+                      }else{
+                        echo '<i class="fa fa-star-o select"></i>'; 
+                      }
+                    } ?>
                   </div>
                   <div class="col-md-1" id="collapse-click"><i class="fa fa-plus fa-lg"></i></div>
                 </div>
               </div>
-              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div id="collapse<?php echo ($key+1); ?>" class="collapse" aria-labelledby="heading-<?php echo ($key+1); ?>" data-parent="#accordionExample">
                 <div class="card-body-fluid">
                   <div class="jumbotron jumbotron-fluid mb-0">
                     <div class="container-fluid">
 
                       <div class="row mb-3">
                         <div class="col-md-12">
-                          <img src="<?php echo base_url(); ?>images/step/step-1.png" class="img-fluid">
+                          <img src="<?php echo base_url().'images/step/step-'.$value['STATUS'].'.png'; ?>" class="img-fluid">
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-md-7">
-                          <h3 id="id-jumbotron-personnel">1.</h3>
+                          <h3 id="id-jumbotron-personnel"><?php echo ($key+1).'.'; ?></h3>
                         </div>
                         <div class="col-md-5">
                           <div class="form-group row">
                             <label class="col-md-5 col-form-label">Relationship</label>
                             <div class="col-md pt-1 text-center">
-                              <i class="fa fa-star select"></i>
-                              <i class="fa fa-star select"></i>
-                              <i class="fa fa-star select"></i>
-                              <i class="fa fa-star-o select"></i>
-                              <i class="fa fa-star-o select"></i>
+                              <?php 
+                              for ($i=1; $i<=5; $i++) { 
+                                if ($value['RELATIONSHIP']>=$i) {
+                                  echo '<i class="fa fa-star select"></i>'; 
+                                }else{
+                                  echo '<i class="fa fa-star-o select"></i>'; 
+                                }
+                              } ?>
                             </div>
                           </div>
                         </div>
@@ -66,7 +74,7 @@
                       <div class="row">
                         <div class="col-md-6 mb-3">
                           <div class="z-depth-1-half text-center">
-                            <img src="<?php echo base_url(); ?>images/180.png" class="img-thumbnail" style="height: 180px;">
+                            <img src="<?php echo $value['IMAGE'] ? base_url().$value['IMAGE'] : base_url().'images/180.png'; ?>" class="img-thumbnail" style="height: 180px;">
                           </div>
                         </div>
                         <div class="col-md-6 mt-3">
@@ -74,13 +82,13 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label>Prefix</label>
-                                <input type="text" class="form-control" placeholder="Prefix" value="Prefix" readonly>
+                                <input type="text" class="form-control" placeholder="Prefix" value="<?php echo ARR_PREFIX_TH[$value['PREFIX']]; ?>" readonly>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label>Position</label>
-                                <input type="text" class="form-control" placeholder="Position" value="Doctor" readonly>
+                                <input type="text" class="form-control" placeholder="Position" value="<?php echo ARR_POSITION[$value['POSITION_ID']]; ?>" readonly>
                               </div>
                             </div>
                           </div>
@@ -91,13 +99,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Name - Surname (Thai)</label>
-                            <input type="text" class="form-control" placeholder="Name - Surname (Thai)" value="XXXX XXXXXXXXXXX" readonly>
+                            <input type="text" class="form-control" placeholder="Name - Surname (Thai)" value="<?php echo $value['FIRST_NAME_TH'].' '.$value['LAST_NAME_TH']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Name - Surname (Eng)</label>
-                            <input type="text" class="form-control" placeholder="Name - Surname (Eng)" value="XXXX XXXXXXXXXXX" readonly>
+                            <input type="text" class="form-control" placeholder="Name - Surname (Eng)" value="<?php echo $value['FIRST_NAME_ENG'].' '.$value['LAST_NAME_ENG']; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -106,13 +114,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>E-mail</label>
-                            <input type="text" class="form-control" placeholder="E-mail" value="Xxxxxxxx@hotmail.com" readonly>
+                            <input type="text" class="form-control" placeholder="E-mail" value="<?php echo $value['EMAIL']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Tel.</label>
-                            <input type="text" class="form-control" placeholder="Tel." value="089-106-7777" readonly>
+                            <input type="text" class="form-control" placeholder="Tel." value="<?php echo $value['TELEPHONE']; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -122,7 +130,7 @@
                           <label>Date Birthday</label>
                           <div class="form-group row">
                             <div class="col-10">
-                              <input type="date" class="form-control" value="1940-07-12" readonly>
+                              <input type="date" class="form-control" value="<?php echo $value['BIRTHDAY']; ?>" readonly>
                             </div>
                             <div class="col text-center">
                               <i class="fa fa-calendar fa-lg"></i>
@@ -132,7 +140,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Gender</label>
-                            <input type="text" class="form-control" placeholder="Gender" value="Male" readonly>
+                            <input type="text" class="form-control" placeholder="Gender" value="<?php echo ARR_GENDER_TH[$value['GENDER']]; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -141,13 +149,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Salesperson</label>
-                            <input type="text" class="form-control" placeholder="Salesperson" value="XXXXXXXX" readonly>
+                            <input type="text" class="form-control" placeholder="Salesperson" value="<?php echo $value['SALES_FIRST_NAME_TH'].' '.$value['SALES_LAST_NAME_TH']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Contact Channal</label>
-                            <input type="text" class="form-control" placeholder="Contact Channal" value="Event" readonly>
+                            <input type="text" class="form-control" placeholder="Contact Channal" value="<?php echo ARR_CONTACT_CHANNAL[$value['CONTACT_CHANNAL']]; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -156,14 +164,14 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Event</label>
-                            <input type="text" class="form-control" placeholder="Event" value="งานราชวิทยารังสีวิทยาแห่งประเทศไทย" readonly>
+                            <input type="text" class="form-control" placeholder="Event" value="<?php echo $value['EVENT']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label>Date Stamp</label>
                           <div class="form-group row">
                             <div class="col-10">
-                              <input type="date" class="form-control" value="2019-09-02" readonly>
+                              <input type="date" class="form-control" value="<?php echo $value['DATE_STAMP']; ?>" readonly>
                             </div>
                             <div class="col text-center">
                               <i class="fa fa-calendar fa-lg"></i>
@@ -176,13 +184,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Brands</label>
-                            <input type="text" class="form-control" placeholder="Brands" value="Hitachi" readonly>
+                            <input type="text" class="form-control" placeholder="Brands" value="<?php echo $value['BRANDS_VENDOR_NAME']; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Model</label>
-                            <input type="text" class="form-control" placeholder="Model" value="Lisendo 880" readonly>
+                            <input type="text" class="form-control" placeholder="Model" value="<?php echo $value['MODEL']; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -191,13 +199,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Status</label>
-                            <input type="text" class="form-control" placeholder="Status" value="นำเสนอลูกค้า" readonly>
+                            <input type="text" class="form-control" placeholder="Status" value="<?php echo ARR_STATUS_TH[$value['STATUS']]; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Confident (%)</label>
-                            <input type="text" class="form-control" placeholder="Confident (%)" value="50 (%)" readonly>
+                            <input type="text" class="form-control" placeholder="Confident (%)" value="<?php echo ARR_CONFIDENT[$value['CONFIDENT']]; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -206,7 +214,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Remarks</label>
-                            <input type="text" class="form-control" placeholder="Remarks" value="-" readonly>
+                            <input type="text" class="form-control" placeholder="Remarks" value="<?php echo $value['REMARKS']; ?>" readonly>
                           </div>
                         </div>
                       </div>
@@ -216,7 +224,10 @@
                 </div>
               </div>
             </div>
-            <div class="card">
+            <?php }
+            } ?>
+
+            <!-- <div class="card">
               <div class="card-header card-header-hover" id="headingTwo">
                 <div class="row text-center" data-toggle="collapse" data-target="#collapseTwo">
                   <div class="col-md-1">2.</div>
@@ -413,7 +424,7 @@
                       </div>
 
                     </div>
-                  </div> <!-- .jumbotron jumbotron-fluid mb-0 -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -614,10 +625,10 @@
                       </div>
 
                     </div>
-                  </div> <!-- .jumbotron jumbotron-fluid mb-0 -->
+                  </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="card">
               <div class="card-header">
                 <div class="row text-center">

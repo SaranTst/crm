@@ -97,8 +97,17 @@ class Customer extends MY_Controller {
 
 	public function more_read_customer()
 	{
+		$name_hospital = $this->input->get('hospital') ? $this->input->get('hospital') : '';
+		$data['datas'] = $this->customers_model->gets_read_more_customer($name_hospital);
+
+		if ($this->input->get('json')) {
+			header("Content-Type: application/json");
+			echo json_encode($data);
+			exit;
+		}
+
 		$this->load->view('header');
-		$this->load->view('customer/more_read_customer');
+		$this->load->view('customer/more_read_customer', $data);
 		$this->load->view('footer');
 	}
 

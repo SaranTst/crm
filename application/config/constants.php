@@ -118,6 +118,19 @@ define('ARR_STATUS_TH', array(
 	10 => 'เกินกำหนดการส่งสินค้า'
 ));
 
+define('ARR_STATUS_BTN', array(
+	1 => 'btn crm-btn-light-purple',
+	2 => 'btn crm-btn-purple',
+	3 => 'btn crm-btn-dark-blue',
+	4 => 'btn crm-btn-blue',
+	5 => 'btn crm-btn-dark-green',
+	6 => 'btn crm-btn-light-green',
+	7 => 'btn crm-btn-yellow',
+	8 => 'btn crm-btn-light-orange',
+	9 => 'btn crm-btn-light-red',
+	10 => 'btn crm-btn-pink'
+));
+
 define('ARR_STATUS_ENG', array(
 	1 => 'Status Propose',
 	2 => 'Demo',

@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row mb-3" id="header-table">
         <div class="col-md-4">
-          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block no-hover">Chulalongkorn Hospital</a>
+          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block no-hover"><?php echo $datas['status']==1 ? strtoupper($datas['data'][0]['HOSPITAL_NAME_ENG']) : $datas['message']; ?></a>
         </div>
         <div class="col-md-8"></div>
       </div>
@@ -13,12 +13,11 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Expertise</label>
             <div class="col">
-              <select class="custom-select">
-                <option value="" selected>Choose Radiology</option>
-                <option value="1">Radiology 1</option>
-                <option value="2">Radiology 2</option>
-                <option value="3">Radiology 3</option>
-                <option value="4">Radiology 4</option>
+              <select class="custom-select" name="more_read_customer_expertise" id="more_read_customer_expertise">
+                <option value="" selected disabled hidden>Choose Expertise</option>
+                <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
+                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -50,6 +49,7 @@
         </li>
       </ul> <!-- .nav nav-pills nav-fill flex-column flex-sm-row -->
 
+      <?php if ($datas['status']==1) { ?>
       <div class="tab-content">
         <div class="tab-pane fade show active" id="SALES" role="tabpanel" aria-labelledby="SALES-tab">
           <?php include_once("read_sales_detail.php"); ?>
@@ -68,6 +68,9 @@
         </div> <!-- PERSONNEL-tab -->
         
       </div> <!-- .tab-content -->
+      <?php }else{ ?>
+        <h3 class="text-center pt-5"><?php echo $datas['message']; ?></h3>
+      <?php } ?>
 
     </div> <!-- .container-fluid -->
     </div> <!-- .content-wrapper -->
