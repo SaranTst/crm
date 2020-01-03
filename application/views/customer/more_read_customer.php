@@ -18,6 +18,7 @@
                 <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
                 <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                 <?php } ?>
+                <option value="">-- No Expertise --</option>
               </select>
             </div>
           </div>
@@ -25,7 +26,7 @@
         <div class="col-md-5 pt-2">
           <form class="form-inline md-form form-sm active-pink-2 mt-1">
             <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
-              aria-label="Search" name="search">
+              aria-label="Search" name="search" onkeydown="return event.key != 'Enter';">
             <a href="javascript:void(0)" id="btn-search-more-read-customer"><i class="fa fa-search fa-lg"></i></a>
           </form>
         </div>

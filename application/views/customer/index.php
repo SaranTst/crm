@@ -7,7 +7,7 @@
           <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-user fa-fw"></i><p>Customer Management</p></a>
         </div> -->
         <div class="col-md-6 pt-2">
-          <form class="form-inline md-form form-sm active-pink-2 mt-1">
+          <form class="form-inline md-form form-sm active-pink-2 mt-1" onkeydown="return event.key != 'Enter';">
             <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
               aria-label="Search" name="search">
             <a href="javascript:void(0)" id="btn-search"><i class="fa fa-search fa-lg"></i></a>
@@ -128,9 +128,9 @@
             $.each(data, function(i, v){
 
               content_result.find('#txt-id').text(((resp.page - 1) * resp.limit) + (i + 1));
-              content_result.find('#link-hospital-th').attr('href', base_url+'customer/create_customer/'+v.ID);
+              content_result.find('#link-hospital-th').attr('href', base_url+'customer/read_customer?hospital='+v.HOSPITAL_NAME_TH);
               content_result.find('#link-hospital-th').text(v.HOSPITAL_NAME_TH);
-              content_result.find('#link-hospital-eng').attr('href', base_url+'customer/create_customer/'+v.ID);
+              content_result.find('#link-hospital-eng').attr('href', base_url+'customer/read_customer?hospital='+v.HOSPITAL_NAME_ENG);
               content_result.find('#link-hospital-eng').text(v.HOSPITAL_NAME_ENG);
               content_result.find('#txt-customer-id').text(v.CUSTOMER_ID_HOSPITAL);
               content_result.find('#txt-order-amount').text(v.ORDER_AMOUNT_HOSPITAL.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -164,7 +164,7 @@
               type: 'warning'
             }).then((result) => {
               if (result.value || result.dismiss) {
-                $('form#frm_serach')[0].reset();
+                $('form')[0].reset();
                 ajax_data();
               }
             })

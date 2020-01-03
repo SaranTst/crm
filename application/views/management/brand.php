@@ -5,7 +5,7 @@
       <div class="col-md-6 pt-2">
         <form class="form-inline md-form form-sm active-pink-2 mt-1">
           <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
-            aria-label="Search">
+            aria-label="Search" onkeydown="return event.key != 'Enter';">
           <a href="javascript:void(0)" id="ic-search"><i class="fa fa-search fa-lg"></i></a>
         </form>
       </div>
