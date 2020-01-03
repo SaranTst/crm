@@ -871,17 +871,35 @@ class Customers_model extends CI_Model
 
 	public function gets_read_more_customer($name_hospital=null) {
 
-		$limit = $this->input->get('limit') ? $this->input->get('limit') : 10;
+		$limit = $this->input->get('limit') ? $this->input->get('limit') : 20;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
 		$offset = ($page - 1) * $limit;
 		$sort = $this->input->get('sort') ? $this->input->get('sort') : 'DESC';
+
+		$expertise = $this->input->get('expertise') ? $this->input->get('expertise') : '';
+		$search = $this->input->get('search') ? $this->input->get('search') : '';
 
 		$ip_post = $this->input->post();
 		$where = "";
 		if ($name_hospital!='') {
 			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($name_hospital));
-			$where .= $this->table.".HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
-			$where .= $this->table.".HOSPITAL_NAME_ENG LIKE '%".$keyword."%' AND ";
+			$where .= '('.$this->table.".HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= $this->table.".HOSPITAL_NAME_ENG LIKE '%".$keyword."%') AND ";
+		}
+		if ($search!='') {
+			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($search));
+			$where .= "(SALES.FIRST_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "SALES.LAST_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "SALES.NICKNAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "SERVICES.FIRST_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "SERVICES.LAST_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "SERVICES.NICKNAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "CUSTOMERS_PERSONNEL.FIRST_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "CUSTOMERS_PERSONNEL.LAST_NAME_TH LIKE '%".$keyword."%') AND ";
+		}
+		if ($expertise!='') {
+			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($expertise));
+			$where .= $this->table.".EXPERTISE=".$keyword." AND ";
 		}
 		$where .= $this->table.".STATUS_DELETE=0"; // status_delete 0 => no delete / 1 => delete
 

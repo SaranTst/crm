@@ -13,7 +13,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Expertise</label>
             <div class="col">
-              <select class="custom-select" name="more_read_customer_expertise" id="more_read_customer_expertise">
+              <select class="custom-select" id="more_read_customer_expertise">
                 <option value="" selected disabled hidden>Choose Expertise</option>
                 <?php foreach (ARR_EXPERTISE as $key => $value) { ?>
                 <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -25,8 +25,8 @@
         <div class="col-md-5 pt-2">
           <form class="form-inline md-form form-sm active-pink-2 mt-1">
             <input class="form-control form-control-md mr-3" id="crm-input-search" type="text" placeholder="Search"
-              aria-label="Search">
-            <a href="javascript:void(0)"><i class="fa fa-search fa-lg"></i></a>
+              aria-label="Search" name="search">
+            <a href="javascript:void(0)" id="btn-search-more-read-customer"><i class="fa fa-search fa-lg"></i></a>
           </form>
         </div>
         <div class="col-md-3 pt-2">
@@ -72,6 +72,131 @@
         <h3 class="text-center pt-5"><?php echo $datas['message']; ?></h3>
       <?php } ?>
 
+      <div class="d-flex justify-content-center pt-3" id="pagination-more-read-customer"></div>
+
     </div> <!-- .container-fluid -->
     </div> <!-- .content-wrapper -->
   </main> <!-- .cd-main-content -->
+
+  <script type="text/javascript">
+    var total = <?php echo isset($datas['total']) ? $datas['total'] : 0; ?>;
+    var perpage = <?php echo isset($datas['limit']) ? $datas['limit'] : 0; ?>;
+    var current_page = <?php echo isset($datas['page']) ? $datas['page'] : 1; ?>;
+
+    var search_url = '';
+    var current_tab = new URL(window.location.href).searchParams.get('tab');
+    var search = new URL(window.location.href).searchParams.get('search');
+    var hospital = new URL(window.location.href).searchParams.get('hospital');
+    var expertise = new URL(window.location.href).searchParams.get('expertise');
+
+    $(document).ready(function(){
+
+      if (current_tab) {
+        $("#"+current_tab).tab('show');
+      }
+
+      $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+        current_tab = e.target.id;
+      })
+
+      $("#pagination-more-read-customer").pagination({
+        items: total,
+        itemsOnPage: perpage,
+        displayedPages: 3,
+        edges: 1,
+        onPageClick: function(pageNumber) {
+
+          search_url += '?hospital='+hospital;
+          search_url += '&page='+pageNumber;
+          if (current_tab) {
+            search_url += '&tab='+current_tab;
+          }
+          if (search) {
+            search_url += '&search='+search;
+          }
+          if (expertise) {
+            search_url += '&expertise='+expertise;
+          }
+          window.location.href = window.location.pathname+search_url;
+
+          // Modal Process
+          Swal.fire({
+            title: 'แก้ไขข้อมูล',
+            html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+              Swal.showLoading()
+            },
+          })
+          return false;
+        }
+      });
+
+      $('#pagination-more-read-customer').pagination('drawPage', current_page);
+
+      $('#btn-search-more-read-customer').click(function(){
+        search = $("[name='search']").val();
+
+        search_url += '?hospital='+hospital;
+        search_url += '&search='+search;
+
+        if (expertise) {
+          search_url += '&expertise='+expertise;
+        }
+        window.location.href = window.location.pathname+search_url;
+
+        // Modal Process
+        Swal.fire({
+          title: 'แก้ไขข้อมูล',
+          html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            Swal.showLoading()
+          },
+        })
+        return false;
+      });
+
+      $('#more_read_customer_expertise').change(function(e) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "คุณต้องการค้นหา "+$(this).find("option:selected").text()+" นี้ใช่หรือไม่",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+        }).then((result) => {
+          if (typeof result.dismiss === "undefined") {
+
+            search_url += '?hospital='+hospital;
+
+            expertise = this.value;
+            search_url += '&expertise='+expertise;
+            if (search) {
+              search_url += '&search='+search;
+            }
+            window.location.href = window.location.pathname+search_url;
+
+            // Modal Process
+            Swal.fire({
+              title: 'แก้ไขข้อมูล',
+              html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              onBeforeOpen: () => {
+                Swal.showLoading()
+              },
+            })
+            return false;
+          }
+        })
+      });
+
+      $('#more_read_customer_expertise').val(expertise).change(false);
+      $('#crm-input-search').val(search);
+
+    });
+
+  </script>

@@ -21,8 +21,7 @@
           <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp; Export to PDF</p></a>
         </div>
         <div class="col-md-3 pt-2">
-          <!-- <a href="<?php echo base_url(); ?>customer/more_read_customer" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-arrow-right fa-fw"></i><p>&nbsp; More info</p></a> -->
-          <a href="javascript:void(0)" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-arrow-right fa-fw"></i><p>&nbsp; More info</p></a>
+          <a href="<?php echo base_url().'customer/more_read_customer?hospital='.$name_hospital; ?>" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-arrow-right fa-fw"></i><p>&nbsp; More info</p></a>
         </div>
       </div>
  
