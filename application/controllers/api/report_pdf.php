@@ -16,7 +16,7 @@ class Report_pdf extends CI_Controller {
 	                'R' => 'THSarabunNew.ttf',
 	                'I' => 'THSarabunNewItalic.ttf',
 	                'B' =>  'THSarabunNewBold.ttf',
-	                'BI' => "THSarabunNewBoldItalic.ttf",
+	                'BI' => 'THSarabunNewBoldItalic.ttf',
 	            ]
 	        ],
 		]);
