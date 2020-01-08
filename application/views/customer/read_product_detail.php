@@ -33,30 +33,6 @@
                 </tr>
                 <?php }
                 } ?>
-                <!-- <tr>
-                  <th scope="row">2.</th>
-                  <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
-                  <td>346861</td>
-                  <td>Hitachi</td>
-                  <td>Lisendo 880</td>
-                  <td>1</td>
-                  <td>3,000,000</td>
-                  <td>XXXX XXXXXXXX</td>
-                  <td>XXXX XXXXXXXX</td>
-                  <td>24/07/2565</td>
-                </tr>
-                <tr>
-                  <th scope="row">3.</th>
-                  <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
-                  <td>823474</td>
-                  <td>Shimadzu</td>
-                  <td>CathLab</td>
-                  <td>1</td>
-                  <td>1,500,000</td>
-                  <td>XXXX XXXXXXXX</td>
-                  <td>XXXX XXXXXXXX</td>
-                  <td>03/09/2569</td>
-                </tr> -->
               </tbody>
             </table>
           </div> <!-- .table-responsive -->
@@ -85,14 +61,6 @@
                 </tr>
                 <?php }
                 } ?>
-                <!-- <tr>
-                  <th scope="row">2.</th>
-                  <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
-                  <td>CMC</td>
-                  <td>XXXXXXXX</td>
-                  <td>1</td>
-                  <td>3,000,000</td>
-                </tr> -->
               </tbody>
             </table>
           </div> <!-- .table-responsive -->

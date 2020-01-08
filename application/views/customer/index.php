@@ -14,7 +14,7 @@
           </form>
         </div>
         <div class="col-md-3 pt-2">
-          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp;Export to PDF</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block" id="btn-report-customers"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp;Export to PDF</p></a>
         </div>
         <div class="col-md-3 pt-2">
           <a href="<?php echo base_url(); ?>customer/create_customer" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-plus fa-fw"></i><p>&nbsp;CreateCustomer</p></a>
@@ -39,7 +39,7 @@
             <tr>
               <th scope="col">No.</th>
               <th scope="col">Hospital / Royal</th>
-              <th scope="col">โรงพยาบาล/สถานบัน</th>
+              <th scope="col">โรงพยาบาล / สถานบัน</th>
               <th scope="col">Customer ID</th>
               <th scope="col">Order amount</th>
               <th scope="col">Rating</th>
@@ -103,6 +103,10 @@
 
       $('#btn-search').click(function(){
         ajax_data();
+      });
+
+      $('#btn-report-customers').click(function(){
+        report_pdf('customers');
       });
 
     });

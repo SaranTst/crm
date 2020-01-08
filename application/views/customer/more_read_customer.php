@@ -31,7 +31,7 @@
           </form>
         </div>
         <div class="col-md-3 pt-2">
-          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp; Export to PDF</p></a>
+          <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block" id="btn-report-more-read-customers"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp; Export to PDF</p></a>
         </div>
       </div> <!-- #header-table -->
 
@@ -122,8 +122,8 @@
 
           // Modal Process
           Swal.fire({
-            title: 'แก้ไขข้อมูล',
-            html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+            title: 'กำลังแสดงข้อมูล',
+            html: 'กำลังแสดงข้อมูล กรุณารอสักครู่ !!! <b></b>',
             allowOutsideClick: false,
             showConfirmButton: false,
             onBeforeOpen: () => {
@@ -149,8 +149,8 @@
 
         // Modal Process
         Swal.fire({
-          title: 'แก้ไขข้อมูล',
-          html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+          title: 'กำลังแสดงข้อมูล',
+          html: 'กำลังแสดงข้อมูล กรุณารอสักครู่ !!! <b></b>',
           allowOutsideClick: false,
           showConfirmButton: false,
           onBeforeOpen: () => {
@@ -182,8 +182,8 @@
 
             // Modal Process
             Swal.fire({
-              title: 'แก้ไขข้อมูล',
-              html: 'กำลังบันทึกข้อมูล กรุณารอสักครู่ !!! <b></b>',
+              title: 'กำลังแสดงข้อมูล',
+              html: 'กำลังแสดงข้อมูล กรุณารอสักครู่ !!! <b></b>',
               allowOutsideClick: false,
               showConfirmButton: false,
               onBeforeOpen: () => {
@@ -197,6 +197,12 @@
 
       $('#more_read_customer_expertise').val(expertise).change(false);
       $('#crm-input-search').val(search);
+
+      $('#btn-report-more-read-customers').click(function(){
+        var param = {};
+        param['hospital'] = hospital;
+        report_pdf('more_read_customers', param);
+      });
 
     });
 

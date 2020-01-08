@@ -81,17 +81,17 @@ class Customers extends MY_Controller {
 		echo json_encode($msg);
 	}
 
-	public function lists_customers_general($name_hospital=null)
+	public function lists_customers_general($name_hospital=null, $start_date=null, $end_date=null)
 	{
-		$msg = $this->customers_model->lists_customers_general(urldecode($name_hospital));
+		$msg = $this->customers_model->lists_customers_general(urldecode($name_hospital), $start_date, $end_date);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);
 	}
 
-	public function gets_read_more_customer($name_hospital=null)
+	public function gets_read_more_customer($name_hospital=null, $start_date=null, $end_date=null)
 	{
-		$msg = $this->customers_model->gets_read_more_customer(urldecode($name_hospital));
+		$msg = $this->customers_model->gets_read_more_customer(urldecode($name_hospital), $start_date, $end_date);
 
 		header("Content-Type: application/json");
 		echo json_encode($msg);

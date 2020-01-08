@@ -10,7 +10,7 @@
         </form>
       </div>
       <div class="col-md-3 pt-2">
-        <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp;Export to PDF</p></a>
+        <a href="javascript:void(0)" class="btn crm-btn-gray btn-lg btn-block" id="btn-report-brands"><i class="fa fa-file-pdf-o fa-fw"></i><p>&nbsp;Export to PDF</p></a>
       </div>
       <div class="col-md-3 pt-2">
         <a href="<?php echo base_url(); ?>management/create_brand" class="btn crm-btn-orange btn-lg btn-block"><i class="fa fa-plus fa-fw"></i><p>&nbsp;CreateBrand</p></a>
@@ -94,6 +94,10 @@
 
       $('#ic-search').click(function(){
         ajax_data();
+      });
+
+      $('#btn-report-brands').click(function(){
+        report_pdf('brands');
       });
   });
 

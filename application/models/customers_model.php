@@ -23,7 +23,7 @@ class Customers_model extends CI_Model
 		$this->table_personnel_detail = 'CUSTOMERS_PERSONNEL';
 	}
 
-	public function lists() {
+	public function lists($start_date=null, $end_date=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -41,12 +41,18 @@ class Customers_model extends CI_Model
 				$where .= "HOSPITAL_NAME_ENG LIKE '%".$keyword."%' AND ";
 			}
 		}
+
+		if ($start_date && $end_date) {
+			$where .= "CREATE_DATE BETWEEN '". date('Y-m-d H:i:s', strtotime($start_date)). "' AND '". date('Y-m-d H:i:s', strtotime($end_date))."' AND ";
+		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
 
 		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->where($where, NULL, FALSE);
-		$this->db->limit($limit,$offset);
+		if (!$start_date && !$end_date) {
+			$this->db->limit($limit,$offset);
+		}
 		$this->db->order_by('ID', $sort);
 		$query = $this->db->get();
 
@@ -824,7 +830,7 @@ class Customers_model extends CI_Model
 
 
 	/*Read More Customer */
-	public function lists_customers_general($name_hospital=null) {
+	public function lists_customers_general($name_hospital=null, $start_date=null, $end_date=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 2;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -835,15 +841,20 @@ class Customers_model extends CI_Model
 		if ($name_hospital!='') {
 			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($name_hospital));
 			// $where .= "CONCAT(HOSPITAL_NAME_TH, HOSPITAL_NAME_ENG) LIKE '%".$keyword."%' AND ";
-			$where .= "HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
-			$where .= "HOSPITAL_NAME_ENG LIKE '%".$keyword."%' AND ";
+			$where .= "(HOSPITAL_NAME_TH LIKE '%".$keyword."%' OR ";
+			$where .= "HOSPITAL_NAME_ENG LIKE '%".$keyword."%') AND ";
+		}
+		if ($start_date && $end_date) {
+			$where .= "CREATE_DATE BETWEEN '". date('Y-m-d H:i:s', strtotime($start_date)). "' AND '". date('Y-m-d H:i:s', strtotime($end_date))."' AND ";
 		}
 		$where .= "STATUS_DELETE = 0";
 
 		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->where($where, NULL, FALSE);
-		$this->db->limit($limit,$offset);
+		if (!$start_date && !$end_date) {
+			$this->db->limit($limit,$offset);
+		}
 		$this->db->order_by('ID', $sort);
 		$query = $this->db->get();
 
@@ -869,7 +880,7 @@ class Customers_model extends CI_Model
 		return $msg;
 	}
 
-	public function gets_read_more_customer($name_hospital=null) {
+	public function gets_read_more_customer($name_hospital=null, $start_date=null, $end_date=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 20;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -900,6 +911,9 @@ class Customers_model extends CI_Model
 		if ($expertise!='') {
 			$keyword = $this->db->escape_like_str($this->general_model->clearbadstr($expertise));
 			$where .= $this->table.".EXPERTISE=".$keyword." AND ";
+		}
+		if ($start_date && $end_date) {
+			$where .= $this->table.".CREATE_DATE BETWEEN '". date('Y-m-d H:i:s', strtotime($start_date)). "' AND '". date('Y-m-d H:i:s', strtotime($end_date))."' AND ";
 		}
 		$where .= $this->table.".STATUS_DELETE=0"; // status_delete 0 => no delete / 1 => delete
 
@@ -967,7 +981,9 @@ class Customers_model extends CI_Model
 
 
 		$this->db->where($where, NULL, FALSE);
-		$this->db->limit($limit,$offset);
+		if (!$start_date && !$end_date) {
+			$this->db->limit($limit,$offset);
+		}
 		$this->db->order_by($this->table.'.ID', $sort);
 		$query = $this->db->get();
 		// print_r($this->db->last_query());exit;

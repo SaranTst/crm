@@ -12,7 +12,7 @@ class Brands_model extends CI_Model
 		$this->load->model('logs_model');
 	}
 
-	public function lists() {
+	public function lists($start_date=null, $end_date=null) {
 
 		$limit = $this->input->get('limit') ? $this->input->get('limit') : 3;
 		$page = $this->input->get('page') ? $this->input->get('page') : 1;
@@ -30,12 +30,18 @@ class Brands_model extends CI_Model
 				$where .= "COUNTY LIKE '%".$keyword."%' AND ";
 			}
 		}
+
+		if ($start_date && $end_date) {
+			$where .= "CREATE_DATE BETWEEN '". date('Y-m-d H:i:s', strtotime($start_date)). "' AND '". date('Y-m-d H:i:s', strtotime($end_date))."' AND ";
+		}
 		$where .= "STATUS_DELETE = 0"; // status_delete 0 => no delete / 1 => delete
 
 		$this->db->select('*');
 		$this->db->from($this->table);
 		$this->db->where($where, NULL, FALSE);
-		$this->db->limit($limit,$offset);
+		if (!$start_date && !$end_date) {
+			$this->db->limit($limit,$offset);
+		}
 		$this->db->order_by('ID', $sort);
 		$query = $this->db->get();
 

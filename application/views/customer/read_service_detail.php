@@ -26,24 +26,6 @@
                 </tr>
                 <?php }
                 } ?>
-                <!-- <tr>
-                  <th scope="row">1.</th>
-                  <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
-                  <td>000001</td>
-                  <td>XXXX XXXXXXXXXX</td>
-                  <td>XXXX</td>
-                  <td>Service1</td>
-                  <td>Service</td>
-                </tr>
-                <tr>
-                  <th scope="row">2.</th>
-                  <td><img src="<?php echo base_url(); ?>images/180.png" id="preview-hospital" class="img-thumbnail" style="height: 75px;"></td>
-                  <td>000002</td>
-                  <td>XXXX XXXXXXXXXX</td>
-                  <td>XXXX</td>
-                  <td>Service2</td>
-                  <td>Service</td>
-                </tr> -->
               </tbody>
             </table>
           </div> <!-- .table-responsive -->

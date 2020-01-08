@@ -80,6 +80,55 @@
       });
     }
 
+    function report_pdf(name_report, param) {
+
+      Swal.fire({
+        title: 'กรุณาระบุวันที่ออกรีพอร์ต',
+        type: 'question',
+        html: '<div class="row pt-2">'+
+          '<div class="col-md-6 pb-2">'+
+            '<div class="form-row">'+
+              '<label>วันเริ่มต้น : </label>'+
+              '<input id="start_date" class="form-control" placeholder="Start Date" autofocus>'+
+            '</div>'+
+          '</div>'+
+          '<div class="col-md-6 pb-2">'+
+            '<div class="form-row">'+
+              '<label>วันที่สิ้นสุด : </label>'+
+              '<input id="end_date" class="form-control" placeholder="End Date" autofocus>'+
+            '</div>'+
+          '</div>'+
+        '</div>',
+        customClass: 'warning',
+        onOpen:function(){
+          $('#start_date').datepicker({
+            format: "yyyy-mm-dd",
+            language: "th",
+            autoclose: true
+          });
+          $('#end_date').datepicker({
+            format: "yyyy-mm-dd",
+            language: "th",
+            autoclose: true
+          });
+        }
+        }).then(function(result) {
+        if (typeof result.dismiss === "undefined") {
+          var start_date = $('#start_date').val();
+          var end_date = $('#end_date').val();
+          var url_report = base_url+'api/report_pdf/report_all/'+start_date+'/'+end_date+'?report='+name_report;
+
+          if (param) {
+            $.each(param, function(i, v){
+              url_report += '&'+i+'='+v;
+            })
+          }
+          window.location.assign(url_report);
+          console.log(url_report);
+        }
+      });
+    }
+
 </script>
 
 </body>
